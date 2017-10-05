@@ -1,0 +1,56 @@
+body {
+  font-family: 'Source Code Pro', monospace;
+}
+
+body, a {
+  color: #0088ce;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  display: flex;
+}
+
+.container {
+  padding: 15px;
+  margin: auto;
+  text-align: center;
+}
+
+.brand {
+  font-size: 30px;
+}
+
+a {
+  font-weight: bold;
+}
+
+p, .cta {
+  font-size: 14px;
+}
+
+.cta {
+  display: inline-block;
+  border: 1px solid;
+  padding: 8px 10px;
+  text-decoration: none;
+}
+
+.cta:hover {
+  background-color: #0088ce;
+  color: #fff;
+}
+
+@media (min-width: 600px) {
+  .brand {
+    font-size: 48px;
+  }
+
+  p, .cta {
+    font-size: 24px;
+  }
+}
