@@ -66,8 +66,8 @@ p {
 .cta {
   display: inline-block;
   font-size: 18px;
-  border: 1px solid;
-  padding: 8px 10px;
+    border: 2px solid;
+  padding: 8px 11px;
   text-decoration: none;
   background-color: #fff;
   margin-top: 10px;
