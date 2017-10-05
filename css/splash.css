@@ -18,6 +18,10 @@ h1, h2, p, .cta {
   margin-bottom: 25px;
 }
 
+p {
+  line-height: 1.4;
+}
+
 body {
   min-height: 100%;
   display: flex;
@@ -43,7 +47,6 @@ body {
 .brand-sub {
   font-size: 24px;
   font-weight: normal;
-  margin-bottom: 50px;
 }
 
 a {
@@ -56,16 +59,19 @@ a:hover {
 
 }
 
-p, .cta {
+p {
   font-size: 14px;
 }
 
 .cta {
   display: inline-block;
+  font-size: 18px;
   border: 1px solid;
   padding: 8px 10px;
   text-decoration: none;
   background-color: #fff;
+  margin-top: 10px;
+  margin-bottom: 70px;
 }
 
 @media (min-width: 700px) {
@@ -77,7 +83,13 @@ p, .cta {
     font-size: 32px;
   }
 
-  p, .cta {
+  .cta {
     font-size: 24px;
+    margin-top: 20px;
+    margin-bottom: 90px;
+  }
+
+  p {
+    font-size: 18px;
   }
 }
