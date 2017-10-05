@@ -34,8 +34,10 @@ body {
   margin-bottom: 0;
 }
 
+
 .brand {
   font-size: 30px;
+  font-weight: 900;
 }
 
 .brand-sub {
@@ -46,7 +48,7 @@ body {
 }
 
 a {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 a:hover {
