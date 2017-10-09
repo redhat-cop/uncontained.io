@@ -76,7 +76,7 @@ p {
 .signup-submit {
   display: inline-block;
   font-size: 18px;
-  border: 2px solid;
+  border: 2px solid #0088ce;
   padding: 8px 11px;
   text-decoration: none;
   background-color: #fff;
