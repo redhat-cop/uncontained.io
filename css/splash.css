@@ -1,19 +1,23 @@
 body {
-  font-family: 'Source Code Pro', monospace;
   /* Cream Pixels (c) Mizanur Rahman
    * https://www.toptal.com/designers/subtlepatterns/cream-pixels/ */
   background: #fff url('cream_pixels.png');
 }
 
-body, a {
+body, a, .signup-submit, .signup-email {
   color: #0088ce;
+}
+
+body,
+input {
+  font-family: 'Source Code Pro', monospace;
 }
 
 html {
   height: 100%;
 }
 
-h1, h2, p, .cta {
+h1, h2, p {
   margin-top: 0;
   margin-bottom: 25px;
 }
@@ -45,36 +49,63 @@ body {
 }
 
 .brand-sub {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: normal;
+}
+
+.signup-head {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
 }
 
 a {
   font-weight: 600;
 }
 
-a:hover {
+a:hover,
+.signup-submit:hover {
   background-color: #0088ce;
   color: #fff;
-
 }
 
 p {
   font-size: 14px;
 }
 
-.cta {
+.signup-submit {
   display: inline-block;
   font-size: 18px;
-    border: 2px solid;
+  border: 2px solid;
   padding: 8px 11px;
   text-decoration: none;
   background-color: #fff;
-  margin-top: 10px;
-  margin-bottom: 70px;
 }
 
-#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+.signup {
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+.signup-email, .signup-submit {
+  font-size: 18px;
+  box-sizing: border-box;
+  height: 2.3em;
+  padding: 8px 11px;
+}
+
+.signup-email {
+  border: 2px solid;
+  background: transparent;
+  width: 100%;
+  max-width: 350px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.signup-submit {
+  cursor: pointer;
+}
 
 @media (min-width: 700px) {
   .brand {
@@ -85,9 +116,18 @@ p {
     font-size: 32px;
   }
 
-  .cta {
+  .signup-head {
     font-size: 24px;
-    margin-bottom: 100px;
+  }
+
+  .signup {
+    margin-top: 40px;
+    margin-bottom: 80px;
+  }
+
+  .signup-email, .signup-submit {
+    display: inline-block;
+    font-size: 18px;
   }
 
   p {
