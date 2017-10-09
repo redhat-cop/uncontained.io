@@ -74,6 +74,8 @@ p {
   margin-bottom: 70px;
 }
 
+#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+
 @media (min-width: 700px) {
   .brand {
     font-size: 72px;
