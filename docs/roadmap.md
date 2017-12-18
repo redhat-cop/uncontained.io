@@ -1,12 +1,12 @@
 # Roadmap
 
-Our vision for uncontained.io guides is to provide a jumping off point for individuals, communities, and companies to sustainably embrace containers and related container technologies and industry best practices.
+Our vision for uncontained.io guides is to provide a jumping off point for individuals, communities, and companies to sustainably embrace containers and related container technologies as well as industry best practices.
 
 ### CY 2017
 
-We started by focusing on open source containers, because they play a critical role in growing healthy cloud projects. Creators help set good examples for contributors and consumers of open source. We also noticed there were very few comprehensive resources aimed at helping creators.
+We started by focusing on open source containers, because they play a critical role in growing healthy cloud projects. Creators help set good examples for contributors and consumers of container technologies. We also noticed there were very few good comprehensive resources aimed at helping creators and consumers to effectively utilize containers.
 
-* [x] Create a first set of guides that help creators start and grow their own open source project
+* [x] Create a first set of guides that help creators start and use their own open source containers
 * [x] Make the guides public and release it as an open source project
 * [x] Expand [Contributing to uncontained.io on GitHub](https://github.com/redhat-cop/CONTRIBUTING.md) to include community best practices for contributors.
 * [ ] Foster healthy community dynamics so the guides become a place to codify community best practices

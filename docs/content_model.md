@@ -18,13 +18,17 @@ Article guides dive deep into a specific topic (for example, "Building a communi
 
 Tutorial guides dive deep into a specific topic (for example, "Building a community" or "Measuring success"). They may contain visuals and anecdotes to illustrate their point. While meant to be read from beginning to end, they have a table of contents to help the reader quickly skim the content and find a relevant subsection.
 
+## Link Page Guides
+
+A link page is simply a guide that provides a list of links to great resources around the web. Write down the title of the article, hyperlink it, and number it. It’s helpful to add your own blurb or introduction for each link you provide. Although not necessary, it’s a good way to put your own thought leadership on a topic or add a bit of value to the discussion.
+
 ## FAQ
 
-An FAQ tackles a complex topic where a reader is likely coming in with specific questions (for example, "The legal side of open source" or "Leadership & governance"). Whereas concept guides aim to teach the entire concept, an FAQ respects a reader's desire to jump around, get the information they need, and leave. The table of contents is especially important in an FAQ, because the page isn't meant to be read from beginning to end. FAQs might also be longer than a concept guide, because of the jump-around navigation.
+An FAQ tackles a complex topic where a reader is likely coming in with specific questions (for example, "How do I...?" or "Troubleshooting OpenShift"). Whereas article and tutorial guides aim to teach the entire concept, an FAQ respects a reader's desire to jump around, get the information they need, and leave. The table of contents is especially important in an FAQ, because the page isn't meant to be read from beginning to end. FAQs might also be longer than a concept guide, because of the jump-around navigation.
 
 ## Design Elements
 
-If you're writing a concept guide, here are some smaller design elements that enrich the content experience. We use them to draw the reader's attention and break up walls of text; therefore, they should all get some sort of visual treatment.
+If you're writing an article or tutorial guide, here are some smaller design elements that enrich the content experience. We use them to draw the reader's attention and break up walls of text; therefore, they should all get some sort of visual treatment.
 
 ## Pull quote
 

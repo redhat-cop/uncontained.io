@@ -1,11 +1,11 @@
 # Proposing a new guide
 
-Thanks for your interest in suggesting a new Open Source Guide! Your suggestions help us decide what to work on next.
+Thanks for your interest in suggesting a new uncontained.io guide! Your suggestions help us decide what to work on next.
 
 ## If you'd like to propose a new guide:
 
 1. **[Open an issue](https://github.com/redhat-cop/uncontained.io/issues)** with your suggestion. Please explain:
-  * Why the topic is broadly useful to open source contributors
+  * Why the topic is broadly useful to uncontained.io contributors
   * Why it doesn't fit into an existing guide
   * 3-5 bullets of expected sub-topics
 2. We (likely @jaredburck, @etsauer, or @sabre1041) will label the issue ```new-guide``` and share feedback.
@@ -26,3 +26,4 @@ At this point, we may decide the topic doesn't warrant a new guide and close the
 - [ ] Label your issue ```draft``` and update PR with the 1st draft. Anyone is welcome to give feedback.
 - [ ] Make final edits and add estimated date for completion
 - [ ] Release the new guide! 🎉
+- [ ] Promote new guide in weekly email digest! 🎉
