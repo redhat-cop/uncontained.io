@@ -21,7 +21,7 @@ This site is powered by [Jekyll](https://jekyllrb.com/). Our goal is for this pr
 
 ## Licenses
 
-Content is released under [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/). See [notices](notices.md) for complete details, including attribution guidelines, contribution terms, and software and third-party licenses and permissions.
+Content is released under [CC-BY-SA-4.0](https://creativecommons.org/licenses/by-sa/4.0/). See [notices](notices.md) for complete details, including attribution guidelines, contribution terms, and software and third-party licenses and permissions.
 
 ## Acknowledgments
 
