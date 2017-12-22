@@ -31,8 +31,8 @@ When referring to a project on GitHub, link to the repository so others can dive
 
 ## Capitalization
 
-"Guides" is capitalized when referring to the "Uncontained.io Guides", but not when saying "the guide" or "this guide".
+The word "guides" is not capitalized when referring to the "Uncontained.io guides", just like saying "the guide" or "this guide".
 
-- :smile: Welcome to Uncontained.io Guides!
+- :smile: Welcome to Uncontained.io guides!
 - :smile: The guide is meant to..
 - :cry: The goal of this Guide is to...

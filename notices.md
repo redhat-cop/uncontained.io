@@ -25,6 +25,8 @@ This means you can use the code and content in this repository except for Red Ha
 
 When you contribute to this repository you are doing so under the above licenses.
 
+[![creativecommons](https://i.creativecommons.org/l/by-sa/4.0/88x31.png)](https://creativecommons.org/licenses/by-sa/4.0/)
+
 ## Permissions
 
 Screenshots and images from other projects are used with permissions below.

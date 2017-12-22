@@ -23,11 +23,13 @@ This site is powered by [Jekyll](https://jekyllrb.com/). Our goal is for this pr
 
 Content is released under [CC-BY-SA-4.0](https://creativecommons.org/licenses/by-sa/4.0/). See [notices](notices.md) for complete details, including attribution guidelines, contribution terms, and software and third-party licenses and permissions.
 
+[![creativecommons](https://i.creativecommons.org/l/by-sa/4.0/88x31.png)](https://creativecommons.org/licenses/by-sa/4.0/)
+
 ## Acknowledgments
 
 The working group for the initial release of uncontained.io consisted of **@jaredburck, @etsauer, @sabre1041, @rdebeasi, @oybed** and **Phyllis Fann**.
 
-Thanks to **@contributors...n,** for lending their valuable input and expertise leading up to the initial release, to **@drew** and **@mattw** for coming up with the new site name, and to **@rdebeasi** for designing and illustrating the guides.
+Thanks to **@contributors...n,** for lending their valuable input and expertise leading up to the initial release, to **@drew** and **@mattw** for coming up with the new site name, and to **@rdebeasi** for designing and illustrating the content templates. And to Red Hat brand, marketing, legal, and anyone missed, thank you for your time and effort to help the uncontained.io project.
 
 ## Disclaimer
 While we've got advice about running containers and open source technologies, we are not lawyers. Be sure to read our [disclaimer](notices.md#legal-disclaimer) before diving in.

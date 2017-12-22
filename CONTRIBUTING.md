@@ -49,7 +49,7 @@ This site is written in asciidoc format and is built using the [Asciidoctor plug
 
 ## Setting up your environment
 
-This site is powered by [Jekyll](https://jekyllrb.com/). Running it on your local machine requires a working [Ruby](https://www.ruby-lang.org/en/) installation with [Bundler](http://bundler.io/). You can use Docker or your native operating system.
+This site is powered by [Jekyll](https://jekyllrb.com/). Running it on your local machine requires a working [Ruby](https://www.ruby-lang.org/en/) installation with [Bundler](http://bundler.io/). We recommend using the docker container method (for obvious reasons) instead of your native operating system, but you may choose either environment setup.  
 
 ### Docker QuickStart Guide
 
@@ -79,46 +79,41 @@ docker run \
 ```
 sudo yum install -y libyaml-devel autoconf gcc-c++ readline-devel zlib-devel libffi-devel openssl-devel automake libtool bison sqlite-devel
 ```
-1. Install Node.js Version Manager (nvm -- see https://github.com/creationix/nvm)
+2. Install Node.js Version Manager (nvm -- see https://github.com/creationix/nvm)
 ```
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash
 ```
-1. [Install RVM](https://rvm.io/)
+3. [Install RVM](https://rvm.io/)
 ```
 NOTE: For `gnome-terminal` users, you'll need to do this [additional step](https://rvm.io/integration/gnome-terminal)
 ```
-2. Install and use Ruby 2.4
+4. Install and use Ruby 2.4
 ```
 rvm install 2.4.0
 rvm use 2.4.0
 ```
-3. Install and set up RubyGems
+5. Install and set up RubyGems
 ```
 rvm rubygems latest
 ```
-4. Install bundler
+6. Install bundler
 ```
 gem install bundler
 ```
-5. Install project dependencies
+7. Install project dependencies
 ```
 bundle install
 ```
-6. Build site source
+8. Build site source
 ```
 bundle exec jekyll build
 ```
-7. Run local Jekyll server to view site
+9. Run local Jekyll server to view site
 ```
 bundle exec jekyll serve
 ```
+10. Launch browser and navigate to `http://localhost:4000`
 
-#### Building the Image
-
-```
-cd container-images/local-builder
-docker build -t redhatcop/jekyll-local-builder:latest .
-```
 
 ### Other OSs / Mac / Windows Quickstart Guide
 

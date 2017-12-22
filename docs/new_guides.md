@@ -26,4 +26,4 @@ At this point, we may decide the topic doesn't warrant a new guide and close the
 - [ ] Label your issue ```draft``` and update PR with the 1st draft. Anyone is welcome to give feedback.
 - [ ] Make final edits and add estimated date for completion
 - [ ] Release the new guide! 🎉
-- [ ] Promote new guide in weekly email digest! 🎉
+- [ ] Promote new guide in weekly email digest and monthly public call for the Containers & PaaS Community of Practice! 🎉
