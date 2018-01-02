@@ -9,7 +9,7 @@
 * Sees self as a mentor, teacher, director, or leader
 * Still building community reputation
 * May have never contributed content or a guide before
-* May have no ninja points or would like to become join and become one
+* May have no ninja points or would like to join and become a ninja
 
 ### Primary Goals
 

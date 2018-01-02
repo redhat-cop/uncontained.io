@@ -1,12 +1,12 @@
 # Content Model
-Uncontained.io guides help individuals, communities, and companies embrace open source software. It explains not only how to accomplish a task, but why you'd want to, and how that task fits into the larger story of consuming, contributing to, and producing open source software.
+Uncontained.io guides help individuals, communities, and companies embrace open source software. It explains not only how to accomplish a task, but why you'd want to, and how that task fits into the larger story of consuming, contributing to, and producing open source software containers and related technologies.
 
 This content was originally created and curated by Red Hat's PaaS Community of Practice, and covers topics that are very relevant to Red Hat users, but it is not specific to Red Hat products.
 
 For content that is specific to Red Hat products, see:
 
-- docs.openshift.com - gets existing users unstuck and back to work.
-- access.redhat.com -  tutorials about a larger idea or product feature for new users.
+- docs.openshift.com - gets existing users unstuck and back to work utilizing OpenShift Container Platform.
+- access.redhat.com -  support, documentation, and more about all Red Hat specific products and services for all users.
 
 Everything written in the guides should fall into one of the following categories.
 
