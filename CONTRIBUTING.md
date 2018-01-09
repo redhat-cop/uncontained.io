@@ -15,7 +15,7 @@ We've put together the following guidelines to help you figure out where you can
 0. [Community](#community)
 
 ## Types of contributions we're looking for
-First and foremost, this project is a forum to discuss DevOps technical practices and container automation approaches using Red Hat commercial open source products, then document them in a guide when we've found consensus. Your first contribution might be starting a new conversation, or adding to an existing conversation, around best practices. You can do so under [Issues](https://github.com/redhat-cop/uncontained.io/issues) or Cards(https://trello.com/b/JMaxIjCy/cant-contain-this).
+First and foremost, this project is a forum to discuss DevOps technical practices and container automation approaches using Red Hat commercial open source products, then document them in a guide when we've found consensus. Your first contribution might be starting a new conversation, or adding to an existing conversation, around best practices. You can do so under our [GitHub issues](https://github.com/redhat-cop/uncontained.io/issues) or [Trello board cards](https://trello.com/b/JMaxIjCy/cant-contain-this).
 
 There are also many ways you can directly contribute to the guides (in descending order of need):
 
@@ -37,7 +37,7 @@ Before we get started, here are a few things we expect from you (and that you sh
 
 ## How to contribute
 
-If you'd like to contribute, start by searching through the [issues](https://github.com/redhat-cop/uncontained.io/issues), [pull requests](https://github.com/redhat-cop/uncontained.io/pulls), and [cards](https://trello.com/b/JMaxIjCy/cant-contain-this) to see whether someone else has raised a similar idea or question.
+If you'd like to contribute, start by searching through the GitHub [issues](https://github.com/redhat-cop/uncontained.io/issues), [pull requests](https://github.com/redhat-cop/uncontained.io/pulls), and Trello  [cards](https://trello.com/b/JMaxIjCy/cant-contain-this) to see whether someone else has raised a similar idea or question.
 
 If you don't see your idea listed, and you think it fits into the goals of this guide, do one of the following:
 * **If your contribution is minor,** such as a typo fix, open a pull request.
@@ -133,6 +133,6 @@ This repo is currently maintained by @jaredburck, @etsauer, and @sabre1041, who 
 
 ## Community
 
-Discussions about UnContained.io takes place this repository's [Issues](https://github.com/redhat-cop/uncontained.io/issues) and [Pull Requests](https://github.com/redhat-cop/uncontained.io/pulls) sections and RocketChat's #cant-contain-this channel. Anybody is welcome to join these conversations. There is also a [mailing list](http://uncontained.io/) for regular updates.
+Discussions about uncontained.io takes place within this repository's [Issues](https://github.com/redhat-cop/uncontained.io/issues) and [Pull Requests](https://github.com/redhat-cop/uncontained.io/pulls) sections and Trello's [Cant-Contain-This](https://trello.com/b/JMaxIjCy/cant-contain-this) board. Red Hatter's can also find us on RocketChat's #cant-contain-this channel. Anybody is welcome to join these conversations. There is also a [mailing list](http://uncontained.io/) for regular updates.
 
 Wherever possible, do not take these conversations to private channels, including contacting the maintainers directly. Keeping communication public means everybody can benefit and learn from the conversation.

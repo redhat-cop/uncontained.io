@@ -6,9 +6,10 @@ From the GitHub Manual of Style, which this style guide inherits from:
 >
 > In other words, the way we write is just as important as the way we design. Consider these things when writing copy.
 
-Where possible, [automated tests](../script/test-prose) enforce style rules.
+Where possible, automated tests enforce style rules.
 
 ## Content Principles
+
 All written content should follow these principles:
 
 * **Approachability:** Don't assume reader has prior knowledge
@@ -31,8 +32,15 @@ When referring to a project on GitHub, link to the repository so others can dive
 
 ## Capitalization
 
-The word "guides" is not capitalized when referring to the "Uncontained.io guides", just like saying "the guide" or "this guide".
+The domain "uncontained.io" is not capitalized when referring to the "uncontained.io guides", except at the beginning of a sentence.
 
-- :smile: Welcome to Uncontained.io guides!
+- :smile: Welcome to uncontained.io!
+- :smile: The uncontained.io site is meant to...
+- :cry: The goal of Uncontained.io is to...
+- :cry: The mission of UnContained.io is to...
+
+The word "guides" is not capitalized when referring to the "uncontained.io guides", just like saying "the guide" or "this guide".
+
+- :smile: Welcome to uncontained.io guides!
 - :smile: The guide is meant to..
 - :cry: The goal of this Guide is to...
