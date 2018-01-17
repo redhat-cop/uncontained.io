@@ -29,6 +29,11 @@ node('master') {
   env.PROD_API= readFile('/tmp/prod_api').trim()
   env.PROD_REGISTRY = readFile('/tmp/prod_registry').trim()
   env.PROD_TOKEN = readFile('/tmp/prod_token').trim()
+
+  stage('Build Image') {
+    sh "oc start-build ${env.APP_NAME} --wait --follow"
+  }
+
 }
 
 podTemplate(label: 'promotion-slave', cloud: 'openshift', containers: [
