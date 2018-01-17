@@ -6,9 +6,9 @@ metadata:
   annotations:
     description: Application template for building Jekyll applications built using a Jenkins Pipeline
     iconClass: icon-tomcat
-    tags: jekyll,ruby
+    tags: s2i,jenkins,pipeline
     version: 1.0.0
-  name: jekyll-pipeline
+  name: generic-s2i-pipeline
 objects:
 - kind: "BuildConfig"
   apiVersion: "v1"
@@ -62,15 +62,21 @@ objects:
       sourceStrategy:
         from:
           kind: ImageStreamTag
-          name: ${IMAGE_STREAM_TAG_NAME}
-          namespace: ${IMAGE_STREAM_NAMESPACE}
+          name: "${BASE_IMAGE_STREAM_NAME}:${BASE_IMAGE_TAG}"
+          namespace: ${BASE_IMAGE_STREAM_NAMESPACE}
       type: Source
+    triggers:
+    - type: "GitHub"
+      github:
+        secret: ${GITHUB_WEBHOOK_SECRET}
+    - type: "ConfigChange"
 - apiVersion: v1
   kind: ImageStream
   metadata:
-    name: s2i-gows
+    name: ${BASE_IMAGE_STREAM_NAME}
+    namespace: ${NAMESPACE}
   spec:
-    dockerImageRepository: "docker.io/redhatcop/s2i-gows"
+    dockerImageRepository: "${BASE_IMAGE_REPO_URL}"
 parameters:
 - description: The name for the application.
   name: APPLICATION_NAME
@@ -106,10 +112,17 @@ parameters:
     installed. These ImageStreams are normally installed in the openshift namespace.
     You should only need to modify this if you've installed the ImageStreams in a
     different namespace/project.
-  name: IMAGE_STREAM_NAMESPACE
+  name: BASE_IMAGE_STREAM_NAMESPACE
   required: true
   value: openshift
-- description: Image stream tag for the image you'd like to use to build the application
-  name: IMAGE_STREAM_TAG_NAME
+- description: Image stream for the image you'd like to use to build the application
+  name: BASE_IMAGE_STREAM_NAME
   required: true
-  value: s2i-gows:latest
+  value: s2i-gows
+- description: Tag to pull for base image
+  name: BASE_IMAGE_TAG
+  required: true
+  value: latest
+- description: Docker image url for base image
+  name: BASE_IMAGE_REPO_URL
+  required: false
