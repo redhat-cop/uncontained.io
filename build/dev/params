@@ -1,5 +1,7 @@
-APPLICATION_NAME=site
+APPLICATION_NAME=splash
 NAMESPACE=field-guides-dev
-SOURCE_REPOSITORY_URL=https://github.com/etsauer/openshift-playbooks.git
-SOURCE_REPOSITORY_REF=copedia
-IMAGE_STREAM_NAMESPACE=field-guides-dev
+SOURCE_REPOSITORY_URL=https://github.com/etsauer/uncontained.io.git
+SOURCE_REPOSITORY_REF=pipeline-completion
+BASE_IMAGE_STREAM_NAME=httpd-24-rhel7
+BASE_IMAGE_STREAM_NAMESPACE=field-guides-dev
+BASE_IMAGE_REPO_URL=registry.access.redhat.com/rhscl/httpd-24-rhel7

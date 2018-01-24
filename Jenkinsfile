@@ -18,18 +18,22 @@ node('master') {
   env.STAGE1 = "${projectBase}-dev"
   env.STAGE2 = "${projectBase}-prod"
 
-  sh(returnStdout: true, script: "${env.OC_CMD} get is jenkins-slave-image-mgmt --template=\'{{ .status.dockerImageRepository }}\' > /tmp/jenkins-slave-image-mgmt.out")
+  sh"""
+    oc version
+    oc get is jenkins-slave-image-mgmt -o jsonpath='{ .status.dockerImageRepository }' > /tmp/jenkins-slave-image-mgmt.out;
+    oc get secret prod-credentials -o jsonpath='{ .data.api }' | base64 --decode > /tmp/prod_api;
+    oc get secret prod-credentials -o jsonpath='{ .data.registry }' | base64 --decode > /tmp/prod_registry
+    oc get secret prod-credentials -o jsonpath='{ .data.token }' | base64 --decode > /tmp/prod_token
+  """
   env.SKOPEO_SLAVE_IMAGE = readFile('/tmp/jenkins-slave-image-mgmt.out').trim()
-  println "${env.SKOPEO_SLAVE_IMAGE}"
-
-  sh(returnStdout: true, script: "oc get secret prod-credentials -o jsonpath='{ .data.api }' | base64 --decode > /tmp/prod_api")
   env.PROD_API= readFile('/tmp/prod_api').trim()
-
-  sh(returnStdout: true, script: "oc get secret prod-credentials -o jsonpath='{ .data.registry }' | base64 --decode > /tmp/prod_registry")
   env.PROD_REGISTRY = readFile('/tmp/prod_registry').trim()
-
-  sh(returnStdout: true, script: "oc get secret prod-credentials -o jsonpath='{ .data.token }' | base64 --decode > /tmp/prod_token")
   env.PROD_TOKEN = readFile('/tmp/prod_token').trim()
+
+  stage('Build Image') {
+    sh "oc start-build ${env.APP_NAME} --wait --follow"
+  }
+
 }
 
 podTemplate(label: 'promotion-slave', cloud: 'openshift', containers: [
