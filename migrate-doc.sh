@@ -15,6 +15,12 @@ content=$(echo "${content}" | sed 's/include::..\/..\/_includes\/variables.adoc\
 # Old format: link:#syncing-images-using-satellite-6
 # new format: link:#_syncing_images_using-satellite-6
 # regex: link:#[a-z0-9]+[a-z-]*[a-z0-9]+
+anchors=$(echo "${content}" | grep -o 'link:#[a-z0-9-]*')
+
+for anchor in ${anchors}; do
+  content=$(echo "${content}" | sed "s/${anchor}/${anchor//-/_}/g")
+done
+content=${content//link:#/link:#_}
 
 # Create uncontained doc
 rm ${UNCONTAINED_SITE}${DOC}
