@@ -1,6 +1,11 @@
 ---
-title: "External Jenkins Integration"
-date: 2018-02-23T20:44:19-05:00
+date: "2018-02-24T00:01:50-05:00"
+title: "External-Jenkins-Integration"
+authors: []
+categories:
+  -
+tags:
+  -
 draft: true
 ---
 = External Jenkins Integration
@@ -10,7 +15,7 @@ v1.0, 2017-05-10
 :toc: macro
 :toc-title:
 
-include::data/includes/variables.adoc[]
+include::layouts/variables.adoc[]
 toc::[]
 
 == Overview
