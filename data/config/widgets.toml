@@ -1,0 +1,10 @@
+# Recent Posts Widget config
+[recent_posts]
+title = "Recent Content"                            # default: "Recent Posts"
+length = 5                            # default: 5
+excludeTypes = ["page"]               # default: ["page"]
+
+[guides]
+title = "Guides"
+length = 4
+excludeTypes = ["page","article"]

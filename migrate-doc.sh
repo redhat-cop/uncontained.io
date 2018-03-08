@@ -23,7 +23,7 @@ done
 content=${content//link:#/link:#_}
 
 # Create uncontained doc
-rm ${UNCONTAINED_SITE}${DOC}
+rm -f ${UNCONTAINED_SITE}${DOC}
 hugo new ${DOC}
 
 # Grab frontmatter and combine with content

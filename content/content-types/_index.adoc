@@ -1,0 +1,19 @@
+---
+title: Content Types
+linkTitle: Content Types
+menu: main
+weight: -255
+slug: content-types
+---
+
+= Uncontained.io Content Structure
+
+== Guides
+
+Guides are long-form
+
+== Articles
+
+== Roadmaps
+
+Roadmaps are an aggregation of some combination of guides and articles to solve some higher level problem.

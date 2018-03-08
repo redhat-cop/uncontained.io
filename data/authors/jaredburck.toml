@@ -1,0 +1,11 @@
+id = "jaredburck"
+
+[email]
+username = "jburck"
+host = "redhat.com"
+
+[name]
+display = "Jared Burck"
+
+[social]
+github = "JaredBurck"

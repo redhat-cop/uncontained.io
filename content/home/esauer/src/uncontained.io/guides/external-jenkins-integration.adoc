@@ -1,6 +1,0 @@
----
-title: "External Jenkins Integration"
-date: 2018-02-23T22:50:55-05:00
-draft: true
----
-

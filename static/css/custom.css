@@ -1,0 +1,17 @@
+.container
+
+.list .item {
+  display: block;
+}
+
+.widget-guides ul {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+
+.widget-guides .list .item {
+  margin: 0;
+  flex: 1;
+  width: unset;
+}

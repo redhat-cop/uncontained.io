@@ -1,11 +1,12 @@
 ---
-date: "2018-02-24T00:01:50-05:00"
-title: "External-Jenkins-Integration"
-authors: []
+date: "2018-02-24T01:02:44-05:00"
+title: "External Jenkins Integration"
+authors: ["sabre1041"]
 categories:
-  -
+  - 'Field Guide'
 tags:
-  -
+  - jenkins
+  - openshift
 draft: true
 ---
 = External Jenkins Integration

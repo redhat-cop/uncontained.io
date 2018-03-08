@@ -1,16 +1,19 @@
 ---
+date: "2018-02-24T01:07:30-05:00"
 title: "Installing a Highly Available OpenShift Cluster"
-date: 2018-02-23T19:30:57-05:00
 authors: ["redhat-cop"]
 categories:
-  - Implementation
+  - 'Field Guide'
 tags:
   - openshift
   - ansible
+  - loadbalancing
+  - f5
 draft: true
-
 ---
 = Installing a Highly-Available OpenShift Cluster
+Red Hat Containers & PaaS CoP
+v2.0, 2016-08-18
 :scripts_repo: https://github.com/rhtconsulting/rhc-ose
 :toc: macro
 :toc-title:
@@ -34,6 +37,7 @@ The diagram above depicts the architecture of the environment we will build. It 
 
 OpenShift uses Ansible as it's installation & configuration manager. As we walk through design decisions, we can start capturing this information in an ini style config file that's referred to as the link:http://docs.ansible.com/ansible/intro_inventory.html[_ansible inventory file_]. To start, we'll establish a project skeleton for storing this file and begin populating information specific to the cluster we are designing:
 
+[source,bash]
 ----
 mkdir myorg-openshift
 cd myorg-openshift
@@ -48,6 +52,7 @@ touch c1-ocp.myorg.com/hosts
 
 Now we can establish a base structure for our inventory file. Write this to `c1-ocp.myorg.com/hosts`
 
+[source,ini]
 ----
 # hosts file for c1-ocp.myorg.com
 [OSEv3:children]
@@ -61,6 +66,61 @@ nodes
 [etcd]
 [nodes]
 ----
+
+```
+# hosts file for c1-ocp.myorg.com
+[OSEv3:children]
+masters
+etcd
+nodes
+
+[OSEv3:vars]
+
+[masters]
+[etcd]
+[nodes]
+```
+
+{{< highlight ini >}}
+```
+# hosts file for c1-ocp.myorg.com
+[OSEv3:children]
+masters
+etcd
+nodes
+
+[OSEv3:vars]
+
+[masters]
+[etcd]
+[nodes]
+```
+{{</ highlight>}}
+
+{{< highlight go "linenos=table,hl_lines=8 15-17,linenostart=199" >}}
+// GetTitleFunc returns a func that can be used to transform a string to
+// title case.
+//
+// The supported styles are
+//
+// - "Go" (strings.Title)
+// - "AP" (see https://www.apstylebook.com/)
+// - "Chicago" (see http://www.chicagomanualofstyle.org/home.html)
+//
+// If an unknown or empty style is provided, AP style is what you get.
+func GetTitleFunc(style string) func(s string) string {
+  switch strings.ToLower(style) {
+  case "go":
+    return strings.Title
+  case "chicago":
+    tc := transform.NewTitleConverter(transform.ChicagoStyle)
+    return tc.Title
+  default:
+    tc := transform.NewTitleConverter(transform.APStyle)
+    return tc.Title
+  }
+}
+{{< / highlight >}}
 
 We'll add to this file as we go.
 
@@ -192,7 +252,7 @@ openshift_master_default_subdomain=apps.c1-ocp.myorg.com <3>
 
 === SSL/TLS Certificates
 
-The Ansible config playbook will by default generate a bunch of certificates that will be used by various components. If you have need to customize these certificates, consult link:/guides/custom-certificates[Configuring OpenShift to use Custom Certificates].
+The Ansible config playbook will by default generate a bunch of certificates that will be used by various components. If you have need to customize these certificates, consult link:/guides/openshift-custom-certificates[Configuring OpenShift to use Custom Certificates].
 
 === Load Balancing & HA
 
@@ -207,7 +267,7 @@ To integrate with an external load balancer, at minimum, you'll need to create:
 * A passthrough VIP and back-end pool for the Master hosts
 * A passthrough VIP and back-end pool for the Infrastructure hosts
 
-See our link:/playbooks/installation/load_balancing{outfilesuffix}[Integrating External Loadbalancers] guide for more details on this.
+See our link:/guides/openshift-load-balancing[Integrating External Loadbalancers] guide for more details on this.
 
 ==== Option 2: Use the Integrated HAProxy Balancer
 
@@ -324,17 +384,17 @@ The following sub sections outline the various types of content to consider when
 
 This proposed architecture installs OpenShift via RPM. This is the most common way to install the platform. In this guide, we offer several options for syncing RPM content internally.
 
-* Syncing subscription-manager channels via Satellite 6 (Recommended. link:#satellite-6[See below])
+* Syncing subscription-manager channels via Satellite 6 (Recommended. link:#_satellite_6[See below])
 * Creating and syncing custom channels via Satellite 5 (Coming soon)
-* Creating and syncing a custom RPM server (link:#custom-yum-repos[See below])
+* Creating and syncing a custom RPM server (link:#_custom_yum_repos[See below])
 
 ==== Container Image Content
 
 In addition to RPM content, OpenShift requires the ability to pull container images from an external image registry. In order to bring this in house we suggest the following options to build and sync a Standalone Registry.
 
-* A Simple Bootstrap Registry (link:#simple-docker-registry-docker-distribution[See below.])
+* A Simple Bootstrap Registry (link:#_simple_docker_registry_docker_distribution[See below.])
 * Using the OpenShift Standalone Registry (Coming Soon)
-* Syncing image content to Satellite 6 (link:#syncing-images-using-satellite-6[See below])
+* Syncing image content to Satellite 6 (link:#_syncing_images_using_satellite_6[See below])
 
 ==== Application Content
 
@@ -459,7 +519,7 @@ ssh will require you to accept the new ssh key for the first time into the `~/.s
 
 ==== Configuring Node Host Labels
 
-Labels are simple key/value pairs that are used to organize, group, or select API objects. You can assign labels to node hosts during the Ansible install by configuring the /etc/ansible/hosts file. Labels are useful for determining the placement of pods onto nodes using the scheduler. Other than `region=infra` (discussed in link:#configuring-labels-for-dedicated-infrastructure-nodes[Configuring Labels For Dedicated Infrastructure Nodes]]), the actual label names and values are arbitrary and can be assigned however you see fit per your cluster’s requirements.
+Labels are simple key/value pairs that are used to organize, group, or select API objects. You can assign labels to node hosts during the Ansible install by configuring the /etc/ansible/hosts file. Labels are useful for determining the placement of pods onto nodes using the scheduler. Other than `region=infra` (discussed in link:#_configuring_labels_for_dedicated_infrastructure_nodes[Configuring Labels For Dedicated Infrastructure Nodes]]), the actual label names and values are arbitrary and can be assigned however you see fit per your cluster’s requirements.
 
 To assign labels to a node host during the advanced installation, use the `openshift_node_labels` variable with the desired labels added to the desired node host entry in the `[nodes]` section. For example:
 
@@ -848,7 +908,7 @@ NOTE: The `rhel-7-fast-datapath-rpms` channel is only required for OpenShift Con
 
 === Docker Storage Setup
 
-During the link:#provision-servers[Provision Servers] step of this guide, we provisioned all of our nodes (including the masters) with docker volumes attached as `/dev/vdb`. We'll now install and configure docker to use that volume for all local docker storage.
+During the link:#_provision_servers[Provision Servers] step of this guide, we provisioned all of our nodes (including the masters) with docker volumes attached as `/dev/vdb`. We'll now install and configure docker to use that volume for all local docker storage.
 
 NOTE: There are other options for configuring docker storage. They are outlined in the link:{docs_url}install_config/install/host_preparation.html#configuring-docker-storage[Official Docs].
 
@@ -862,7 +922,7 @@ This file will be consumed by the docker engine once it is installed by Ansible.
 
 === Configure etcd and Node Storage
 
-Just as with the Docker Storage, during the link:#provision-servers[Provision Servers] step of this guide, we provisioned our masters and nodes with an extra volume to be used for `/var/lib/etcd` (for masters) and `/var/lib/origin` (for nodes), attached as `/dev/vdc` in this guide. (Make sure to replace this with the disk available in your environment.) We will now demonstrate the steps involved with using LVM to set up and use this volume for backing storage.
+Just as with the Docker Storage, during the link:#_provision_servers[Provision Servers] step of this guide, we provisioned our masters and nodes with an extra volume to be used for `/var/lib/etcd` (for masters) and `/var/lib/origin` (for nodes), attached as `/dev/vdc` in this guide. (Make sure to replace this with the disk available in your environment.) We will now demonstrate the steps involved with using LVM to set up and use this volume for backing storage.
 
 ----
 ansible -i c1-ocp.myorg.com/hosts etcd -a 'yum -y install lvm2'
@@ -917,7 +977,7 @@ openshift_node_kubelet_args="{'kube-reserved': ['cpu=250m,memory=500M'], <1>
 
 === Validating Pre-requisites
 
-Once we have everything prepped, it's a good idea to run through our link:/playbooks/installation/pre-validation{outfilesuffix}[OpenShift Pre-Install Validation Checklist].
+Once we have everything prepped, it's a good idea to run through our link:/guides/openshift-pre-install[OpenShift Pre-Install Validation Checklist].
 
 Or alternatively, you could just run this link:https://github.com/redhat-cop/openshift-toolkit/tree/master/validation/[pre-install validation script].
 
@@ -935,10 +995,10 @@ The install will run for 15-20 minutes. Good time for a coffee break.
 
 == Validating the Cluster
 
-link:/playbooks/installation/install_validation{outfilesuffix}[Validating an OpenShift Install]
+link:/guides/openshift-validate[Validating an OpenShift Install]
 
 == What's Next?
 
-* link:/playbooks/installation/admin_overview{outfilesuffix}[Overview of OpenShift for Administrators]
-* link:/playbooks/installation/custom_certificates{outfilesuffix}[Configuring OpenShift to use Custom Certificates]
-* link:/playbooks/installation/ldap_integration{outfilesuffix}[Adding LDAP for Authentication]
+* link:/guides/openshift-admin-overview[Overview of OpenShift for Administrators]
+* link:/guides/openshift-custom-certificates[Configuring OpenShift to use Custom Certificates]
+* link:/guides/openshift-ldap-integration[Adding LDAP for Authentication]
