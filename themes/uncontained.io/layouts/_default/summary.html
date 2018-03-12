@@ -1,0 +1,10 @@
+<li class='item'>
+  <header class='item-header'>
+    <h3><a href='{{ .Permalink }}'> {{ .Title }}</a> </h3>
+    <div class="meta other">{{ .Date.Format "Mon, Jan 2, 2006" }} - {{ .FuzzyWordCount }} Words </div>
+  </header>
+  {{ .Summary }}
+  <footer>
+  <a href='{{ .Permalink }}'><nobr>Read more →</nobr></a>
+  </footer>
+</li>

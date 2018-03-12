@@ -1,0 +1,23 @@
+[about]
+title = ""
+description = ""
+logo = "/images/logo.png"
+
+[recent_posts]
+title = "Recent Posts"
+length = 5
+excludeTypes = ["page"]
+
+[guides]
+title = "Recent Guides"
+length = 4
+excludeTypes = ["page","article"]
+
+[social_menu]
+title = ""
+platforms = ["github","facebook","twitter","instagram","email","codepen","gitlab","linkedin","telegram","google_scholar"]
+
+[taxonomy_cloud]
+title = "Topics"
+taxonomy = "tags"
+shuffle = true

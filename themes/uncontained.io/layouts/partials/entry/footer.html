@@ -1,0 +1,14 @@
+{{ if not ( eq .Section "page" ) }}
+<footer class='entry-footer'>
+  <div class='container sep-before'>
+  {{ range $taxonomy, $pages := .Site.Taxonomies }}
+    {{- if not ( eq $taxonomy "authors" ) -}}
+      {{- if ( index $.Params $taxonomy ) -}}
+        {{- $.Scratch.Set "taxonomy" $taxonomy -}}
+        {{- partial "entry/taxonomy-list" $ -}}
+      {{- end -}}
+    {{- end -}}
+  {{ end }}
+  </div>
+</footer>
+{{ end }}

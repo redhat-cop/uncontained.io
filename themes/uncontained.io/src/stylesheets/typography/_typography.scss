@@ -1,0 +1,31 @@
+body,
+button,
+input,
+select,
+optgroup,
+textarea {
+  font-family: $font-family__main;
+  @include font-size($font-size__main);
+  line-height: $line-height__body;
+  color: $color__text-main;
+  word-wrap: break-word;
+}
+
+@include screen($breakpoint-small) {
+  body,
+  button,
+  input,
+  select,
+  optgroup,
+  textarea {
+    @include font-size($font-size__main*1.125);
+  }
+}
+
+@import 'headings';
+
+@import 'copy';
+
+.desc {
+  font-style: italic;
+}
