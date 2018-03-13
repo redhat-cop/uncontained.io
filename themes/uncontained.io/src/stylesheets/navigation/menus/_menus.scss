@@ -1,0 +1,11 @@
+@import 'main';
+
+.main-menu a,
+.widget-social_menu a {
+  color: $color__bluegrey-700;
+
+  &:focus,
+  &:hover {
+    color: $color__bluegrey-900;
+  }
+}

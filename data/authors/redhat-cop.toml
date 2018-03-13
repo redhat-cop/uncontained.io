@@ -1,0 +1,11 @@
+id = "redhat-cop"
+
+[email]
+username = "container-cop"
+host = "redhat.com"
+
+[name]
+display = "Red Hat Communities of Practice"
+
+[social]
+github = "redhat-cop"

@@ -1,0 +1,11 @@
+id = "rht-labs"
+
+[email]
+username = "labs"
+host = "redhat.com"
+
+[name]
+display = "Red Hat Open Innovation Labs"
+
+[social]
+github = "rht-labs"

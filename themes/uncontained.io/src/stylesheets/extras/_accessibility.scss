@@ -1,0 +1,31 @@
+.screen-reader-text {
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  word-wrap: normal !important;
+
+  &:focus {
+    display: block;
+    left: 0.5em;
+    top: 0.5em;
+    clip: auto;
+    clip-path: none;
+    height: auto;
+    width: auto;
+    padding: 1em;
+    border-radius: 0.25em;
+    @include font-size(0.875);
+    font-weight: 700;
+    line-height: normal;
+    text-decoration: none;
+    background: $color__background-screen;
+    color: $color__text-screen;
+    z-index: 100000;
+  }
+}
