@@ -10,48 +10,44 @@ For content that is specific to Red Hat products, see:
 
 Everything written in the guides should fall into one of the following categories.
 
+## Editorial Guides
+
+Editorial guides are long form documents that may have multiple contributors  that dive deep into a specific topic (for example, "Getting Started with Containers" or "Installing a Highly Available OpenShift Cluster"). They may contain visuals and anecdotes to illustrate their point and may provide very opinionated guidance. While meant to be read from beginning to end, they have a table of contents to help the reader quickly skim the content and find a relevant subsection.
+
 ## Article Guides
 
-Article guides dive deep into a specific topic (for example, "Building a community" or "Measuring success"). They may contain visuals and anecdotes to illustrate their point. While meant to be read from beginning to end, they have a table of contents to help the reader quickly skim the content and find a relevant subsection.
+ Article guides are short form documents, opinion pieces, ideas from individuals on a specific topic (for example, "Creating a Custom Role" or "Measuring success"). They may contain visuals and anecdotes to illustrate their point.
 
-## Tutorial Guides
+### Tutorial Guides
 
-Tutorial guides dive deep into a specific topic (for example, "Building a community" or "Measuring success"). They may contain visuals and anecdotes to illustrate their point. While meant to be read from beginning to end, they have a table of contents to help the reader quickly skim the content and find a relevant subsection.
-
-## Link Page Guides
-
-A link page is simply a guide that provides a list of links to great resources around the web. Write down the title of the article, hyperlink it, and number it. It’s helpful to add your own blurb or introduction for each link you provide. Although not necessary, it’s a good way to put your own thought leadership on a topic or add a bit of value to the discussion.
-
-## FAQ
-
-An FAQ tackles a complex topic where a reader is likely coming in with specific questions (for example, "How do I...?" or "Troubleshooting OpenShift"). Whereas article and tutorial guides aim to teach the entire concept, an FAQ respects a reader's desire to jump around, get the information they need, and leave. The table of contents is especially important in an FAQ, because the page isn't meant to be read from beginning to end. FAQs might also be longer than a concept guide, because of the jump-around navigation.
+A tutorial is a specific type of article that has a specific expected content structure.
 
 ## Design Elements
 
 If you're writing an article or tutorial guide, here are some smaller design elements that enrich the content experience. We use them to draw the reader's attention and break up walls of text; therefore, they should all get some sort of visual treatment.
 
-## Pull quote
+### Pull quote
 
 We use quotes in the guide to illustrate a point through an anecdote. Pull quotes should highlight real people and their experiences.
 
-## Image
+### Image
 
 Images help visually illustrate a point. Some images are instructive, such as a graph. Other images are visual, such as a webpage screenshot. We should have lots of these.
 
-## Data vignette
+### Data vignette
 
 Whereas pull quotes and images help ground ideas in something specific and concrete, data vignettes help connect ideas to bigger systems.
 
 Data vignettes are limited so as not to overwhelm, but contain just enough information to help readers understand why they should pay attention to a certain idea.
 
-## Historical vignette
+### Historical vignette
 
 Historical vignettes are fun anecdotes that keep a reader's attention. They make community members the heroes of the story, and help pass down cultural knowledge.
 
-## Content taxonomy tags
+### Content taxonomy tags
 
 Content taxonomy tags are categories or classifications (a term or phrase) that is added to a web publication that relates the specific publication to other contents that are similarly tagged.
 
-## Tag clouds
+### Tag clouds
 
 A tag cloud (word cloud, or weighted list in visual design) is a visual representation of text data, typically used to depict keyword metadata (tags) on websites, or to visualize free form text. Tags are usually single words, and the importance of each tag is shown with font size or color.

@@ -15,7 +15,7 @@ We've put together the following guidelines to help you figure out where you can
 0. [Community](#community)
 
 ## Types of contributions we're looking for
-First and foremost, this project is a forum to discuss DevOps technical practices and container automation approaches using Red Hat commercial open source products, then document them in a guide when we've found consensus. Your first contribution might be starting a new conversation, or adding to an existing conversation, around best practices. You can do so under our [GitHub issues](https://github.com/redhat-cop/uncontained.io/issues) or [Trello board cards](https://trello.com/b/JMaxIjCy/cant-contain-this).
+This project is an attempt at establish and document some guiding principles and, dare we say it, best practices in the open source emerging technology space. Currently that space, as we see it, is predominantly made up of technologies that enable DevOps practices, such as "Cloud" (API-automated Infrastructure), CI/CD tooling, container technologies, microservices frameworks, and probably more. This project was started by a community of thought leaders from Red Hat so if it initially appears as if this site is only about Red Hat technologies, it's not intended to be, its just impassioned people writing about what they know.
 
 There are also many ways you can directly contribute to the guides (in descending order of need):
 
@@ -49,9 +49,41 @@ This site is written in asciidoc format and is built using the [Asciidoctor plug
 
 ## Setting up your environment
 
-This site is powered by [Jekyll](https://jekyllrb.com/). Running it on your local machine requires a working [Ruby](https://www.ruby-lang.org/en/) installation with [Bundler](http://bundler.io/). We recommend using the docker container method (for obvious reasons) instead of your native operating system, but you may choose either environment setup.  
+This site is powered by [Hugo](https://gohugo.io/). Running it on your local machine only requires a working [Hugo](https://gohugo.io/getting-started/installing) installation, either natively or a docker container. We recommend using the docker container method (for obvious reasons) instead of your native operating system, but you may choose either environment setup.
 
-### Docker QuickStart Guide
+
+### Installing Asciidoc and Asciidoctor on native OS
+
+<b>Fedora / RHEL</b>
+
+`Asciidoc` is installed through the standard repos. `Asciidoctor` can be installed using the gem command.
+
+```
+yum install asciidoc
+gem install asciidoctor
+```
+
+<b>Mac OS</b>
+
+`Asciidoc` and `Asciidoctor` can be installed easily using Homebrew.
+
+```
+brew install asciidoc
+brew install asciidoctor
+```
+
+For more detailed installation information, visit the following installation guides:
+
+- [Asciidoc](http://asciidoc.org/INSTALL.html)
+- [Asciidoctor](http://asciidoctor.org/docs/install-toolchain/)
+
+
+### Installing Hugo on native OS
+
+The best guide for [installing Hugo](https://gohugo.io/getting-started/installing/) is on their website.
+
+
+### Hugo Docker Container QuickStart Guide
 
 1. Clone git repositories
 ```
@@ -60,20 +92,20 @@ git clone https://github.com/redhat-cop/openshift-playbooks.git
 2. Building the image
 ```
 cd openshift-playbooks/container-images/local-builder
-docker build -t redhatcop/jekyll-local-builder:latest .
+docker build -t redhatcop/hugo-local-builder:latest .
 ```
 2. Start Site Builder Container
 ```
 cd openshift-playbooks
 docker run \
   -u `id -u` -it \
-  -v $PWD/:/home/jekyll/src/:Z \
+  -v $PWD/:/home/hugo/src/:Z \
   -p 4000:4000 \
-  redhatcop/jekyll-local-builder
+  redhatcop/hugo-local-builder
 ```
 3. Launch browser and navigate to `http://localhost:4000`
 
-### RHEL/CentOS/Fedora (or derivatives) Quickstart Guide
+### RHEL / CentOS / Fedora (or derivatives) Quickstart Guide
 
 1. Install necessary packages.
 ```
