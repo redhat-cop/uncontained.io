@@ -83,9 +83,33 @@ For more detailed installation information, visit the following installation gui
 The best guide for [installing Hugo](https://gohugo.io/getting-started/installing/) is on their website.
 
 
-### Hugo Docker Container QuickStart Guide
+### Native Hugo Environment QuickStart Guide
 
-1. Clone git repositories
+Uncontained.io is built with Hugo and the Minimo theme. To run it locally:
+
+1. Clone git repository
+```
+git clone https://github.com/redhat-cop/uncontained.io.git
+```
+2. Navigate to the top level of the repository
+```
+cd uncontained.io.git
+```
+3. Run the site locally
+```
+hugo server
+```
+Alternately, add the `-D` switch to preview drafts
+```
+hugo server -D
+```
+
+
+### Containerized Hugo Environment QuickStart Guide
+
+Uncontained.io is built with Hugo and the Minimo theme. To run it in a container:
+
+1. Clone git repository
 ```
 git clone https://github.com/redhat-cop/openshift-playbooks.git
 ```
@@ -100,64 +124,25 @@ cd openshift-playbooks
 docker run \
   -u `id -u` -it \
   -v $PWD/:/home/hugo/src/:Z \
-  -p 4000:4000 \
+  -p 1313:1313 \
   redhatcop/hugo-local-builder
 ```
-3. Launch browser and navigate to `http://localhost:4000`
-
-### RHEL / CentOS / Fedora (or derivatives) Quickstart Guide
-
-1. Install necessary packages.
-```
-sudo yum install -y libyaml-devel autoconf gcc-c++ readline-devel zlib-devel libffi-devel openssl-devel automake libtool bison sqlite-devel
-```
-2. Install Node.js Version Manager (nvm -- see https://github.com/creationix/nvm)
-```
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash
-```
-3. [Install RVM](https://rvm.io/)
-```
-NOTE: For `gnome-terminal` users, you'll need to do this [additional step](https://rvm.io/integration/gnome-terminal)
-```
-4. Install and use Ruby 2.4
-```
-rvm install 2.4.0
-rvm use 2.4.0
-```
-5. Install and set up RubyGems
-```
-rvm rubygems latest
-```
-6. Install bundler
-```
-gem install bundler
-```
-7. Install project dependencies
-```
-bundle install
-```
-8. Build site source
-```
-bundle exec jekyll build
-```
-9. Run local Jekyll server to view site
-```
-bundle exec jekyll serve
-```
-10. Launch browser and navigate to `http://localhost:4000`
+3. Launch browser and navigate to `http://localhost:1313`
 
 
-### Other OSs / Mac / Windows Quickstart Guide
+### Migrating Content from OpenShift-Playbooks
 
-1. Install and configure Ruby with Bundler for your operating system
-2. Once you have that set up, run:
+A migration script can be used to translate documents from the `openshift-playbooks` repo.
 
+Usage:
 ```
-  script/bootstrap
-  script/server
+./migrate-doc.sh [path/playbook-doc] [path/uncontained-doc]
 ```
 
-…and open `http://localhost:4000` in your web browser.
+Example:
+```
+./migrate-doc.sh continuous_delivery/external-jenkins-integration.adoc guides/external-jenkins-integration.adoc
+```
 
 ## Contribution review process
 
