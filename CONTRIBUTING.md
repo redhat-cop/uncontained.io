@@ -107,20 +107,22 @@ hugo server -D
 
 ### Containerized Hugo Environment QuickStart Guide
 
+*Note:* This builder isn't yet available. See issue #10.
+
 Uncontained.io is built with Hugo and the Minimo theme. To run it in a container:
 
 1. Clone git repository
 ```
-git clone https://github.com/redhat-cop/openshift-playbooks.git
+git clone https://github.com/redhat-cop/uncontained.io.git
 ```
 2. Building the image
 ```
-cd openshift-playbooks/container-images/local-builder
+cd uncontained.io/container-images/local-builder
 docker build -t redhatcop/hugo-local-builder:latest .
 ```
 2. Start Site Builder Container
 ```
-cd openshift-playbooks
+cd uncontained.io
 docker run \
   -u `id -u` -it \
   -v $PWD/:/home/hugo/src/:Z \
