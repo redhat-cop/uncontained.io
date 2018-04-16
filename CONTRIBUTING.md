@@ -107,6 +107,8 @@ hugo server -D
 
 ### Containerized Hugo Environment QuickStart Guide
 
+*Note:* This builder isn't yet available. See issue #10.
+
 Uncontained.io is built with Hugo and the Minimo theme. To run it in a container:
 
 1. Clone git repository
