@@ -1,12 +1,11 @@
-name = "Blank"
+name = "uncontained.io Theme"
 license = "MIT"
-licenselink = "https://github.com/vimux/blank/blob/master/LICENSE.md"
-description = "Starter Hugo theme for developers."
-homepage = "https://github.com/vimux/blank/"
-tags = ["blog", "plain", "blank", "starter"]
+licenselink = "https://github.com/redhat-cop/uncontained.io/blob/master/themes/uncontained.io/LICENSE.md"
+description = "Hugo Theme for uncontained.io. Based on Blank theme by Vimux."
+homepage = "http://uncontained.io/"
 features = ["blog"]
 min_version = 0.19
 
 [author]
-  name = "Vimux"
-  homepage = "https://github.com/vimux"
+  name = "Red Hat Communities of Practice"
+  homepage = "https://github.com/redhat-cop/"

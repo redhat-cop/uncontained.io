@@ -1,0 +1,12 @@
+{{ partial "header.html" . }}
+	<main>
+		<h1>
+      {{- .Site.Params.error404.title | default .Title -}}
+    </h1>
+    <p>{{ .Site.Params.error404.message }}</p>
+    <p>
+      <a href="{{ .Site.BaseURL }}">{{ .Site.Params.error404.homeText }}</a>
+    </p>
+	</main>
+{{ partial "sidebar.html" . }}
+{{ partial "footer.html" . }}
