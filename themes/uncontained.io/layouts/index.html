@@ -1,20 +1,10 @@
-{{ partial "header" . }}
-
-{{ if .Content }}
-<div class='entry'>
-  {{ partial "entry/cover" . }}
-  {{ partial "entry/content" . }}
-</div>
-{{ end }}
-
-{{ if gt ( len .Site.Params.widgets.homepage ) 0 }}
-<div class='home-widgets'>
-  <div class='container sep-before'>
-    {{- range .Site.Params.widgets.homepage -}}
-      {{- partial ( print "widgets/" . ) $ -}}
-    {{- end -}}
-  </div>
-</div>
-{{ end }}
-
-{{ partial "footer" . }}
+{{ partial "header.html" . }}
+	<main>
+		{{ $paginator := .Paginate (where .Site.Pages "Type" "post") }}
+		{{ range $paginator.Pages }}
+			{{ partial "summary.html" . }}
+		{{ end }}
+		{{ partial "pagination.html" . }}
+	</main>
+{{ partial "sidebar.html" . }}
+{{ partial "footer.html" . }}

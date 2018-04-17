@@ -1,36 +1,12 @@
-name = "Minimo"
+name = "Blank"
 license = "MIT"
-licenselink = "https://github.com/MunifTanjim/minimo/blob/master/LICENSE"
-description = "Minimalist theme for Hugo"
-homepage = "https://minimo.netlify.com"
-tags = [
-  "blog",
-  "minimal",
-  "minimalist",
-  "responsive"
-]
-features = [
-  "accessibility",
-  "analytics",
-  "comments",
-  "cover-image",
-  "double-column",
-  "entry-navigation",
-  "favicon",
-  "multilingual",
-  "multi-author",
-  "opengraph",
-  "pagination",
-  "shortcodes",
-  "sidebar",
-  "single-column",
-  "social-menu",
-  "syntax-highlighting",
-  "table-of-contents",
-  "widgets"
-]
-min_version = 0.32
+licenselink = "https://github.com/vimux/blank/blob/master/LICENSE.md"
+description = "Starter Hugo theme for developers."
+homepage = "https://github.com/vimux/blank/"
+tags = ["blog", "plain", "blank", "starter"]
+features = ["blog"]
+min_version = 0.19
 
 [author]
-  name = "Munif Tanjim"
-  homepage = "https://muniftanjim.com"
+  name = "Vimux"
+  homepage = "https://github.com/vimux"
