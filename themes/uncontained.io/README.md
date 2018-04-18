@@ -35,7 +35,7 @@ hugo
 
 We are using a pared-down version of [Bootstrap 4](https://getbootstrap.com/), customized as per the [theming instructions](https://getbootstrap.com/docs/4.0/getting-started/theming/). We've left out parts of Bootstrap CSS and all of Bootstrap JS. To see which Bootstrap modules we're using, see `style.scss`. To see all of the Bootstrap modules that exist, see [bootstrap.scss](https://github.com/twbs/bootstrap/blob/v4-dev/scss/bootstrap.scss).
 
-## SCSS Code Standards
+## Sass/CSS Code Standards
 
 In lieu of a formal code standards, here are some general guidelines:
 
@@ -49,4 +49,4 @@ In lieu of a formal code standards, here are some general guidelines:
 
 - [Bootstrap - Approach](https://getbootstrap.com/docs/4.1/extend/approach/)
 - [Stop the Cascade](http://markdotto.com/2012/03/02/stop-the-cascade/)
-- [STAT's SASS style guide](https://github.com/statnews/boilermaker/blob/master/sass.md)
+- [STAT's Sass/CSS style guide](https://github.com/statnews/boilermaker/blob/master/sass.md)
