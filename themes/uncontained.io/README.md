@@ -37,7 +37,7 @@ We are using a pared-down version of [Bootstrap 4](https://getbootstrap.com/), c
 
 ## Sass/CSS Code Standards
 
-In lieu of a formal code standards, here are some general guidelines:
+In lieu of formal code standards, here are some general guidelines:
 
 - Minimize selector specificity.
 - Use simple, meaningful CSS class names. Use only lowercase letters and dashes (no underscores, double dashes, etc.).
