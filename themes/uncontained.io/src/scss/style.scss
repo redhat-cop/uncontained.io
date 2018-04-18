@@ -17,12 +17,18 @@
 @import "../../node_modules/bootstrap/scss/grid";
 @import "../../node_modules/bootstrap/scss/tables";
 @import "../../node_modules/bootstrap/scss/buttons";
-@import "../../node_modules/bootstrap/scss/nav";
-@import "../../node_modules/bootstrap/scss/navbar";
+// @import "../../node_modules/bootstrap/scss/nav";
+// @import "../../node_modules/bootstrap/scss/navbar";
+@import "../../node_modules/bootstrap/scss/card";
 @import "../../node_modules/bootstrap/scss/pagination";
 @import "../../node_modules/bootstrap/scss/media";
 @import "../../node_modules/bootstrap/scss/print";
 
 // Uncontained.io styles
+@import 'functions';
 @import 'base';
 @import 'typography';
+@import 'header-main';
+@import 'footer-main';
+@import 'contribute';
+@import 'summary';

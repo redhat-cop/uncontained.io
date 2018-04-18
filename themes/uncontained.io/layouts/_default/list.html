@@ -1,5 +1,5 @@
 {{ partial "header.html" . }}
-	<main>
+	<main class="container">
 		{{ if .Content }}
 		<div>
 			{{ .Content }}
@@ -9,6 +9,6 @@
 			{{ partial "summary.html" . }}
 		{{ end }}
 		{{ partial "pagination.html" . }}
+		{{ partial "sidebar.html" . }}
 	</main>
-{{ partial "sidebar.html" . }}
 {{ partial "footer.html" . }}

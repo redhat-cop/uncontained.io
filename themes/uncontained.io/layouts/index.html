@@ -1,9 +1,15 @@
 {{ partial "header.html" . }}
-	<main>
-		{{ range .Paginator.Pages }}
-			{{ partial "summary.html" . }}
-		{{ end }}
-		{{ partial "pagination.html" . }}
+	<main class="container">
+		<div class="row">
+			<div class="col-sm-10">
+				{{ range .Paginator.Pages }}
+					{{ partial "summary.html" . }}
+				{{ end }}
+				{{ partial "pagination.html" . }}
+				{{ partial "contribute.html" . }}
+				{{ partial "sidebar.html" . }}
+				
+			</div>
+		</div>
 	</main>
-{{ partial "sidebar.html" . }}
 {{ partial "footer.html" . }}

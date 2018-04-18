@@ -1,5 +1,5 @@
 {{ partial "header.html" . }}
-	<main>
+	<main class="container">
 		<h1>
       {{- .Site.Params.error404.title | default .Title -}}
     </h1>
@@ -7,6 +7,6 @@
     <p>
       <a href="{{ .Site.BaseURL }}">{{ .Site.Params.error404.homeText }}</a>
     </p>
+		{{ partial "sidebar.html" . }}
 	</main>
-{{ partial "sidebar.html" . }}
 {{ partial "footer.html" . }}

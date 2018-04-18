@@ -1,0 +1,9 @@
+.footer-main {
+  border-top: 1px solid theme-color("light");
+  padding: 10px;
+  margin-top: 30px;
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}

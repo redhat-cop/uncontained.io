@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>{{ .Title }}</title>
+	<title>{{ .Title }} | {{ .Site.Title }}</title>
 	{{ with .Site.Params.description }}<meta name="description" content="{{ . }}">{{ end }}
 	{{ with .Site.Params.author }}<meta name="author" content="{{ . }}">{{ end }}
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
@@ -13,13 +13,16 @@
 	{{ .Hugo.Generator }}
 </head>
 <body>
-	<header>
-		<a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
-		<nav>
-			<ul>
-				{{ range .Site.Menus.main }}
-				<li><a href="{{ .URL | relURL }}">{{ .Name }}</a></li>
-				{{ end }}
-			</ul>
-		</nav>
+	<header class="header-main">
+		<div class="container">
+			<a href="{{ .Site.BaseURL }}" class="logotype">{{ .Site.Title }}</a>
+			<!-- Hide the main menu for now -->
+			<!-- <nav>
+				<ul>
+					{{ range .Site.Menus.main }}
+					<li><a href="{{ .URL | relURL }}">{{ .Name }}</a></li>
+					{{ end }}
+				</ul>
+			</nav> -->
+		</div>
 	</header>
