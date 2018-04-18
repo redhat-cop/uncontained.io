@@ -6,7 +6,7 @@ Based on the [Blank starter theme](http://themes.gohugo.io/theme/blank/)
 
 Follow the instructions in [setting up your environment](https://github.com/redhat-cop/uncontained.io/blob/master/CONTRIBUTING.md#setting-up-your-environment) to get up and running with Hugo and the tools we use to build uncontained.io.
 
-In the root of this repository, run `hugo serve -D` to start the Hugo server.
+In the root of this repository, run `hugo serve -D --noHTTPCache` to start the Hugo server.
 
 Then, go to `themes/uncontained.io` and run these commands:
 ```

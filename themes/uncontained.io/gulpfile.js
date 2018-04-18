@@ -3,9 +3,13 @@ var sourcemaps = require('gulp-sourcemaps');
 var sass = require('gulp-sass');
 
 gulp.task('sass', function (done) {
+  let sassOpts = {
+    outputStyle: 'compressed'
+  };
+
   return gulp.src('./src/scss/**/*.scss')
     .pipe(sourcemaps.init())
-    .pipe(sass().on('error', sass.logError))
+    .pipe(sass(sassOpts).on('error', sass.logError))
     .pipe(sourcemaps.write('./maps'))
     .pipe(gulp.dest('./static/dist/css'));
 });
