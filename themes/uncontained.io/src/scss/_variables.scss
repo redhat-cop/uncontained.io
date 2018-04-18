@@ -1,3 +1,5 @@
+// =Colors
+
 $theme-colors: (
   "primary": #0088ce,
   "secondary": #666666,
@@ -5,8 +7,14 @@ $theme-colors: (
   "dark": #000000
 );
 
-$font-family-sans-serif: 'Source Sans Pro', sans-serif;
+// =Options
 
+$enable-rounded: false;
+$enable-shadows: false;
+
+// =Typography
+
+$font-family-sans-serif: 'Source Sans Pro', sans-serif;
 $body-color: #000;
 
 $link-color: #00aae5;

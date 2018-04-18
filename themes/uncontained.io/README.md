@@ -30,3 +30,7 @@ npm run build
 cd ../..
 hugo
 ```
+
+## CSS Framework
+
+We are using a pared-down version of [Bootstrap 4](https://getbootstrap.com/), customized as per the [theming instructions](https://getbootstrap.com/docs/4.0/getting-started/theming/). We've left out parts of Bootstrap CSS and all of Bootstrap JS. To see which Bootstrap modules we're using, see `style.scss`. To see all of the Bootstrap modules that exist, see [bootstrap.scss](https://github.com/twbs/bootstrap/blob/v4-dev/scss/bootstrap.scss).
