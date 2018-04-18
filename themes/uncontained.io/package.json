@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "gulp watch",
-    "build": "gulp"
+    "build": "gulp",
+    "start": "gulp watch"
   },
   "repository": {
     "type": "git",
@@ -15,11 +16,11 @@
   "author": "Red Hat Communities of Practice",
   "license": "MIT",
   "devDependencies": {
-    "gulp": "^4.0.0"
-  },
-  "dependencies": {
-    "bootstrap": "^4.1.0",
+    "gulp": "^4.0.0",
     "gulp-sass": "^4.0.1",
     "gulp-sourcemaps": "^2.6.4"
+  },
+  "dependencies": {
+    "bootstrap": "^4.1.0"
   }
 }
