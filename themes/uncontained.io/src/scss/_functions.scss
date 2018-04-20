@@ -1,0 +1,11 @@
+// http://www.stubbornella.org/content/2013/07/01/easy-peasy-rem-conversion-with-sass/
+
+@function calculateRem($size) {
+  $remSize: $size / 18px;
+  @return #{$remSize}rem;
+
+}
+@mixin fontSize($size) {
+  font-size: $size; //Fallback in px
+  font-size: calculateRem($size);
+}

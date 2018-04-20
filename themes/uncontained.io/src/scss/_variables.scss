@@ -1,0 +1,22 @@
+// =Colors
+
+$theme-colors: (
+  "primary": #0088ce,
+  "secondary": #666666,
+  "light": #dcddde,
+  "dark": #000000
+);
+
+// =Options
+
+$enable-rounded: false;
+$enable-shadows: false;
+
+// =Typography
+
+$font-family-sans-serif: 'Source Sans Pro', sans-serif;
+
+$body-color: #000;
+$link-color: #00aae5;
+$link-hover-color: theme-color("primary");
+$headings-font-weight: 600;

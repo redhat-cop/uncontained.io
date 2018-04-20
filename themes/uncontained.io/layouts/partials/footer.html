@@ -1,19 +1,10 @@
-      </main>
-
-      <footer id='footer' class='footer'>
-        <div class='container sep-before'>
-          {{ partial "nav/menus/social" . }}
-          {{ partial "footer/copyright" . }}
-        </div>
-      </footer>
-
-    </div>
-  </div>
-
-  {{- partial "sidebar/overlay" . -}}
-
-  {{- partial "footer/scripts" . -}}
-
+	<footer class="footer-main">
+		<div class="container">
+			<p>
+				<!-- TODO: Make this text configurable -->
+				&copy; {{ now.Year }} the uncontained.io contributors. Content licensed under <a href="https://github.com/redhat-cop/uncontained.io/blob/master/LICENSE">Creative Commons 4.0</a>.
+			</p>
+		</div>
+	</footer>
 </body>
-
 </html>

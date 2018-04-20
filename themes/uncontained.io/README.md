@@ -1,45 +1,52 @@
-[![GitHub release](https://img.shields.io/github/release/MunifTanjim/minimo.svg?style=for-the-badge)](https://github.com/MunifTanjim/minimo/releases/latest)
-[![GitHub Release Date](https://img.shields.io/github/release-date/MunifTanjim/minimo.svg?style=for-the-badge)](https://github.com/MunifTanjim/minimo/releases)
-[![license](https://img.shields.io/github/license/MunifTanjim/minimo.svg?style=for-the-badge)](https://github.com/MunifTanjim/minimo/blob/master/LICENSE)
+# Uncontained.io theme
 
-![Minimo – Minimalist theme for Hugo](https://raw.githubusercontent.com/MunifTanjim/minimo/master/images/tn.png)
+Based on the [Blank starter theme](http://themes.gohugo.io/theme/blank/)
 
-# Minimo
+## Developing
 
-Minimalist theme for Hugo.
+Follow the instructions in [setting up your environment](https://github.com/redhat-cop/uncontained.io/blob/master/CONTRIBUTING.md#setting-up-your-environment) to get up and running with Hugo and the tools we use to build uncontained.io.
 
-## Documentation
+In the root of this repository, run `hugo serve -D --noHTTPCache` to start the Hugo server.
 
-Check the [Minimo Documentation](https://minimo.netlify.com/docs/) for detailed documentation of Minimo.
+Then, go to `themes/uncontained.io` and run these commands:
+```
+npm install
+npm run watch
+```
 
-#### Getting Up & Running
+Now, when you edit a file in `src`, the following will happen:
 
-Follow these guides for getting your site up & running with Minimo:
+1. Gulp will see that a file has changed
+2. Gulp will compile the source files and output the results to `static/dist`
+3. Hugo will see that files in `static` have changed
+4. Hugo will auto-reload the page in your browser.
 
-- **Install Minimo**: [Installation Guide](https://minimo.netlify.com/docs/installation)
-- **Setup Authors**: [Authors Setup Guide](https://minimo.netlify.com/docs/authors)
-- **Configure Widgets**: [Widgets Documentation](https://minimo.netlify.com/docs/widgets)
+## Building
 
-#### Updating Minimo
+To build the site:
+```
+cd themes/uncontained.io
+npm run build
+cd ../..
+hugo
+```
 
-Follow the [**Updating Guide**](https://minimo.netlify.com/docs/updating) to update Minimo to its latest version.
+## CSS Framework
 
-After updating Minimo, always check that your site's **`config.toml`** file matches the latest [**`config.toml`** file](https://minimo.netlify.com/docs/config-file) format.
+We are using a pared-down version of [Bootstrap 4](https://getbootstrap.com/), customized as per the [theming instructions](https://getbootstrap.com/docs/4.0/getting-started/theming/). We've left out parts of Bootstrap CSS and all of Bootstrap JS. To see which Bootstrap modules we're using, see `style.scss`. To see all of the Bootstrap modules that exist, see [bootstrap.scss](https://github.com/twbs/bootstrap/blob/v4-dev/scss/bootstrap.scss).
 
-A good idea is to double check all the [Configuration settings](https://minimo.netlify.com/docs/installation#configuration-for-minimo) of Minimo.
+## Sass/CSS Code Standards
 
-## Development
+In lieu of formal code standards, here are some general guidelines:
 
-If you find a bug or want to request a new feature, feel free to open an issue.
+- Minimize selector specificity.
+- Use simple, meaningful CSS class names. Use only lowercase letters and dashes (no underscores, double dashes, etc.).
+- Use variables for colors and font names.
+- Prefer removing styles to overriding them.
+- Prefer configuring the framework to overriding it.
 
-## Changelog
+### Resources
 
-[Changelog for Minimo](https://github.com/MunifTanjim/minimo/blob/master/CHANGELOG.md)
-
-## License
-
-Minimo is licensed under the MIT License. Check the [LICENSE](https://github.com/MunifTanjim/minimo/blob/master/LICENSE) file for details.
-
-The following resources are included/used in the theme:
-
-- [Feather](https://feather.netlify.com/) by Cole Bemis - Licensed under the [MIT License](https://github.com/colebemis/feather/blob/master/LICENSE).
+- [Bootstrap - Approach](https://getbootstrap.com/docs/4.1/extend/approach/)
+- [Stop the Cascade](http://markdotto.com/2012/03/02/stop-the-cascade/)
+- [STAT's Sass/CSS style guide](https://github.com/statnews/boilermaker/blob/master/sass.md)

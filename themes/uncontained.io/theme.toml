@@ -1,36 +1,11 @@
-name = "Minimo"
+name = "uncontained.io Theme"
 license = "MIT"
-licenselink = "https://github.com/MunifTanjim/minimo/blob/master/LICENSE"
-description = "Minimalist theme for Hugo"
-homepage = "https://minimo.netlify.com"
-tags = [
-  "blog",
-  "minimal",
-  "minimalist",
-  "responsive"
-]
-features = [
-  "accessibility",
-  "analytics",
-  "comments",
-  "cover-image",
-  "double-column",
-  "entry-navigation",
-  "favicon",
-  "multilingual",
-  "multi-author",
-  "opengraph",
-  "pagination",
-  "shortcodes",
-  "sidebar",
-  "single-column",
-  "social-menu",
-  "syntax-highlighting",
-  "table-of-contents",
-  "widgets"
-]
-min_version = 0.32
+licenselink = "https://github.com/redhat-cop/uncontained.io/blob/master/themes/uncontained.io/LICENSE.md"
+description = "Hugo Theme for uncontained.io. Based on Blank theme by Vimux."
+homepage = "http://uncontained.io/"
+features = ["blog"]
+min_version = 0.19
 
 [author]
-  name = "Munif Tanjim"
-  homepage = "https://muniftanjim.com"
+  name = "Red Hat Communities of Practice"
+  homepage = "https://redhat-cop.github.io"

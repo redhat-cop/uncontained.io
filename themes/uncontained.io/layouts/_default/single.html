@@ -1,13 +1,23 @@
-{{ partial "header" . }}
-
-<article lang='{{ .Params.lang | default .Lang }}' class='entry'>
-  {{ partial "entry/header" . }}
-  {{ partial "entry/cover" . }}
-  {{ partial "entry/toc" . }}
-  {{ partial "entry/content" . }}
-  {{ partial "entry/footer" . }}
-</article>
-{{ partial "nav/entry_nav" . }}
-{{ partial "entry/comments" . }}
-
-{{ partial "footer" . }}
+{{ partial "header.html" . }}
+	<main class="container">
+		<div class="row">
+			<article class="col-sm-10">
+				<h1>{{ .Title }}</h1>
+				<time>{{ .Date.Format "02.01.2006 15:04" }}</time>
+				<div>
+					{{ .Content }}
+				</div>
+				<div>
+					<ul id="tags">
+						{{ range .Params.tags }}
+						<li><a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a> </li>
+						{{ end }}
+					</ul>
+				</div>
+				<div>
+					{{ template "_internal/disqus.html" . }}
+				</div>
+			</article>
+		</div>
+	</main>
+{{ partial "footer.html" . }}

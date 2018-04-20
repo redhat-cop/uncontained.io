@@ -1,0 +1,21 @@
+.header-main {
+  border-bottom: 1px solid theme-color("light");
+  padding: 10px;
+  margin-bottom: 30px;
+}
+
+.logotype {
+  @include fontSize(25px);
+  font-weight: 700;
+  color: $black;
+  &:hover, &:focus {
+    color: $black;
+    text-decoration: none;
+  }
+}
+
+@include media-breakpoint-up(sm) {
+  .logotype {
+    @include fontSize(50px);
+  }
+}

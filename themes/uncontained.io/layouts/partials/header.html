@@ -1,29 +1,28 @@
 <!DOCTYPE html>
-<html lang='{{ .Site.Language.Lang }}'>
-
-{{ partial "head/head" . }}
-
-<body class='{{ partial "header/bodyClasses" . }}'>
-
-  <div class='site'>
-
-    {{ partial "sidebar/sidebar" . }}
-
-    <div class='main'>
-
-      {{ partial "nav/menus/main" . }}
-
-      <header id='header' class='header site-header'>
-        <div class='container sep-after'>
-          <div class='header-info'>
-            {{- if eq .Kind "home" -}}
-              <h1 class='site-title title'>{{ .Site.Title }}</h1>
-            {{- else -}}
-              <p class='site-title title'>{{ .Site.Title }}</p>
-            {{- end -}}
-            <p class='desc site-desc'>{{ .Site.Params.info.description }}</p>
-          </div>
-        </div>
-      </header>
-
-      <main id='content'>
+<html lang="{{ .Site.LanguageCode | default "en-us" }}">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>{{ .Title }} | {{ .Site.Title }}</title>
+	{{ with .Site.Params.description }}<meta name="description" content="{{ . }}">{{ end }}
+	{{ with .Site.Params.author }}<meta name="author" content="{{ . }}">{{ end }}
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+	<link rel="stylesheet" href="{{ .Site.BaseURL }}dist/css/style.css">
+	{{ if .RSSLink -}}<link href="{{ .RSSLink }}" rel="feed" type="application/rss+xml" title="{{ .Site.Title }}">{{- end }}
+	{{ .Hugo.Generator }}
+</head>
+<body>
+	<header class="header-main">
+		<div class="container">
+			<a href="{{ .Site.BaseURL }}" class="logotype">{{ .Site.Title }}</a>
+			<!-- Hide the main menu for now -->
+			<!-- <nav>
+				<ul>
+					{{ range .Site.Menus.main }}
+					<li><a href="{{ .URL | relURL }}">{{ .Name }}</a></li>
+					{{ end }}
+				</ul>
+			</nav> -->
+		</div>
+	</header>

@@ -1,26 +1,11 @@
-{{ partial "header" . }}
-
-<div class='entry'>
-  <div class='container entry-content'>
-    <span class='screen-reader-text'>
-      {{- .Site.Params.info.title404 | default .Title -}}
-    </span>
-    <figure class='gopher'>
-      <a href='{{ "/" | relLangURL }}'>
-        <img src='{{ ( .Site.Params.assets.gopher | default "assets/gopher.png" ) | relURL }}' alt='{{ i18n "gopher" }}'/>
-        <span class='screen-reader-text'>
-          {{- i18n "goHome" -}}
-        </span>
-      </a>
-      <figcaption>
-        <h1 class='title'>
-          <a href='{{ "/" | relLangURL }}'>
-            {{- .Site.Params.info.title404 | default .Title -}}
-          </a>
-        </h1>
-      </figcaption>
-    </figure>
-  </div>
-</div>
-
-{{ partial "footer" . }}
+{{ partial "header.html" . }}
+	<main class="container">
+		<h1>
+      {{- .Site.Params.error404.title | default .Title -}}
+    </h1>
+    <p>{{ .Site.Params.error404.message }}</p>
+    <p>
+      <a href="{{ .Site.BaseURL }}">{{ .Site.Params.error404.homeText }}</a>
+    </p>
+	</main>
+{{ partial "footer.html" . }}
