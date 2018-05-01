@@ -1,5 +1,5 @@
 ---
-date: "2018-02-24T01:07:30-05:00"
+date: "2016-08-18T01:07:30-05:00"
 title: "Installing a Highly Available OpenShift Cluster"
 authors: ["redhat-cop"]
 categories:
@@ -9,7 +9,7 @@ tags:
   - ansible
   - loadbalancing
   - f5
-draft: true
+draft: false
 ---
 = Installing a Highly-Available OpenShift Cluster
 Red Hat Containers & PaaS CoP
@@ -252,7 +252,7 @@ openshift_master_default_subdomain=apps.c1-ocp.myorg.com <3>
 
 === SSL/TLS Certificates
 
-The Ansible config playbook will by default generate a bunch of certificates that will be used by various components. If you have need to customize these certificates, consult link:/guides/openshift-custom-certificates[Configuring OpenShift to use Custom Certificates].
+The Ansible config playbook will by default generate a bunch of certificates that will be used by various components. If you have need to customize these certificates, consult link:/articles/openshift-custom-certificates[Configuring OpenShift to use Custom Certificates].
 
 === Load Balancing & HA
 
@@ -1000,5 +1000,5 @@ link:/guides/openshift-validate[Validating an OpenShift Install]
 == What's Next?
 
 * link:/guides/openshift-admin-overview[Overview of OpenShift for Administrators]
-* link:/guides/openshift-custom-certificates[Configuring OpenShift to use Custom Certificates]
-* link:/guides/openshift-ldap-integration[Adding LDAP for Authentication]
+* link:/articles/openshift-custom-certificates[Configuring OpenShift to use Custom Certificates]
+* link:/articles/openshift-ldap-integration[Adding LDAP for Authentication]

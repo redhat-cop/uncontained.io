@@ -9,7 +9,7 @@ tags:
   - f5
   - loadbalancing
   - netscaler
-draft: true
+draft: false
 ---
 = External Load Balancer Integrations with OpenShift Enterprise 3
 Eric Sauer <esauer@redhat.com>, obedin@redhat.com

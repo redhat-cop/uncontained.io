@@ -126,17 +126,27 @@ hugo server -D
 
 ### Migrating Content from OpenShift-Playbooks
 
-A migration script can be used to translate documents from the `openshift-playbooks` repo.
+This site is the evolution of the [Openshift Playbooks](https://github.com/redhat-cop/openshift-playbooks) site.
 
-Usage:
-```
-./migrate-doc.sh [path/playbook-doc] [path/uncontained-doc]
-```
+Migrating content from there to here is fairly straightforward, but involves some work.
 
-Example:
-```
-./migrate-doc.sh continuous_delivery/external-jenkins-integration.adoc guides/external-jenkins-integration.adoc
-```
+1. A migration script can be used to translate documents from the [openshift-playbooks](https://github.com/redhat-cop/openshift-playbooks) repo.
+
+    Usage:
+    ```
+    ./migrate-doc.sh [path/playbook-doc] [path/uncontained-doc]
+    ```
+
+    Example:
+    ```
+    ./migrate-doc.sh continuous_delivery/external-jenkins-integration.adoc guides/external-jenkins-integration.adoc
+    ```
+2. Next, start the test site using the [container image](#containerized-hugo-environment-quickstart-guide) or [native hugo](#native-hugo-environment-quickstart-guide)
+3. Navigate to the content you migrated and ensure that:
+  * all content renders correctly
+  * there are no broken links (we recommend using a link checker like [this one for Firefox](https://addons.mozilla.org/en-US/firefox/addon/linkchecker/) or [this one for Chrome](https://chrome.google.com/webstore/detail/broken-link-checker/nibppfobembgfmejpjaaeocbogeonhch?hl=en))
+  * if the guide or article links to other guides, or articles, we suggest you migrate those as well.
+4. Examine front matter. Ensure `title` is reader friendly, and that the `date` represents the date written, not the date migrated.
 
 ## Contribution review process
 

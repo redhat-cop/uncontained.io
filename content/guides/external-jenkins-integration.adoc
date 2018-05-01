@@ -7,7 +7,7 @@ categories:
 tags:
   - jenkins
   - openshift
-draft: true
+draft: false
 ---
 = External Jenkins Integration
 Red Hat Containers & PaaS CoP

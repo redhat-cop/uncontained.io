@@ -28,6 +28,7 @@ hugo new ${DOC}
 
 # Grab frontmatter and combine with content
 frontmatter=$(cat ${UNCONTAINED_SITE}${DOC})
+frontmatter=$(echo "${frontmatter}" | sed "s/draft: true/draft: false/")
 cat > ${UNCONTAINED_SITE}${DOC} <<zz_uncontained_content
 ${frontmatter}
 ${content}
