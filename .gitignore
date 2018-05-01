@@ -1,5 +1,9 @@
 node_modules
 *.log
 *~
-
+.bundle/
 .vscode
+.gem/
+Gemfile.lock
+public/
+bin/

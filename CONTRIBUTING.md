@@ -51,6 +51,26 @@ This site is written in asciidoc format and is built using the [Asciidoctor plug
 
 This site is powered by [Hugo](https://gohugo.io/). Running it on your local machine only requires a working [Hugo](https://gohugo.io/getting-started/installing) installation, either natively or a docker container. We recommend using the docker container method (for obvious reasons) instead of your native operating system, but you may choose either environment setup.
 
+### Containerized Hugo Environment QuickStart Guide
+
+Uncontained.io is built with Hugo and the Minimo theme. To run it in a container:
+
+1. Clone git repository
+```
+git clone https://github.com/redhat-cop/uncontained.io.git
+```
+2. Start Site Builder Container
+```
+cd uncontained.io
+docker run \
+  -u `id -u` -it \
+  -v ${PWD}:/opt/hugo:z \
+  -p 1313:1313 \
+  redhatcop/hugo serve --bind 0.0.0.0
+```
+3. Launch browser and navigate to `http://localhost:1313`
+
+For more info about the container image, see the link:container-images/hugo/[hugo image doc].
 
 ### Installing Asciidoc and Asciidoctor on native OS
 
@@ -103,34 +123,6 @@ Alternately, add the `-D` switch to preview drafts
 ```
 hugo server -D
 ```
-
-
-### Containerized Hugo Environment QuickStart Guide
-
-*Note:* This builder isn't yet available. See issue #10.
-
-Uncontained.io is built with Hugo and the Minimo theme. To run it in a container:
-
-1. Clone git repository
-```
-git clone https://github.com/redhat-cop/uncontained.io.git
-```
-2. Building the image
-```
-cd uncontained.io/container-images/local-builder
-docker build -t redhatcop/hugo-local-builder:latest .
-```
-2. Start Site Builder Container
-```
-cd uncontained.io
-docker run \
-  -u `id -u` -it \
-  -v $PWD/:/home/hugo/src/:Z \
-  -p 1313:1313 \
-  redhatcop/hugo-local-builder
-```
-3. Launch browser and navigate to `http://localhost:1313`
-
 
 ### Migrating Content from OpenShift-Playbooks
 
