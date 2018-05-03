@@ -10,14 +10,15 @@ ENV USER 1001
 
 USER root
 
+ADD . /opt/hugo/
+
+RUN chown -R ${USER} /opt/hugo
+
 RUN curl -sLo /tmp/hugo.tar.gz ${HUGO_URL} \
   && tar zxf /tmp/hugo.tar.gz \
   && mv hugo /bin/hugo
 
 ADD ./container-images/hugo/root /
-ADD . /opt/hugo/
-
-RUN chown -R ${USER} /opt/hugo
 
 USER ${USER}
 WORKDIR ${HOME}

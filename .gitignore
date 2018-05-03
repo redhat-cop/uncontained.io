@@ -6,4 +6,4 @@ node_modules
 .gem/
 Gemfile.lock
 public/
-bin/
+/bin/
