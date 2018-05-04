@@ -93,7 +93,7 @@ git clone https://github.com/redhat-cop/uncontained.io.git
 ```
 2. Navigate to the top level of the repository
 ```
-cd uncontained.io.git
+cd uncontained.io
 ```
 3. Run the site locally
 ```
