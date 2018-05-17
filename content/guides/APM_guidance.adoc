@@ -61,7 +61,7 @@ Application Performance Monitoring is about being able to answer these types of 
 
 APM is nowadays achieved by instrumenting the application so that it can generate metrics about what is going on inside the process running it and collecting those metrics to some central database that can then be used to generate dashboards and do alerting.
 
-image::images/APMGuidance-APMArchitecture.png[]
+image::/images/APMGuidance-APMArchitecture.png[]
 
 Normally an application is instrumented by adding a probe that captures the main application events and metrics. In Java this is done via an agent (activated usually with the https://docs.oracle.com/javase/8/docs/technotes/tools/windows/java.html#BABDJJFI[CLI argument ]). Other runtimes may have different approaches.
 
@@ -71,7 +71,7 @@ In the container world there are two ways of installing APM tools.
 
 In this architecture the container image of the application that needs to be monitored has the agent onboard. Upon start of the container, the agent will be activated and start communicating with the metrics collector.
 
-image::images/APMGuidance-ContainerAPMArch1.png[]
+image::/images/APMGuidance-ContainerAPMArch1.png[]
 
 Notice that this approach requires specifically crafted images and decreases the ability to reuse externally prepared images such as the {docs_url}creating_images/s2i.html[s2i images] from Red Hat.
 
@@ -88,7 +88,7 @@ So the setup for this configuration is very minimal. On the other hand, Promethe
 
 In this approach the agents are deployed as {docs_url}dev_guide/daemonsets.html[daemon sets]. The containers in this daemon set are privileged and can inspect the other containers running on the same node. Once a new container starts, the agent sends all available information of that container to the metrics collector.
 
-image::images/APMGuidance-ContainerAPMArch2.png[]
+image::/images/APMGuidance-ContainerAPMArch2.png[]
 
 Note that in this case very little additional work is required in order to enable APM and that no additional image configuration is needed.
 
@@ -149,7 +149,7 @@ The reference implementation of OpenTracing is https://github.com/jaegertracing/
 
 The general architecture of Jaeger is the following:
 
-image::images/jaeger_architecture.png[]
+image::/images/jaeger_architecture.png[]
 
 A jaeger client (http://jaeger.readthedocs.io/en/latest/client_libraries/[client libraries] for various languages exist) will generate trace information and sends them via a local UDP to a jaeger agent, running as a http://blog.kubernetes.io/2015/06/the-distributed-system-toolkit-patterns.html[sidecar]. The jaeger agent will perform the necessary sampling and throttling, and then send the traces to the central jaeger collector, which stores them in http://cassandra.apache.org/[Cassandra]. Once the traces are stored they can be visualized using the UI.
 
@@ -157,7 +157,7 @@ Instructions on how to install jaeger in OpenShift can be found https://github.c
 
 The UI presents result as follows:
 
-image::images/jaeger_ui.png[]
+image::/images/jaeger_ui.png[]
 
 https://github.com/redhat-helloworld-msa/helloworld-msa[Helloworld-MSA] is an example of how to instrument an application with Jaeger.
 
