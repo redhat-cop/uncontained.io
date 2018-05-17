@@ -1,5 +1,8 @@
 = Style Guide
 :toc: macro
+:toc-title:
+
+toc::[]
 
 From the GitHub Manual of Style, which this style guide inherits from:
 
@@ -8,8 +11,6 @@ From the GitHub Manual of Style, which this style guide inherits from:
 > In other words, the way we write is just as important as the way we design. Consider these things when writing copy.
 
 Where possible, automated tests enforce style rules.
-
-toc::[]
 
 == uncontained.io Content Standards
 
