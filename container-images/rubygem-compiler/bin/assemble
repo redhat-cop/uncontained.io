@@ -1,0 +1,7 @@
+#!/bin/bash
+
+OUTPUT_PATH=${PACKER_OUTPUT_PATH:-/tmp/output/a.out}
+OPTIONS=${PACKER_OPTIONS:=}
+ENTRANCE=${PACKER_ENTRANCE:=}
+
+rubyc ${OPTIONS} -o ${OUTPUT_PATH} ${ENTRANCE}

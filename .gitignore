@@ -7,3 +7,4 @@ node_modules
 Gemfile.lock
 public/
 /bin/
+container-images/hugo/root/usr/bin/asciidoctor

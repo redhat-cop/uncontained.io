@@ -1,4 +1,4 @@
-FROM centos/ruby-24-centos7
+FROM centos
 
 # Download and install hugo
 ENV HUGO_VERSION 0.25.1

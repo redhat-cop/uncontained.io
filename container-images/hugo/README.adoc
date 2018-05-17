@@ -4,6 +4,32 @@ This container image is provided to help test and build this hugo site.
 
 == Building the Image
 
+The hugo image is built in several stages:
+
+1. Build the rubygem-compiler
+2. Use the rubygem-compiler image to build an asciidoctor binary
+3. Build the hugo image
+
+Build the rubygem-compiler image:
+
+[source,bash]
+----
+docker build -t redhatcop/rubgem-compiler ./container-images/rubygem-compiler
+----
+
+Compile asciidoctor.
+
+[source,bash]
+----
+docker run -it -v ${PWD}/container-images/hugo/root/usr/bin/:/tmp/output/ \
+  -e PACKER_OPTIONS="--gem=asciidoctor --gem-version=1.5.7.1" \
+  -e PACKER_ENTRANCE="asciidoctor" \
+  -e PACKER_OUTPUT_PATH:=/tmp/output/asciidoctor \
+  redhatcop/rubygem-compiler
+----
+
+Build the image.
+
 [source,bash]
 ----
 cd uncontained.io/

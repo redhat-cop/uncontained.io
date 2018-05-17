@@ -1,0 +1,17 @@
+= RubyGem Compiler Image
+
+This image uses link:https://github.com/pmq20/ruby-packer[ruby-packer] to generate compiled executable binaries from RubyGems. This image was created for the purpose of converting useful rubygem bases CLIs, such as asciidoctor into executable utilities such that they don't require a Ruby runtime to run.
+
+== Building the Image
+
+[source,bash]
+----
+docker build -t redhatcop/rubgem-compiler ./container-images/rubygem-compiler
+----
+
+== Running the Image
+
+[source,bash]
+----
+
+----
