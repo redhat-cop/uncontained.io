@@ -1,0 +1,152 @@
+= Style Guide
+
+:toc: macro
+
+From the GitHub Manual of Style, which this style guide inherits from:
+
+> Words are an important part of how software works. Just as we have a style guide for our code, we have a style guide for our tone and our voice. Even though there may be dozens of people creating a product, it should still sound like we speak in one consistent voice.
+>
+> In other words, the way we write is just as important as the way we design. Consider these things when writing copy.
+
+Where possible, automated tests enforce style rules.
+
+toc::[]
+
+== uncontained.io Content Standards
+
+=== Follow standards for file names
+
+Names of files under either the `static/` or `content/` should:
+
+- use only lowercase characters, numbers, or hyphens
+- be descriptive, similar to document title
+- align with content directory structure
+
+For example:
+
+[source,bash]
+----
+/content/guides/how-to-raise-a-turtle.adoc
+/static/images/guides/baby-turtle.png
+/static/images/guides/grownup-turtle.jpg
+----
+
+=== Content Titles & Section Headers
+
+The title of a document is the first thing a visitor will see before they even open the document. A strong title communicates to readers and potential readers whether reading a document is worth their time. In general we should try to avoid one word titles, and titles that are very generic.
+
+For example:
+
+[source,asciidoc]
+----
+# Weak title
+= Monitoring
+
+# Strong title
+= Developing a Monitoring Strategy for an OpenShift Platform
+----
+
+Additionally, section headers provide the basis for navigation via table of contents. Your section headers should use consistent language and proper nesting to convery structure of the document.
+
+Section headers should follow a sequential order, such that a Table of Contents can be properly generated, and Proper nesting should be followed at all times.
+
+.Good Example :smile:
+----
+= Top Header
+== Section 1
+== Section 2
+=== Section 2.1
+==== Section 2.1.1
+=== Section 2.2
+== Section 3
+----
+
+.Bad Example :cry:
+----
+= Top Header
+=== Section 1
+=== Section 2
+=== Section 2.1
+===== Section 2.1.1
+== Section 2.2
+= Section 3
+----
+
+=== Links
+
+Links should follow the following format:
+----
+link:/path/to/file{outfilesuffix}[Link Name]
+----
+The `{outfilesuffix}` parameter should replace the file type and is there to handle the translation from '.adoc' to '.html' when we publish this content to our web front end.
+
+=== Interlinking Content
+
+Whenever possible we try to have content refer to other guides & articles. Tying content together in a logical way helps us build up complete stories and solutions and even lead to other solutions.
+
+When linking to other content within the site, we like to take steps to make it as obvious as possible without ruining the flow of the doc. Here are some guidelines for formatting your links:
+
+1. Include the title of the guide in the link text. For example...
++
+----
+link:/guides/openshift-ha-installation{outfilesuffix}[Installing a Highly Available OpenShift Cluster]
+----
++
+rather than
++
+----
+link:/guides/openshift-ha-installation{outfilesuffix}{outfilesuffix}[click here!]
+----
++
+2. Provide some context as to why you are providing this link. For example...
++
+----
+The link:/articles/openshift-load-balancing{outfilesuffix}[External Load Balancing for OpenShift] provides an introduction to the strategies that can be employed within OpenShift.
+----
++
+3. Use a NOTE callout when there's no natural flow.
++
+----
+NOTE: The link:/articles/load_balancing{outfilesuffix}[External Load Balancing for OpenShift] provides an introduction to the strategies that can be employed within OpenShift.
+----
+
+=== Include a "What's Next?" section to encourage further reading
+
+We like to conclude our documents with a "call to action" or something of that sort. Whenever applicable, think about ending your doc with a "What's Next?" section with links out to further suggested playbooks guides, or other documents when a playbook guide doesn't yet exist (if you think it SHOULD exist, please link:https://github.com/rhtconsulting/openshift-playbooks/issues/new[Open an Issue]).
+
+== Content Principles
+
+All written content should follow these principles:
+
+* **Approachability:** Don't assume reader has prior knowledge
+* **Brevity:** Keep it simple, link to outside content for deeper dives
+* **Curation:** Amplify community best practices vs. any individual's point of view
+
+Content should maintain a light-hearted, but wise (think classy, not overly excited) tone. Open source is fun! Readers should feel inspired, not discouraged, by the tone of your writing, and they should trust you to help them get started.
+
+== Mentions
+
+When referring to people that use GitHub, use @mentions of their username instead of their full name.
+
+- :smile: As @sabre1041 put it...
+- :cry: As [Andrew Block](https://github.com/sabre1041) put it...
+
+When referring to a project on GitHub, link to the repository so others can dive deeper, if they choose.
+
+- :smile: @JaredBurck took a similar approach to [Dat](https://github.com/datproject/dat)...
+- :cry: @JaredBurck took a similar approach to Dat...
+
+== Capitalization
+
+The domain "uncontained.io" is not capitalized when referring to the "uncontained.io guides", except at the beginning of a sentence.
+
+- :smile: Welcome to uncontained.io!
+- :smile: The uncontained.io site is meant to...
+- :cry: The goal of Uncontained.io is to...
+- :cry: The mission of UnContained.io is to...
+
+The word "guides" is not capitalized when referring to the "uncontained.io guides", just like saying "the guide" or "this guide".
+
+- :smile: Welcome to uncontained.io guides!
+- :smile: The guide is meant to..
+- :cry: The goal of this Guide is to...
