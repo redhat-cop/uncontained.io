@@ -1,5 +1,4 @@
 = Style Guide
-
 :toc: macro
 
 From the GitHub Manual of Style, which this style guide inherits from:
