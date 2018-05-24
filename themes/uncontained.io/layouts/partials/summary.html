@@ -1,13 +1,17 @@
 	<article class="summary">
 		<h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
-		<time>{{ .Date.Format "02.01.2006 15:04" }}</time>
+		<time>{{ .Date.Format "January 2 2006" }}</time>
+		<p>
+			{{ .Summary }}
+		</p>
+		{{ if .Truncated }}
+			<div class="read-more">
+				<a href="{{ .Permalink }}">Read More</a>
+			</div>
+		{{ end }}
+		<!-- Not sure if we need this
 		{{ range .Params.tags }}
 		<a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>
 		{{ end }}
-		<div>
-			{{ .Summary }}
-			{{ if .Truncated }}
-				<a href="{{ .Permalink }}">Read more...</a>
-			{{ end }}
-		</div>
+		-->
 	</article>
