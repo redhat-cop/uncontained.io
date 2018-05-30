@@ -7,7 +7,6 @@
 	<title>{{ .Title }} | {{ .Site.Title }}</title>
 	{{ with .Site.Params.description }}<meta name="description" content="{{ . }}">{{ end }}
 	{{ with .Site.Params.author }}<meta name="author" content="{{ . }}">{{ end }}
-	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
 	<link rel="stylesheet" href="{{ .Site.BaseURL }}dist/css/style.css">
 	{{ if .RSSLink -}}<link href="{{ .RSSLink }}" rel="feed" type="application/rss+xml" title="{{ .Site.Title }}">{{- end }}
 	{{ .Hugo.Generator }}
@@ -24,5 +23,6 @@
 					{{ end }}
 				</ul>
 			</nav> -->
+
 		</div>
 	</header>
