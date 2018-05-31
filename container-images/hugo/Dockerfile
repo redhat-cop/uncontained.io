@@ -1,7 +1,7 @@
-FROM centos/ruby-24-centos7
+FROM registry.centos.org/centos/centos7-atomic
 
 # Download and install hugo
-ENV HUGO_VERSION 0.25.1
+ENV HUGO_VERSION 0.36.1
 ENV HUGO_BINARY hugo_${HUGO_VERSION}_Linux-64bit.tar.gz
 ARG HUGO_URL
 ENV HUGO_URL https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${HUGO_BINARY}
@@ -10,15 +10,19 @@ ENV USER 1001
 
 USER root
 
-ADD . /opt/hugo/
+COPY . /opt/hugo/
 
 RUN chown -R ${USER} /opt/hugo
 
-RUN curl -sLo /tmp/hugo.tar.gz ${HUGO_URL} \
-  && tar zxf /tmp/hugo.tar.gz \
-  && mv hugo /bin/hugo
+ADD ${HUGO_URL} /tmp/
+RUN microdnf install tar gzip \
+  && tar -zxf /tmp/${HUGO_BINARY} -C /tmp/ \
+  && mv /tmp/hugo /bin/hugo \
+  && rm -rf /tmp/* \
+  && microdnf remove tar gzip \
+  && microdnf clean all
 
-ADD ./container-images/hugo/root /
+COPY ./container-images/hugo/root /
 
 USER ${USER}
 WORKDIR ${HOME}

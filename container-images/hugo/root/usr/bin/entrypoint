@@ -1,5 +1,4 @@
 #!/bin/bash
 
 export PATH=${PATH}:${HOME}/bin
-bundle install
 exec /bin/hugo "$@"
