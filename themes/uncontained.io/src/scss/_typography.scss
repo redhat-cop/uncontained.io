@@ -9,17 +9,16 @@ html {
 
 h1,
 .h1 {
-  @include fontSize(75px);
-  font-weight: 700;
+  font-weight: 400;
 }
 
 h2,
 .h2 {
-  @include fontSize(55px);
   color: theme-color("primary");
+  font-weight: 300;
 }
 
 h3,
 .h3 {
-  @include fontSize(35px);
+  font-weight: 400;
 }

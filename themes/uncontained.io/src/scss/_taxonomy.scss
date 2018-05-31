@@ -1,0 +1,32 @@
+.taxonomy {
+  background-color: theme-color("dark-blue");
+  width: 100%;
+  padding: 30px 15px;
+  h2 {
+    color: $white;
+  }
+  ul {
+    display: flex;
+    flex-flow: wrap;
+    margin: 0;
+    margin-top: 40px;
+    -webkit-padding-start: 0;
+    li {
+      list-style: none;
+      a {
+        display: block;
+        color: $white;
+        margin: 5px 15px;
+        padding: 8px 15px;
+        background-color: theme-color("medium-blue");
+        text-transform: capitalize;
+        font-weight: 600;
+        -webkit-margin-start: 0;
+        &:hover {
+          text-decoration: none;
+          background-color: theme-color("light-blue");
+        }
+      }
+    }
+  }
+}

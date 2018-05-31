@@ -1,8 +1,12 @@
 .header-main {
   border-bottom: 1px solid theme-color("light");
-  padding: 10px;
   margin-bottom: 30px;
   background-color: theme-color("dark-blue");
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 .logotype {
@@ -18,5 +22,38 @@
 @include media-breakpoint-up(sm) {
   .logotype {
     @include fontSize(50px);
+  }
+}
+
+.search-container {
+  margin: auto 0;
+  input[type=text] {
+    padding: 6px;
+    font-size: 17px;
+    border: none;
+    background: theme-color("medium-blue");
+    color: $white;
+  }
+  button {
+    float: right;
+    height: 37px;
+    width: 37px;
+    background: theme-color("medium-blue");
+    border: none;
+    cursor: pointer;
+    .icon-search {
+      width: 25px;
+      height: 25px;
+      &:before {
+        background-image: url('/images/icons/white/rgb_Search_White.png');
+        background-size: 38px auto;
+        background-repeat: no-repeat;
+        display: inline-block;
+        width: 37px;
+        height: 37px;
+        margin: -.1em 0 0 -.5em;
+        content:"";
+      }
+    }
   }
 }
