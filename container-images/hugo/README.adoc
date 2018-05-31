@@ -14,7 +14,7 @@ Build the rubygem-compiler image:
 
 [source,bash]
 ----
-docker build -t redhatcop/rubgem-compiler ./container-images/rubygem-compiler
+docker build -t redhatcop/rubygem-compiler ./container-images/rubygem-compiler
 ----
 
 Compile asciidoctor.
@@ -24,15 +24,16 @@ Compile asciidoctor.
 docker run -it -v ${PWD}/container-images/hugo/root/usr/bin/:/tmp/output/ \
   -e PACKER_OPTIONS="--gem=asciidoctor --gem-version=1.5.7.1" \
   -e PACKER_ENTRANCE="asciidoctor" \
-  -e PACKER_OUTPUT_PATH:=/tmp/output/asciidoctor \
+  -e PACKER_OUTPUT_PATH=/tmp/output/asciidoctor \
   redhatcop/rubygem-compiler
 ----
+
+An `asciidoctor` binary will be compiled and generated at `container-images/hugo/root/usr/bin/asciidoctor`. This will be baked into our `hugo` image in the next step.
 
 Build the image.
 
 [source,bash]
 ----
-cd uncontained.io/
 docker build -t redhatcop/hugo -f container-images/hugo/Dockerfile .
 ----
 
