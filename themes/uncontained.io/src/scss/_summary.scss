@@ -1,3 +1,24 @@
 .summary {
   margin-bottom: 1.5rem;
+  padding-bottom: 1em;
+  border-bottom: 1px solid theme-color("secondary");
+  h2 a {
+    color: theme-color("dark");
+    &:hover, &:focus {
+      color: theme-color("primary");
+      text-decoration: none;
+    }
+  }
+  p {
+    margin-top: 1em;
+  }
+  .read-more {
+    display: flex;
+    font-weight: 500;
+    a {
+      background: theme-color("light");
+      color: theme-color("dark-blue");
+      padding: 0.4em .8em;
+    }
+  }
 }

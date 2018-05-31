@@ -1,4 +1,6 @@
 id = "redhat-cop"
+group = true
+verified = true
 
 [email]
 username = "container-cop"

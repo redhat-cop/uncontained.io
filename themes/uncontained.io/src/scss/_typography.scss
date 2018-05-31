@@ -1,20 +1,24 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700);
+
+
 html {
-  font-size: 18px;
+  font-size: 16px;
+  font-family: "Open Sans";
+
 }
 
 h1,
 .h1 {
-  @include fontSize(75px);
-  font-weight: 700;
+  font-weight: 400;
 }
 
 h2,
 .h2 {
-  @include fontSize(55px);
   color: theme-color("primary");
+  font-weight: 300;
 }
 
 h3,
 .h3 {
-  @include fontSize(35px);
+  font-weight: 400;
 }

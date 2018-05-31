@@ -2,14 +2,14 @@
 
 [![Build Status](https://travis-ci.org/redhat-cop/uncontained.io.svg?branch=master)](https://travis-ci.org/redhat-cop/uncontained.io)
 
-Uncontained.io guides (https://uncontained.io/) are a collection of resources for individuals, communities, and companies who want to learn how to run and use container technologies.
+This is the source code repository for [Uncontained.io](https://uncontained.io/), a site that focuses on Containers, Cloud, and Digital Transformation guidance for the Enterprise.
 
 ## Background
 The first sets of uncontained.io guides were created and curated by Red Hat Consultants, along with input from outside community reviewers, but they are not exclusive to Red Hat products.
 
 Our goal is to aggregate community best practices, *not* what Red Hat (or any other individual or entity) thinks is best. Therefore, we try to use examples and quotations from the field or others to illustrate our points.
 
-**Uncontained.io guides are a resource and a discussion forum.** One reason we started this project is because we felt that there weren't enough really good resources for people creating and using containers. We made these guides open source in hopes that you'll use this space to talk about best practices, then document them when you've found consensus. We'd like this to be a safe space to talk about what's hard, what's scary, and what's simply confusing about running and using container technologies.
+**Uncontained.io is a community resource_.** One reason we started this project is because we felt that there weren't enough really good resources for organizations creating and using DevOps-centric tooling & tech. We made these guides open source in hopes that you'll use this space to talk about best practices, then document them when you've found consensus. We'd like this to be a safe space to talk about what's hard, what's scary, and what's simply confusing about running and using containers & cloud technologies.
 
 ## Roadmap
 

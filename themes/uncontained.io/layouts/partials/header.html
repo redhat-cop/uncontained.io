@@ -7,7 +7,6 @@
 	<title>{{ .Title }} | {{ .Site.Title }}</title>
 	{{ with .Site.Params.description }}<meta name="description" content="{{ . }}">{{ end }}
 	{{ with .Site.Params.author }}<meta name="author" content="{{ . }}">{{ end }}
-	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
 	<link rel="stylesheet" href="{{ .Site.BaseURL }}dist/css/style.css">
 	{{ if .RSSLink -}}<link href="{{ .RSSLink }}" rel="feed" type="application/rss+xml" title="{{ .Site.Title }}">{{- end }}
 	{{ .Hugo.Generator }}
@@ -15,7 +14,7 @@
 <body>
 	<header class="header-main">
 		<div class="container">
-			<a href="{{ .Site.BaseURL }}" class="logotype">{{ .Site.Title }}</a>
+			<a href="{{ .Site.BaseURL }}" class="logotype"><img  alt="{{ .Site.Title }}" src="/images/logo/Uncontained.io_Logo_Horizontal_RGB_White.png" width="400" /></a>
 			<!-- Hide the main menu for now -->
 			<!-- <nav>
 				<ul>
@@ -24,5 +23,12 @@
 					{{ end }}
 				</ul>
 			</nav> -->
+			<div class="search-container">
+				<form action="/action_page.php">
+					<input type="text" name="search">
+					<button type="submit"><i class="icon icon-search"></i></button>
+				</form>
+			</div>
+
 		</div>
 	</header>

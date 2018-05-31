@@ -1,0 +1,37 @@
+time.calendar {
+  color: theme-color("medium-blue");
+  margin-top: .8em;
+  &:before {
+    background-image: url('/images/icons/blue/rgb_Calendar_Blue.png');
+    background-size: 1.5em auto;
+    background-repeat: no-repeat;
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    margin: 0 .5em -.5em 0;
+    content:"";
+  }
+}
+
+.byline {
+  color: theme-color("medium-blue");
+  margin-top: .8em;
+  a {
+    &:before {
+      background-image: url('/images/icons/blue/rgb_Author_Blue.png');
+      background-size: 1.5em auto;
+      background-repeat: no-repeat;
+      display: inline-block;
+      width: 1.5em;
+      height: 1.5em;
+      margin: 0em .2em -.3em .5em;
+      content:"";
+    }
+  }
+  a.group {
+    &:before {
+      background-image: url('/images/icons/blue/rgb_Groupauthorship_Blue.png');
+      margin: 0em .5em -.3em .5em;
+    }
+  }
+}
