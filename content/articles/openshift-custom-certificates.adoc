@@ -1,11 +1,13 @@
 ---
-title: "Openshift Custom Certificates"
+title: "Configuring OpenShift to Use Custom Certificates"
 date: 2016-08-18T00:53:08-04:00
-authors: []
+authors: ["redhat-cop"]
 categories:
-  -
+  - 'Add On'
 tags:
-  -
+  - openshift
+  - TLS
+  - security
 draft: false
 ---
 = Configuring OpenShift to use Custom Certificates
