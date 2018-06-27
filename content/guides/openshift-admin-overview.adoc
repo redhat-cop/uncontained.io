@@ -7,7 +7,7 @@ categories:
 tags:
   - openshift
   - operations
-draft: true
+draft: false
 ---
 = An Overview of OpenShift for System Administrators
 Eric Sauer <esauer@redhat.com>
@@ -203,4 +203,4 @@ Additional 20-25 GB for every additional 8 GB Memory | Growth limited by capacit
 
 == What's Next?
 
-* link:/playbooks/operationalizing/monitoring_guide{outfilesuffix}[Developing a Monitoring Strategy for OpenShift]
+* link:/guides/openshift-monitoring-guide[Developing a Monitoring Strategy for OpenShift]

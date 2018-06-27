@@ -8,7 +8,7 @@ tags:
   - openshift
   - ldap
   - authentication
-draft: true
+draft: false
 summary: Hello world
 ---
 = LDAP Integration for Authentication
@@ -246,7 +246,7 @@ TLS_CACERT      /etc/openldap/certs/ca.cert.pem <2>
 
 == What''s Next?
 
-This guide focused on authenticating users into OpenShift against an LDAP server. To synchronize groups defined within the LDAP server into OpenShift, please refer to the link:../operationalizing/ldap_group_sync{outfilesuffix}[LDAP Group Synchronization guide].
+This guide focused on authenticating users into OpenShift against an LDAP server. To synchronize groups defined within the LDAP server into OpenShift, please refer to the link:../ldap-group-sync/[LDAP Group Synchronization guide].
 
 == Resources
 

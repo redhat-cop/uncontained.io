@@ -6,7 +6,7 @@ categories:
   - Add On
 tags:
   - openshift
-draft: true
+draft: false
 ---
 = OpenShift Pre-Install Validation Checklist
 Matt Witzenman <mwitzenm@redhat.com>

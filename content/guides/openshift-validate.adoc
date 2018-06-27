@@ -7,7 +7,7 @@ categories:
 tags:
   - openshift
   - operations
-draft: true
+draft: false
 ---
 = Validating an OpenShift Install
 Eric Sauer <eric@redhat.com>
