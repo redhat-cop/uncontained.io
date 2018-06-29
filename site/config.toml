@@ -1,4 +1,4 @@
-baseURL = "http://uncontained.io"
+baseURL = "/"
 title = "uncontained.io"
 # for smart copyright line, leave this blank and check [params.copyright]
 copyright = ""

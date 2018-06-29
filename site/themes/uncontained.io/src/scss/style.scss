@@ -1,0 +1,34 @@
+// Bootstrap functions (available to our styles and to Bootstrap)
+@import "../../../../../node_modules/bootstrap/scss/functions";
+
+// Override Bootstrap default variables
+@import 'variables';
+
+// Bootstrap Required
+@import "../../../../../node_modules/bootstrap/scss/variables";
+@import "../../../../../node_modules/bootstrap/scss/mixins";
+
+// Bootstrap Optional
+@import "../../../../../node_modules/bootstrap/scss/root";
+@import "../../../../../node_modules/bootstrap/scss/reboot";
+@import "../../../../../node_modules/bootstrap/scss/type";
+@import "../../../../../node_modules/bootstrap/scss/images";
+@import "../../../../../node_modules/bootstrap/scss/code";
+@import "../../../../../node_modules/bootstrap/scss/grid";
+@import "../../../../../node_modules/bootstrap/scss/tables";
+@import "../../../../../node_modules/bootstrap/scss/buttons";
+@import "../../../../../node_modules/bootstrap/scss/card";
+@import "../../../../../node_modules/bootstrap/scss/pagination";
+@import "../../../../../node_modules/bootstrap/scss/media";
+@import "../../../../../node_modules/bootstrap/scss/print";
+
+// Uncontained.io styles
+@import 'functions';
+@import 'base';
+@import 'typography';
+@import 'header-main';
+@import 'footer-main';
+@import 'contribute';
+@import 'content';
+@import 'taxonomy';
+@import 'summary';
