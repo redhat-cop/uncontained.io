@@ -51,77 +51,38 @@ This site is written in asciidoc format and is built using the [Asciidoctor plug
 
 This site is powered by [Hugo](https://gohugo.io/). Running it on your local machine only requires a working [Hugo](https://gohugo.io/getting-started/installing) installation, either natively or a docker container. We recommend using the docker container method (for obvious reasons) instead of your native operating system, but you may choose either environment setup.
 
-### Containerized Hugo Environment QuickStart Guide
+### Building and Developing the Site
 
-Uncontained.io is built with Hugo and the Minimo theme. To run it in a container:
+Uncontained.io uses the [Hugo static site generator](https://gohugo.io/) to translate Asciidoc into an HTML site. We wrap this functionality in [Gulp](https://gulpjs.com/) to streamline the build and test process. Running the site requires [NPM](https://www.npmjs.com/). Once installed, you should have all you need to build, test and develop. To get started, set up your local environment.
 
-1. Clone git repository
 ```
 git clone https://github.com/redhat-cop/uncontained.io.git
-```
-2. Start Site Builder Container
-```
-cd uncontained.io
-docker run \
-  -u `id -u` -it \
-  -v ${PWD}:/opt/hugo:z \
-  -p 1313:1313 \
-  redhatcop/hugo serve --bind 0.0.0.0
-```
-3. Launch browser and navigate to `http://localhost:1313`
-
-For more info about the container image, see the link:container-images/hugo/[hugo image doc].
-
-### Installing Asciidoc and Asciidoctor on native OS
-
-<b>Fedora / RHEL</b>
-
-`Asciidoc` is installed through the standard repos. `Asciidoctor` can be installed using the gem command.
-
-```
-yum install asciidoc
-gem install asciidoctor
+cd uncontained.io/
+npm install
 ```
 
-<b>Mac OS</b>
+#### Run the Live Preview
 
-`Asciidoc` and `Asciidoctor` can be installed easily using Homebrew.
+The live preview provides an embedded server in which you can test the site locally, and watch changes being made as you develop.
 
 ```
-brew install asciidoc
-brew install asciidoctor
+npm start
 ```
 
-For more detailed installation information, visit the following installation guides:
+or, if you'd like to also include _draft_ content like `hugo server --buildDrafts --buildFuture`:
 
-- [Asciidoc](http://asciidoc.org/INSTALL.html)
-- [Asciidoctor](http://asciidoctor.org/docs/install-toolchain/)
-
-
-### Installing Hugo on native OS
-
-The best guide for [installing Hugo](https://gohugo.io/getting-started/installing/) is on their website.
-
-
-### Native Hugo Environment QuickStart Guide
-
-Uncontained.io is built with Hugo and the Minimo theme. To run it locally:
-
-1. Clone git repository
 ```
-git clone https://github.com/redhat-cop/uncontained.io.git
+npm run start-preview
 ```
-2. Navigate to the top level of the repository
+
+You should be able to view the site by browsing to http://localhost:3000/.
+
+#### Build the Site
+
+The site build will simple generate all of the site html, css, javascript, etc. This is the process we use to build and publish the site.
+
 ```
-cd uncontained.io
-```
-3. Run the site locally
-```
-hugo server
-```
-Alternately, add the `-D` switch to preview drafts
-```
-hugo server -D
+npm run build
 ```
 
 ### Migrating Content from OpenShift-Playbooks
