@@ -16,7 +16,7 @@ v1.0, 2017-06-10
 :toc: macro
 :toc-title:
 
-include::layouts/variables.adoc[]
+include::site/layouts/variables.adoc[]
 toc::[]
 
 NOTE: This guide discusses the synchronization of groups defined in an LDAP server with OpenShift and is distinct from using an LDAP server to authenticate users to OpenShift. Please refer to the link:/playbooks/installation/ldap_integration{outfilesuffix}[LDAP Integration guide] for using an LDAP server as an identity provider to govern user authentication to OpenShift.

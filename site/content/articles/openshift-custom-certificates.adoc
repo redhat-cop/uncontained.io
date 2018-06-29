@@ -17,7 +17,7 @@ v2.0, 2016-08-18
 :toc: macro
 :toc-title:
 
-include::layouts/variables.adoc[]
+include::site/layouts/variables.adoc[]
 toc::[]
 
 _This is a followup to link:/guides/openshift-ha-installation[Installing a Highly Available OpenShift Cluster]. Many assumptions are made based on the information in that guide. If you have not yet been through this guide, we recommend doing so before continuing._
@@ -33,8 +33,8 @@ In this guide we will discuss how and where TLS Certificates are used in OpenShi
 OpenShift utilizes TLS Certificates in three primary ways.
 
 1. To encrypt traffic
-1. To authenticate certain infrastructure components
-1. To authenticate certain users
+2. To authenticate certain infrastructure components
+3. To authenticate certain users
   * OpenShift uses client certificates to authenticate system critical system users and service accounts
   * Users can also authenticate via client certificates, though this is not common (Client Cert Auth https://kubernetes.io/docs/admin/authentication/#x509-client-certs)
 

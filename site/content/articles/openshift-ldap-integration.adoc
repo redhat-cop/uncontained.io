@@ -17,7 +17,7 @@ Andrew Block <ablock@redhat.com>
 :toc: macro
 :toc-title:
 
-include::layouts/variables.adoc[]
+include::site/layouts/variables.adoc[]
 toc::[]
 
 The OpenShift Container Platform provides support for leveraging users and groups stored in an Lightweight Directory Access Protocol (LDAP) V3 server using simple bind authentication.
