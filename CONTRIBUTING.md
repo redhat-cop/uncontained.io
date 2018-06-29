@@ -53,7 +53,7 @@ This site is powered by [Hugo](https://gohugo.io/). Running it on your local mac
 
 ### Building and Developing the Site
 
-Uncontained.io uses the [Hugo static site generator](https://gohugo.io/) to translate Asciidoc into an HTML site. We wrap this functionality in [Gulp](https://gulpjs.com/) to streamline the build and test process. Running the site requires [NPM](https://www.npmjs.com/). Once installed, you should have all you need to build, test and develop. To get started, set up your local environment.
+Uncontained.io uses the [Hugo static site generator](https://gohugo.io/) to translate Asciidoc into an HTML site. We wrap this functionality in [Gulp](https://gulpjs.com/) to streamline the build and test process. Running the site requires [Node.js](https://nodejs.org/). Once installed, you should have all you need to build, test and develop. To get started, set up your local environment.
 
 ```
 git clone https://github.com/redhat-cop/uncontained.io.git
