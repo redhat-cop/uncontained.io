@@ -84,9 +84,10 @@ function runServer() {
  */
 function buildSite(cb, options, environment = "development") {
   var cmd = spawn('gem', ['install', 'asciidoctor'], {stdio: 'inherit'});
-  cmd.on('error', function (err) {
+  cmd.on('error', function (err, stdout, stderr) {
 
     console.log('Failed to install asciidoctor: ' + err);
+    console.log('Terminal Result: ' + stdout + '\n' + stderr);
   });
 
   const args = options ? hugoArgsDefault.concat(options) : hugoArgsDefault;
