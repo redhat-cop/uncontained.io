@@ -8,7 +8,6 @@ import webpack from "webpack";
 import webpackConfig from "./webpack.conf";
 import sass from "gulp-sass";
 import sourcemaps from "gulp-sourcemaps";
-import mv from "mv";
 
 const browserSync = BrowserSync.create();
 
@@ -92,7 +91,6 @@ function buildSite(cb, options, environment = "development") {
   const args = options ? hugoArgsDefault.concat(options) : hugoArgsDefault;
 
   process.env.NODE_ENV = environment;
-  process.env.PATH = process.env.PWD + '/node_modules/asciidoctor-cli/bin/' + process.env.PATH;
 
   return spawn(hugoBin, args, {stdio: "inherit"}).on("close", (code) => {
     if (code === 0) {
