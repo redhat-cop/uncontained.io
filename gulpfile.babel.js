@@ -83,11 +83,16 @@ function runServer() {
  * Run hugo and build the site
  */
 function buildSite(cb, options, environment = "development") {
-  var cmd = spawn('gem', ['install', 'asciidoctor'], {stdio: 'inherit'});
-  cmd.on('error', function (err, stdout, stderr) {
-
-    console.log('Failed to install asciidoctor: ' + err);
-    console.log('Terminal Result: ' + stdout + '\n' + stderr);
+  const cmd = spawn('gem', ['install', 'asciidoctor']);
+  cmd.on('exit', function (code, signal) {
+    console.log('child process exited with ' +
+              `code ${code} and signal ${signal}`);
+  });
+  cmd.stdout.on('data', (data) => {
+    console.log(`[stdout]:\n${data}`);
+  });
+  cmd.stderr.on('data', (data) => {
+    console.log(`[stderr]:\n${data}`);
   });
 
   const args = options ? hugoArgsDefault.concat(options) : hugoArgsDefault;
