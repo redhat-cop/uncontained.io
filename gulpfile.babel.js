@@ -8,12 +8,16 @@ import webpack from "webpack";
 import webpackConfig from "./webpack.conf";
 import sass from "gulp-sass";
 import sourcemaps from "gulp-sourcemaps";
+import mv from "mv";
 
 const browserSync = BrowserSync.create();
 
 // Hugo arguments
 const hugoArgsDefault = ["-d", "../dist", "-s", "site", "-v"];
 const hugoArgsPreview = ["--buildDrafts", "--buildFuture"];
+
+// Some debugging
+gutil.log("Current dir:" + process.env.PWD);
 
 // Development tasks
 gulp.task("hugo", (cb) => buildSite(cb));
@@ -80,9 +84,15 @@ function runServer() {
  * Run hugo and build the site
  */
 function buildSite(cb, options, environment = "development") {
+  var cmd = spawn('gem', ['install', 'asciidoctor'], {stdio: 'inherit'});
+  cmd.on('close', function (code) {
+    console.log('my-task exited with code ' + code);
+  });
+
   const args = options ? hugoArgsDefault.concat(options) : hugoArgsDefault;
 
   process.env.NODE_ENV = environment;
+  process.env.PATH = process.env.PWD + '/node_modules/asciidoctor-cli/bin/' + process.env.PATH;
 
   return spawn(hugoBin, args, {stdio: "inherit"}).on("close", (code) => {
     if (code === 0) {
