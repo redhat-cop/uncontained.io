@@ -23,16 +23,16 @@ gulp.task("hugo", (cb) => buildSite(cb));
 gulp.task("hugo-preview", (cb) => buildSite(cb, hugoArgsPreview));
 
 // Run server tasks
-gulp.task("server", ["hugo", "sass", "js", "fonts"], (cb) => runServer(cb));
-gulp.task("server-preview", ["hugo-preview", "sass", "js", "fonts"], (cb) => runServer(cb));
+gulp.task("server", ["hugo", "sass", "js", "fonts", "asciidoctor-check"], (cb) => runServer(cb));
+gulp.task("server-preview", ["hugo-preview", "sass", "js", "fonts", "asciidoctor-check"], (cb) => runServer(cb));
 
 // Build/production tasks
-gulp.task("build", ["sass", "js", "fonts"], (cb) => buildSite(cb, [], "production"));
-gulp.task("build-preview", ["sass", "js", "fonts"], (cb) => buildSite(cb, hugoArgsPreview, "production"));
+gulp.task("build", ["sass", "js", "fonts", "asciidoctor-check"], (cb) => buildSite(cb, [], "production"));
+gulp.task("build-preview", ["sass", "js", "fonts", "asciidoctor-check"], (cb) => buildSite(cb, hugoArgsPreview, "production"));
 
 // Compile SCSS into CSS
-gulp.task("sass", function (done) {
-  let sassOpts = {
+gulp.task("sass", function(done) {
+  const sassOpts = {
     outputStyle: "compressed"
   };
 
@@ -66,6 +66,21 @@ gulp.task("fonts", () => (
     .pipe(browserSync.stream())
 ));
 
+// Check that asciidoctor is installed
+gulp.task("asciidoctor-check", (cb) => {
+  const cmd = spawn("asciidoctor");
+  cmd.on("exit", function(code, signal) {
+    cb();
+  });
+  cmd.on("error", function(error) {
+    if (error.toString() === "Error: spawn asciidoctor ENOENT") {
+      cb("Asciidoctor is not installed. Please install asciidoctor or run the build via the included Docker container.");
+    } else {
+      cb(error);
+    }
+  });
+});
+
 // Development server with browsersync
 function runServer() {
   browserSync.init({
@@ -83,18 +98,6 @@ function runServer() {
  * Run hugo and build the site
  */
 function buildSite(cb, options, environment = "development") {
-  const cmd = spawn('gem', ['install', 'asciidoctor']);
-  cmd.on('exit', function (code, signal) {
-    console.log('child process exited with ' +
-              `code ${code} and signal ${signal}`);
-  });
-  cmd.stdout.on('data', (data) => {
-    console.log(`[stdout]:\n${data}`);
-  });
-  cmd.stderr.on('data', (data) => {
-    console.log(`[stderr]:\n${data}`);
-  });
-
   const args = options ? hugoArgsDefault.concat(options) : hugoArgsDefault;
 
   process.env.NODE_ENV = environment;

@@ -61,6 +61,8 @@ cd uncontained.io/
 npm install
 ```
 
+Our Hugo + Gulp setup is based on the [victor-hugo](https://github.com/netlify/victor-hugo) boilerplate.
+
 #### Run the Live Preview
 
 The live preview provides an embedded server in which you can test the site locally, and watch changes being made as you develop.

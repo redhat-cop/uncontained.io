@@ -1,8 +1,8 @@
 {
-  "name": "victor-hugo",
+  "name": "uncontained.io",
   "version": "1.0.0",
-  "description": "Victor Hugo is a Hugo boilerplate for creating truly epic websites!",
-  "repository": "netlify/victor-hugo",
+  "description": "uncontained.io is a website that focuses on Containers, Cloud, and Digital Transformation guidance for the Enterprise.",
+  "repository": "redhat-cop/uncontained.io",
   "main": "index.js",
   "scripts": {
     "hugo": "gulp hugo",
