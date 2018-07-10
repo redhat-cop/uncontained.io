@@ -19,16 +19,16 @@ const hugoArgsPreview = ["--buildDrafts", "--buildFuture"];
 gutil.log("Current dir:" + process.env.PWD);
 
 // Development tasks
-gulp.task("hugo", ["asciidoctor-check"], (cb) => buildSite(cb));
-gulp.task("hugo-preview", ["asciidoctor-check"], (cb) => buildSite(cb, hugoArgsPreview));
+gulp.task("hugo", (cb) => buildSite(cb));
+gulp.task("hugo-preview", (cb) => buildSite(cb, hugoArgsPreview));
 
 // Run server tasks
-gulp.task("server", ["hugo", "sass", "js", "fonts"], (cb) => runServer(cb));
-gulp.task("server-preview", ["hugo-preview", "sass", "js", "fonts"], (cb) => runServer(cb));
+gulp.task("server", ["hugo", "sass", "js", "fonts", "asciidoctor-check"], (cb) => runServer(cb));
+gulp.task("server-preview", ["hugo-preview", "sass", "js", "fonts", "asciidoctor-check"], (cb) => runServer(cb));
 
 // Build/production tasks
-gulp.task("build", ["sass", "js", "fonts"], (cb) => buildSite(cb, [], "production"));
-gulp.task("build-preview", ["sass", "js", "fonts"], (cb) => buildSite(cb, hugoArgsPreview, "production"));
+gulp.task("build", ["sass", "js", "fonts", "asciidoctor-check"], (cb) => buildSite(cb, [], "production"));
+gulp.task("build-preview", ["sass", "js", "fonts", "asciidoctor-check"], (cb) => buildSite(cb, hugoArgsPreview, "production"));
 
 // Compile SCSS into CSS
 gulp.task("sass", function(done) {
