@@ -87,6 +87,17 @@ The site build will simple generate all of the site html, css, javascript, etc. 
 npm run build
 ```
 
+#### Deploying to OpenShift
+
+Uncontained.io is built and hosted on OpenShift, and deployed using [OpenShift Applier](https://github.com/redhat-cop/openshift-applier)
+
+To deploy to a development cluster, run:
+
+```
+ansible-galaxy install -r requirements.yml -p galaxy
+ansible-playbook -i .applier/ galaxy/openshift-applier/playbooks/openshift-cluster-seed.yml -e filter_tags=development,prototype
+```
+
 ### Migrating Content from OpenShift-Playbooks
 
 This site is the evolution of the [Openshift Playbooks](https://github.com/redhat-cop/openshift-playbooks) site.

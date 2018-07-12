@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Template
+metadata:
+  creationTimestamp: null
+  name: pipeline
+objects:
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewBuild
+    creationTimestamp: null
+    labels:
+      build: site-build-bin
+    name: site-build-bin
+  spec:
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: pipeline
+        uri: https://github.com/etsauer/uncontained.io
+      type: Git
+    strategy:
+      jenkinsPipelineStrategy:
+        jenkinsfilePath: Jenkinsfile
+      type: JenkinsPipeline
+    triggers:
+    - github:
+        secret: Adr1cCN25sfMyWmEB3o6
+      type: GitHub
+    - generic:
+        secret: KdSkkhs3SFcXQS5-I3Ld
+      type: Generic
+    - type: ConfigChange
+  status:
+    lastVersion: 0
