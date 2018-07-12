@@ -9,5 +9,6 @@ openshift_cluster_content:
       - development
   - name: Build Builder Image
     file: "{{ inventory_dir }}/../.openshift/files/builder-image.yml"
+    namespace: uncontained--prototype
     tags:
       - prototype
