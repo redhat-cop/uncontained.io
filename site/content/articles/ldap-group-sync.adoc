@@ -1,13 +1,13 @@
 ---
 title: LDAP Group Synchronization with OpenShift
 date: 2017-06-10T00:24:36-04:00
-authors: ["redhatcop"]
+authors: ["redhat-cop"]
 categories:
   - 'Add On'
 tags:
   - openshift
   - ldap
-draft: true
+draft: false
 ---
 = LDAP Group Synchronization
 Red Hat Containers & PaaS CoP
@@ -16,7 +16,7 @@ v1.0, 2017-06-10
 :toc: macro
 :toc-title:
 
-include::layouts/variables.adoc[]
+include::site/layouts/variables.adoc[]
 toc::[]
 
 NOTE: This guide discusses the synchronization of groups defined in an LDAP server with OpenShift and is distinct from using an LDAP server to authenticate users to OpenShift. Please refer to the link:/playbooks/installation/ldap_integration{outfilesuffix}[LDAP Integration guide] for using an LDAP server as an identity provider to govern user authentication to OpenShift.

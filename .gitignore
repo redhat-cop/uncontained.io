@@ -10,3 +10,5 @@ public/
 container-images/hugo/root/usr/bin/asciidoctor
 themes/uncontained.io/static/dist/css/
 
+node_modules/
+dist/
