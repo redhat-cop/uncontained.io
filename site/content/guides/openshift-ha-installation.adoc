@@ -18,7 +18,7 @@ v2.0, 2016-08-18
 :toc: macro
 :toc-title:
 
-include::layouts/variables.adoc[]
+include::site/layouts/variables.adoc[]
 toc::[]
 
 

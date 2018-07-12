@@ -18,7 +18,7 @@ v1.0, 2015-10-30
 :toc: macro
 :toc-title:
 
-include::layouts/variables.adoc[]
+include::site/layouts/variables.adoc[]
 toc::[]
 
 == Load Balancing For HA Applications
