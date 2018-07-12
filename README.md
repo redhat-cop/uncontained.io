@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/redhat-cop/uncontained.io.svg?branch=master)](https://travis-ci.org/redhat-cop/uncontained.io)
 
-This is the source code repository for [Uncontained.io](https://uncontained.io/), a site that focuses on Containers, Cloud, and Digital Transformation guidance for the Enterprise.
+This is the source code repository for [Uncontained.io](http://uncontained.io/), a site that focuses on Containers, Cloud, and Digital Transformation guidance for the Enterprise.
 
 ## Background
 The first sets of uncontained.io guides were created and curated by Red Hat Consultants, along with input from outside community reviewers, but they are not exclusive to Red Hat products.
