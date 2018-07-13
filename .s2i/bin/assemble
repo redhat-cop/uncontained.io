@@ -16,4 +16,4 @@ cp -Rfp /tmp/src/. ./
 echo "Current Directory: ${PWD}"
 
 npm install
-npm build
+npm run build
