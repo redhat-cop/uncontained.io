@@ -20,8 +20,10 @@ items:
     nodeSelector: null
     output:
       to:
-        kind: ImageStreamTag
-        name: site:latest
+        kind: DockerImage
+        name: registry.paas.redhat.com/uncontained/site:latest
+      pushSecret:
+        name: registry-push-config
     postCommit: {}
     resources: {}
     runPolicy: Serial
@@ -32,7 +34,7 @@ items:
           name: hugo-build:latest
         paths:
         - destinationDir: .
-          sourcePath: /opt/app-root/src/
+          sourcePath: /opt/app-root/src/dist/.
     strategy:
       sourceStrategy:
         from:

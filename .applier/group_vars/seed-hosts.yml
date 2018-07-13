@@ -22,3 +22,8 @@ openshift_cluster_content:
     namespace: uncontained--prototype
     tags:
       - prototype
+  - name: Deployment - prototype
+    file: "{{ inventory_dir }}/../.openshift/templates/deployment.yml"
+    namespace: uncontained--prototype
+    tags:
+      - prototype
