@@ -1,40 +1,55 @@
 apiVersion: v1
-kind: BuildConfig
-metadata:
-  creationTimestamp: null
-  labels:
-    build: site
-  name: site
-spec:
-  failedBuildsHistoryLimit: 5
-  nodeSelector: null
-  output:
-    to:
-      kind: ImageStreamTag
-      name: site:latest
-  postCommit: {}
-  resources: {}
-  runPolicy: Serial
-  source:
-    images:
-    - from:
+kind: List
+items:
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: site
+  spec:
+    lookupPolicy:
+      local: true
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    creationTimestamp: null
+    labels:
+      build: site
+    name: site
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
         kind: ImageStreamTag
-        name: uncontainedio:latest
-        namespace: uncontained--prototype
-      paths:
-      - destinationDir: .
-        sourcePath: /opt/app-root/src/
-  strategy:
-    sourceStrategy:
-      from:
-        kind: ImageStreamTag
-        name: nginx:latest
-        namespace: openshift
-    type: Source
-  successfulBuildsHistoryLimit: 5
-  triggers:
-  - type: ConfigChange
-  - imageChange: {}
-    type: ImageChange
-status:
-  lastVersion: 0
+        name: site:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      images:
+      - from:
+          kind: ImageStreamTag
+          name: hugo-build:latest
+        paths:
+        - destinationDir: .
+          sourcePath: /opt/app-root/src/
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nginx:latest
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChange: {}
+    - type: ImageChange
+      imageChange:
+        from:
+          kind: ImageStreamTag
+          name: hugo-build:latest
+          namespace: openshift
+  status:
+    lastVersion: 0
