@@ -12,3 +12,13 @@ openshift_cluster_content:
     namespace: uncontained--prototype
     tags:
       - prototype
+  - name: Hugo build
+    file: "{{ inventory_dir }}/../.openshift/files/hugo-build.yml"
+    namespace: uncontained--prototype
+    tags:
+      - prototype
+  - name: Site build
+    file: "{{ inventory_dir }}/../.openshift/files/site-build.yml"
+    namespace: uncontained--prototype
+    tags:
+      - prototype

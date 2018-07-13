@@ -31,7 +31,7 @@ items:
 
         USER root
 
-        RUN yum install -y rubygems && yum clean all
+        RUN yum install -y rubygems && yum clean all && gem install asciidoctor
 
         USER 1001
     strategy:
@@ -45,6 +45,6 @@ items:
     - generic:
         secret: 0TYRk5fZGhiaM4Lt4BRi
       type: Generic
-    - type: ConfigChange  
+    - type: ConfigChange
   status:
     lastVersion: 0
