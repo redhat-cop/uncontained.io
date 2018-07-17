@@ -91,11 +91,21 @@ npm run build
 
 Uncontained.io is built and hosted on OpenShift, and deployed using [OpenShift Applier](https://github.com/redhat-cop/openshift-applier)
 
-To deploy to a development cluster, run:
+Run the following to pull in applier:
 
 ```
 ansible-galaxy install -r requirements.yml -p galaxy
-ansible-playbook -i .applier/ galaxy/openshift-applier/playbooks/openshift-cluster-seed.yml -e filter_tags=development,prototype
+```
+
+To deploy to a _development_ cluster, run:
+
+```
+ansible-playbook -i .applier/ galaxy/openshift-applier/playbooks/openshift-cluster-seed.yml
+```
+
+To deploy to managed prototype environment, run:
+```
+ansible-playbook -i .applier/ galaxy/openshift-applier/playbooks/openshift-cluster-seed.yml -e filter_tags=prototype
 ```
 
 ### Migrating Content from OpenShift-Playbooks
