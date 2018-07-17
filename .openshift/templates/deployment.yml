@@ -1,12 +1,16 @@
 apiVersion: v1
-kind: List
-items:
+kind: Template
+metadata:
+  name: deployment-template
+  labels:
+    template-type: deployment
+objects:
 - apiVersion: v1
   kind: ImageStream
   metadata:
     name: site
   spec:
-    dockerImageRepository: registry.paas.redhat.com/uncontained/site
+    dockerImageRepository: ${UPSTREAM_IMAGE_REPO}
     importPolicy:
       scheduled: true
 - apiVersion: v1
@@ -17,11 +21,11 @@ items:
       app: site
     name: site
   spec:
-    host: site-uncontained--prototype.ext.paas.dev.redhat.com
+    host: ${HOSTNAME}
     port:
-      targetPort: 8080-tcp
+      targetPort: 8443-tcp
     tls:
-      termination: edge
+      termination: ${TERMINATION}
     to:
       kind: Service
       name: site
@@ -60,8 +64,13 @@ items:
           deploymentconfig: site
       spec:
         containers:
-        - image: registry.paas.redhat.com/uncontained/site@sha256:7f1d0f404d3be2b0928c7d2e4f00b10cb8c9085b1c90b7a02c4380da36712f00
+        - image:
           imagePullPolicy: Always
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 15
+            timeoutSeconds: 1
           name: site
           ports:
           - containerPort: 8080
@@ -71,11 +80,24 @@ items:
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
+          volumeMounts:
+          - name: cert-volume
+            mountPath: /etc/opt/rh/rh-nginx112/nginx/certs/
+            readOnly: true
+          - name: config-volume
+            mountPath: /opt/app-root/etc/nginx.d/
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         schedulerName: default-scheduler
         securityContext: {}
         terminationGracePeriodSeconds: 30
+        volumes:
+        - name: cert-volume
+          secret:
+            secretName: site-int-cert
+        - name: config-volume
+          configMap:
+            name: site-config
     test: false
     triggers:
     - type: ConfigChange
@@ -91,6 +113,8 @@ items:
 - apiVersion: v1
   kind: Service
   metadata:
+    annotations:
+      service.alpha.openshift.io/serving-cert-secret-name: site-int-cert
     creationTimestamp: null
     labels:
       app: site
@@ -110,3 +134,40 @@ items:
       deploymentconfig: site
     sessionAffinity: None
     type: ClusterIP
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: site-config
+  data:
+    tls-server.conf: |-
+      # HTTPS server
+
+      server {
+        listen       8443;
+        server_name  _;
+        root         /opt/app-root/src;
+
+        location / {
+        }
+
+        error_page 404 /404.html;
+        location = /40x.html {
+        }
+
+        error_page 500 502 503 504  /50x.html;
+        location = /50x.html {
+        }
+
+        ssl                  on;
+        ssl_certificate      certs/tls.crt;
+        ssl_certificate_key  certs/tls.key;
+
+        ssl_session_timeout  5m;
+        ssl_protocols  SSLv2 SSLv3 TLSv1;
+        ssl_ciphers  HIGH:!aNULL:!MD5;
+        ssl_prefer_server_ciphers   on;
+      }
+parameters:
+  - name: HOSTNAME
+  - name: TERMINATION
+  - name: UPSTREAM_IMAGE_REPO

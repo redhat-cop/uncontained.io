@@ -1,40 +1,54 @@
 apiVersion: v1
 kind: Template
 metadata:
-  creationTimestamp: null
-  name: pipeline
+  name: site-build-template
 objects:
 - apiVersion: v1
   kind: BuildConfig
   metadata:
-    annotations:
-      openshift.io/generated-by: OpenShiftNewBuild
     creationTimestamp: null
     labels:
-      build: site-build-bin
-    name: site-build-bin
+      build: site
+    name: site
   spec:
-    nodeSelector: {}
-    output: {}
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ${OUTPUT_IMAGE_TYPE}
+        name: ${OUTPUT_IMAGE}
     postCommit: {}
     resources: {}
     runPolicy: Serial
     source:
-      git:
-        ref: pipeline
-        uri: https://github.com/etsauer/uncontained.io
-      type: Git
+      images:
+      - from:
+          kind: ImageStreamTag
+          name: hugo-build:latest
+        paths:
+        - destinationDir: .
+          sourcePath: /opt/app-root/src/dist/.
     strategy:
-      jenkinsPipelineStrategy:
-        jenkinsfilePath: Jenkinsfile
-      type: JenkinsPipeline
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nginx:latest
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
     triggers:
-    - github:
-        secret: Adr1cCN25sfMyWmEB3o6
-      type: GitHub
-    - generic:
-        secret: KdSkkhs3SFcXQS5-I3Ld
-      type: Generic
     - type: ConfigChange
+    - type: ImageChange
+      imageChange: {}
+    - type: ImageChange
+      imageChange:
+        from:
+          kind: ImageStreamTag
+          name: hugo-build:latest
+          namespace: openshift
   status:
     lastVersion: 0
+parameters:
+- name: OUTPUT_IMAGE
+- name: OUTPUT_IMAGE_TYPE
+- name: PUSH_SECRET
