@@ -1,0 +1,173 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: deployment-template
+  labels:
+    template-type: deployment
+objects:
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: site
+  spec:
+    dockerImageRepository: ${UPSTREAM_IMAGE_REPO}
+    importPolicy:
+      scheduled: true
+- apiVersion: v1
+  kind: Route
+  metadata:
+    creationTimestamp: null
+    labels:
+      app: site
+    name: site
+  spec:
+    host: ${HOSTNAME}
+    port:
+      targetPort: 8443-tcp
+    tls:
+      termination: ${TERMINATION}
+    to:
+      kind: Service
+      name: site
+      weight: 100
+    wildcardPolicy: None
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    creationTimestamp: null
+    generation: 1
+    labels:
+      app: site
+    name: site
+  spec:
+    replicas: 2
+    revisionHistoryLimit: 10
+    selector:
+      app: site
+      deploymentconfig: site
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+        creationTimestamp: null
+        labels:
+          app: site
+          deploymentconfig: site
+      spec:
+        containers:
+        - image:
+          imagePullPolicy: Always
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 15
+            timeoutSeconds: 1
+          name: site
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          - containerPort: 8443
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - name: cert-volume
+            mountPath: /etc/opt/rh/rh-nginx112/nginx/certs/
+            readOnly: true
+          - name: config-volume
+            mountPath: /opt/app-root/etc/nginx.d/
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: cert-volume
+          secret:
+            secretName: site-int-cert
+        - name: config-volume
+          configMap:
+            name: site-config
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - site
+        from:
+          kind: ImageStreamTag
+          name: site:latest
+          namespace: uncontained--prototype
+      type: ImageChange
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      service.alpha.openshift.io/serving-cert-secret-name: site-int-cert
+    creationTimestamp: null
+    labels:
+      app: site
+    name: site
+  spec:
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    selector:
+      app: site
+      deploymentconfig: site
+    sessionAffinity: None
+    type: ClusterIP
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: site-config
+  data:
+    tls-server.conf: |-
+      # HTTPS server
+
+      server {
+        listen       8443;
+        server_name  _;
+        root         /opt/app-root/src;
+
+        location / {
+        }
+
+        error_page 404 /404.html;
+        location = /40x.html {
+        }
+
+        error_page 500 502 503 504  /50x.html;
+        location = /50x.html {
+        }
+
+        ssl                  on;
+        ssl_certificate      certs/tls.crt;
+        ssl_certificate_key  certs/tls.key;
+
+        ssl_session_timeout  5m;
+        ssl_protocols  SSLv2 SSLv3 TLSv1;
+        ssl_ciphers  HIGH:!aNULL:!MD5;
+        ssl_prefer_server_ciphers   on;
+      }
+parameters:
+  - name: HOSTNAME
+  - name: TERMINATION
+  - name: UPSTREAM_IMAGE_REPO

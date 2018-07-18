@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: List
+items:
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: hugo-build
+  spec:
+    lookupPolicy:
+      local: true
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    creationTimestamp: null
+    labels:
+      build: hugo-build
+    name: hugo-build
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: hugo-build:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        uri: "https://github.com/etsauer/uncontained.io"
+        ref: "applier-builder-image"
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: builder:latest
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: JT8nWgjYB9y-UylQvY25
+      type: GitHub
+    - generic:
+        secret: ASgPEfHXX2JdZzWYAxcG
+      type: Generic
+    - type: ConfigChange
+    - imageChange: {}
+      type: ImageChange
+  status:
+    lastVersion: 0

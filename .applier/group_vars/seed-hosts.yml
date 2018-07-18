@@ -1,0 +1,48 @@
+---
+
+filter_tags: development
+
+openshift_cluster_content:
+- object: Build Uncontained Prototype
+  content:
+  - name: Create Projects
+    file: "{{ inventory_dir }}/../.openshift/files/projects.yml"
+    file_action: create
+    tags:
+      - development
+  - name: Build Builder Image
+    file: "{{ inventory_dir }}/../.openshift/files/builder-image.yml"
+    namespace: uncontained--prototype
+    tags:
+      - development
+      - prototype
+  - name: Hugo build
+    file: "{{ inventory_dir }}/../.openshift/files/hugo-build.yml"
+    namespace: uncontained--prototype
+    tags:
+      - development
+      - prototype
+  - name: Site build
+    template: "{{ inventory_dir }}/../.openshift/templates/site-build.yml"
+    params: "{{ inventory_dir }}/../.openshift/params/site-build-dev"
+    namespace: uncontained--prototype
+    tags:
+      - development
+  - name: Site build
+    template: "{{ inventory_dir }}/../.openshift/templates/site-build.yml"
+    params: "{{ inventory_dir }}/../.openshift/params/site-build-proto"
+    namespace: uncontained--prototype
+    tags:
+      - prototype
+  - name: Deployment - development
+    template: "{{ inventory_dir }}/../.openshift/templates/deployment.yml"
+    params: "{{ inventory_dir }}/../.openshift/params/deployment-dev"
+    namespace: uncontained--prototype
+    tags:
+      - development
+  - name: Deployment - prototype
+    template: "{{ inventory_dir }}/../.openshift/templates/deployment.yml"
+    params: "{{ inventory_dir }}/../.openshift/params/deployment-proto"
+    namespace: uncontained--prototype
+    tags:
+      - prototype

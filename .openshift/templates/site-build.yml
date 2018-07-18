@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: site-build-template
+objects:
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    creationTimestamp: null
+    labels:
+      build: site
+    name: site
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ${OUTPUT_IMAGE_TYPE}
+        name: ${OUTPUT_IMAGE}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      images:
+      - from:
+          kind: ImageStreamTag
+          name: hugo-build:latest
+        paths:
+        - destinationDir: .
+          sourcePath: /opt/app-root/src/dist/.
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nginx:latest
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChange: {}
+    - type: ImageChange
+      imageChange:
+        from:
+          kind: ImageStreamTag
+          name: hugo-build:latest
+          namespace: openshift
+  status:
+    lastVersion: 0
+parameters:
+- name: OUTPUT_IMAGE
+- name: OUTPUT_IMAGE_TYPE
+- name: PUSH_SECRET

@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: List
+items:
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: builder
+  spec:
+    lookupPolicy:
+      local: true
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    creationTimestamp: null
+    labels:
+      build: builder
+    name: builder
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: builder:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      dockerfile: |-
+        FROM registry.access.redhat.com/rhoar-nodejs/nodejs-8
+
+        USER root
+
+        RUN yum install -y rubygems && yum clean all && gem install asciidoctor
+
+        USER 1001
+    strategy:
+      dockerStrategy: {}
+      type: Docker
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: zzalFwaFe4yHFSEs0zRu
+      type: GitHub
+    - generic:
+        secret: 0TYRk5fZGhiaM4Lt4BRi
+      type: Generic
+    - type: ConfigChange
+  status:
+    lastVersion: 0

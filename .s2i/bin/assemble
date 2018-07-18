@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+
+source /usr/libexec/s2i/env
+
+if [ "$DEV_MODE" == true ] ; then
+	set -x
+fi
+
+chmod 775 -R /tmp/src/.
+
+echo "---> Installing application source"
+cp -Rfp /tmp/src/. ./
+
+echo "Current Directory: ${PWD}"
+
+npm install -s
+npm run build

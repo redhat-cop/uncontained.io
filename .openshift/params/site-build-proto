@@ -1,0 +1,3 @@
+OUTPUT_IMAGE_TYPE=DockerImage
+OUTPUT_IMAGE=registry.paas.redhat.com/uncontained/site:latest
+PUSH_SECRET=registry-push-config
