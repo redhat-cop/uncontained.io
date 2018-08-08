@@ -1,0 +1,12 @@
+{{ partial "header.html" . }}
+	<main class="container">
+		<div class="row">
+			<div class="col-sm-10">
+        {{ .Content }}
+				{{ range where .Site.Pages "Section" "guides" }}
+					{{ partial "summary.html" . }}
+				{{ end }}
+			</div>
+		</div>
+	</main>
+{{ partial "footer.html" . }}
