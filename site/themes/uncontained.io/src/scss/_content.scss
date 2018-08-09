@@ -35,3 +35,61 @@ time.calendar {
     }
   }
 }
+
+.admonitionblock {
+  background-color: theme-color("dark-blue");
+  box-shadow: 1px 1px 10px;
+  padding: 1em 0;
+  margin: .3em 0 2em -1em;
+  a {
+    color: theme-color("light-blue");
+  }
+  table {
+    border-collapse: separate;
+    border: 0;
+    background: none;
+    color: #fff;
+    font-size: 1.1em;
+    table-layout: fixed;
+    width: 100%;
+    td.icon {
+      font-size: 2em;
+      text-align: center;
+      width: 2.5em;
+      .title {
+        line-height: 0;
+        text-indent: -9999px;
+        visibility: hidden;
+      }
+      .title:before {
+        background-size: 1.5em auto;
+        background-repeat: no-repeat;
+        content: "";
+        display: block;
+        height: 1.5em;
+        margin: 0 .5em 0 .5em;
+        width: 1.5em;
+        visibility: visible;
+      }
+    }
+    td.content {
+      padding: 0 1.5em 0 0;
+    }
+  }
+}
+
+.note table td.icon .title:before {
+    background-image: url('/images/icons/white/rgb_Note_White.png');
+}
+
+.tip table td.icon .title:before {
+    background-image: url('/images/icons/white/rgb_ProTip_White.png');
+}
+
+.warning table td.icon .title:before {
+    background-image: url('/images/icons/white/rgb_WatchOut_White.png');
+}
+
+.important table td.icon .title:before {
+    background-image: url('/images/icons/white/rgb_Info_White.png');
+}
