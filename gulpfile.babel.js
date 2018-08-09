@@ -88,7 +88,7 @@ function runServer() {
       baseDir: "./dist"
     }
   });
-  gulp.watch("./site/themes/*/src/*.scss", ["sass"])
+  gulp.watch("./site/themes/*/src/**/*.scss", ["sass"])
   gulp.watch(["./site/**/*", "!./site/themes/*/src/**"], ["hugo"]);
 }
 
