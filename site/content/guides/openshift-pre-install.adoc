@@ -3,7 +3,7 @@ date: "2018-02-24T01:22:09-05:00"
 title: "Openshift Pre-Install Validation Checklist"
 authors: ["mwitzenm"]
 categories:
-  - Add On
+  - 'Add On'
 tags:
   - openshift
 draft: false
@@ -11,15 +11,19 @@ draft: false
 = OpenShift Pre-Install Validation Checklist
 Matt Witzenman <mwitzenm@redhat.com>
 v1.0, 2017-03-29
+:scripts_repo: https://github.com/rhtconsulting/rhc-ose
 :toc: macro
 :toc-title:
 
 include::site/layouts/variables.adoc[]
+
+This document is designed to ensure your OpenShift cluster nodes are ready for the installation of OpenShift via the advanced ansible installer
+
+<!--more-->
+
 toc::[]
 
-== This document is designed to ensure your OpenShift cluster nodes are ready for the installation of OpenShift via the advanced ansible installer
-
-=== Ensure ssh keys are propagated for ansible installer
+== Ensure ssh keys are propagated for ansible installer
 
 The Ansible installer requires either: root password-less ssh access using ssh keys or a non-root user with password-less ssh acess and full password-less sudo access from the ansible installer node
 
@@ -29,7 +33,7 @@ How to Propagate your key example:
 ssh-copy-id -i ~/.ssh/Myidrsa.pub remote.server.com
 ----
 
-=== DNS lookup on each node in your cluster
+== DNS lookup on each node in your cluster
 
 This is to ensure dns is properly set
 
@@ -40,7 +44,7 @@ dig www.google.com +short
 172.217.7.132
 ----
 
-=== DNS reverse lookup on each node
+== DNS reverse lookup on each node
 
 example:
 
@@ -49,7 +53,7 @@ dig -x `dig www.google.com +short` +short
 iad23s59-in-f4.1e100.net.
 ----
 
-=== OCP 3.3 install repos
+== OCP 3.3 install repos
 
 If Installing OpenShift 3.3 please use these repos
 
@@ -65,7 +69,7 @@ yum repolist |egrep 'rhel-7-server-rpms|rhel-7-server-extras-rpms|rhel-7-server-
 |==================
 
 
-=== OCP 3.4 install repos
+== OCP 3.4 install repos
 
 If Installing OpenShift 3.4 please use these repos
 
@@ -81,43 +85,43 @@ yum repolist |egrep 'rhel-7-server-rpms|rhel-7-server-extras-rpms|rhel-7-server-
 |==================
 
 
-=== Show the repos expected and enabled
+== Show the repos expected and enabled
 
 ----
 yum repolist enabled
 ----
 
-=== Are updates required before you install OpenShift
+== Are updates required before you install OpenShift
 
 ----
 yum list updates
 ----
 
-=== Is subscription manager active
+== Is subscription manager active
 
 ----
 subscription-manager status
 ----
 
-=== To list all repos recognized by your rhel 7 nodes
+== To list all repos recognized by your rhel 7 nodes
 
 ----
 subscription-manager repos
 ----
 
-=== Ensure docker is enabled
+== Ensure docker is enabled
 
 ----
 systemctl enable docker
 ----
 
-=== Ensure NetworkManager is enabled
+== Ensure NetworkManager is enabled
 
 ----
 systemctl enable NetworkManager
 ----
 
-=== Check the sha256sum of a docker 1.10 installation for OpenShift 3.3, 3.2
+== Check the sha256sum of a docker 1.10 installation for OpenShift 3.3, 3.2
 
 ----
 sha256sum /etc/sysconfig/docker
@@ -143,7 +147,7 @@ These are here to give you confidence that your docker storage setup will cleanl
 |/etc/sysconfig/docker-storage-setup | bf3e1056e8df0dd4fc170a89ac2358f872a17509efa70a3bc56733a488a1e4b2
 |==================
 
-=== Check to see if SELinux is installed and enforcing
+== Check to see if SELinux is installed and enforcing
 
 Ensure you see SELinux status: enabled, Current mode: enforcing, Mode from config file: enforcing
 

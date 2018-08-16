@@ -19,13 +19,18 @@ v2.0, 2016-08-18
 :toc-title:
 
 include::site/layouts/variables.adoc[]
-toc::[]
 
 
 
 == Overview
 
-This article proposes a reference architecture for a Highly Available installation of OpenShift. We will outline the architecture of such an installation and walk through the installation process.  The intention of this process is to perform iterative installations of the OpenShift cluster, which we refer too as the MVP (Minimal Viable Product ) process; starting with the most basic installation and iteratively adding components and integrations points to the OpenShift Cluster.  The goal is to provide the knowledge transfer of how to build and maintain the cluster to gain confidence in the ability to install and manage any cluster.
+This article proposes a reference architecture for a Highly Available installation of OpenShift. We will outline the architecture of such an installation and walk through the installation process.  
+
+<!--more-->
+
+toc::[]
+
+The intention of this process is to perform iterative installations of the OpenShift cluster, which we refer too as the MVP (Minimal Viable Product ) process; starting with the most basic installation and iteratively adding components and integrations points to the OpenShift Cluster.  The goal is to provide the knowledge transfer of how to build and maintain the cluster to gain confidence in the ability to install and manage any cluster.
 
 == Cluster Design & Architecture
 

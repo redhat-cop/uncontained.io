@@ -16,11 +16,13 @@ v1.0, 2016-05-17
 :toc: macro
 :toc-title:
 include::site/layouts/variables.adoc[]
-toc::[]
 
 == Overview
 
 This is a brief overview to aimed at system administrators aimed at getting accustomed to what OpenShift actually looks like installed on a host, and common places to look when things go wrong.
+<!--more-->
+
+toc::[]
 
 == What should be running (systemctl)
 

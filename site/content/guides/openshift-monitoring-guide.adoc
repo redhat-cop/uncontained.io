@@ -16,9 +16,13 @@ v1.0, 2017-08-29
 :toc: macro
 :toc-title:
 
+include::site/layouts/variables.adoc[]
+
 OpenShift Monitoring is an ever evolving problem space, with many layers, approaches, and complexities. We attempt to unpack them here.
 
-include::site/layouts/variables.adoc[]
+<!--more-->
+
+
 toc::[]
 
 == Overview

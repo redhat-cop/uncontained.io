@@ -18,9 +18,12 @@ v2.0, 2016-08-18
 :toc-title:
 
 include::site/layouts/variables.adoc[]
-toc::[]
 
 _This is a followup to link:/guides/openshift-ha-installation[Installing a Highly Available OpenShift Cluster]. Many assumptions are made based on the information in that guide. If you have not yet been through this guide, we recommend doing so before continuing._
+
+<!--more-->
+
+toc::[]
 
 == Overview
 

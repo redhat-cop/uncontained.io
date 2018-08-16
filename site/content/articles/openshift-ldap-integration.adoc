@@ -14,13 +14,14 @@ summary: Hello world
 = LDAP Integration for Authentication
 Jamie Whetsell <jwhetsel@redhat.com>
 Andrew Block <ablock@redhat.com>
+
 :toc: macro
 :toc-title:
-
 include::site/layouts/variables.adoc[]
 toc::[]
 
 The OpenShift Container Platform provides support for leveraging users and groups stored in an Lightweight Directory Access Protocol (LDAP) V3 server using simple bind authentication.
+<!--more-->
 
 The official OpenShift documentation provides a high level overview for authenticating a user against an LDAP server:
 
