@@ -20,7 +20,7 @@ v1.0, 2015-10-30
 
 include::site/layouts/variables.adoc[]
 
-This guide will walk you how to leverage Load Balancers for cluster and application high availability.
+This guide will walk you through how to leverage Load Balancers for cluster and application high availability.
 
 <!--more-->
 
