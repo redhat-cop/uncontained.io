@@ -88,10 +88,8 @@ function runServer() {
       baseDir: "./dist"
     }
   });
-  gulp.watch("./src/js/**/*.js", ["js"]);
-  gulp.watch("./src/css/**/*.css", ["css"]);
-  gulp.watch("./src/fonts/**/*", ["fonts"]);
-  gulp.watch("./site/**/*", ["hugo"]);
+  gulp.watch("./site/themes/*/src/**/*.scss", ["sass"])
+  gulp.watch(["./site/**/*", "!./site/themes/*/src/**"], ["hugo"]);
 }
 
 /**
