@@ -119,3 +119,19 @@ article {
     padding: .75em 1.5em;
   }
 }
+
+/* Styling for code blocks*/
+
+// inline code only
+p>code, .admonitionblock code {
+  display: inline-block;
+  padding: .25em .5em;
+}
+
+// code blocks only
+pre {
+  border-left: theme-color("coral") 3px solid;
+  display: block;
+  margin: 1em 1em 2em 1em;
+  padding: .75em 1.5em;
+}
