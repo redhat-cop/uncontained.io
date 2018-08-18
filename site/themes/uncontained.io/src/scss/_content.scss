@@ -1,95 +1,121 @@
-time.calendar {
-  color: theme-color("medium-blue");
-  margin-top: .8em;
-  &:before {
-    background-image: url('/images/icons/blue/rgb_Calendar_Blue.png');
-    background-size: 1.5em auto;
-    background-repeat: no-repeat;
-    display: inline-block;
-    width: 1.5em;
-    height: 1.5em;
-    margin: 0 .5em -.5em 0;
-    content:"";
+article {
+  h1 {
+    border-bottom: theme-color("medium-gray") 1px solid;
+    margin: 0;
+    padding: .4em 0;
   }
-}
 
-.byline {
-  color: theme-color("medium-blue");
-  margin-top: .8em;
-  a {
-    &:before {
-      background-image: url('/images/icons/blue/rgb_Author_Blue.png');
-      background-size: 1.5em auto;
-      background-repeat: no-repeat;
-      display: inline-block;
-      width: 1.5em;
-      height: 1.5em;
-      margin: 0em .2em -.3em .5em;
-      content:"";
+  .meta {
+    padding: 1.5em 0;
+    color: theme-color("coral");
+    a {
+      color: theme-color("coral");
     }
-  }
-  a.group {
-    &:before {
-      background-image: url('/images/icons/blue/rgb_Groupauthorship_Blue.png');
-      margin: 0em .5em -.3em .5em;
-    }
-  }
-}
-
-.admonitionblock {
-  background-color: theme-color("dark-blue");
-  box-shadow: 1px 1px 10px;
-  padding: 1em 0;
-  margin: .3em 0 2em -1em;
-  a {
-    color: theme-color("light-blue");
-  }
-  table {
-    border-collapse: separate;
-    border: 0;
-    background: none;
-    color: #fff;
-    font-size: 1.1em;
-    table-layout: fixed;
-    width: 100%;
-    td.icon {
-      font-size: 2em;
-      text-align: center;
-      width: 2.5em;
-      .title {
-        line-height: 0;
-        text-indent: -9999px;
-        visibility: hidden;
-      }
-      .title:before {
-        background-size: 1.5em auto;
+    time.calendar, .byline a {
+      margin: 0 3em 0 0;
+      &:before {
+        background-color: theme-color("coral");
+        background-image: url('/images/icons/white/rgb_Calendar_White.png');
+        background-size: 1.7em auto;
         background-repeat: no-repeat;
-        content: "";
-        display: block;
-        height: 1.5em;
-        margin: 0 .5em 0 .5em;
-        width: 1.5em;
-        visibility: visible;
+        background-position: center;
+        border-radius: 50%;
+        display: inline-block;
+        width: 1.8em;
+        height: 1.8em;
+        margin: 0 .5em -.5em 0;
+        content:"";
       }
     }
-    td.content {
-      padding: 0 1.5em 0 0;
+
+    .byline {
+      a {
+        font-size: 18px;
+        margin: 0 1em 0 0;
+        &:before {
+          background-image: url('/images/icons/white/rgb_Author_White.png');
+        }
+      }
+      a.group {
+        &:before {
+          background-image: url('/images/icons/white/rgb_Groupauthorship_White.png');
+          margin: 0em .5em -.3em .5em;
+        }
+      }
     }
   }
-}
 
-.note table td.icon .title:before {
-    background-image: url('/images/icons/white/rgb_Note_White.png');
-}
+  /* Styling for admonitions */
+  .admonitionblock {
+    background-color: theme-color("dark-blue");
+    box-shadow: 1px 1px 10px;
+    padding: 1em 0;
+    margin: .3em 0 2em -1em;
+    a {
+      color: theme-color("light-blue");
+    }
+    table {
+      border-collapse: separate;
+      border: 0;
+      background: none;
+      color: #fff;
+      font-size: 1.1em;
+      table-layout: fixed;
+      width: 100%;
+      td.icon {
+        font-size: 2em;
+        text-align: center;
+        width: 2.5em;
+        .title {
+          line-height: 0;
+          text-indent: -9999px;
+          visibility: hidden;
+        }
+        .title:before {
+          background-size: 1.5em auto;
+          background-repeat: no-repeat;
+          content: "";
+          display: block;
+          height: 1.5em;
+          margin: 0 .5em 0 .5em;
+          width: 1.5em;
+          visibility: visible;
+        }
+      }
+      td.content {
+        padding: 0 1.5em 0 0;
+      }
+    }
+  }
 
-.tip table td.icon .title:before {
-    background-image: url('/images/icons/white/rgb_ProTip_White.png');
-}
+  .note table td.icon .title:before {
+      background-image: url('/images/icons/white/rgb_Note_White.png');
+  }
 
-.warning table td.icon .title:before {
-    background-image: url('/images/icons/white/rgb_WatchOut_White.png');
-}
+  .tip table td.icon .title:before {
+      background-image: url('/images/icons/white/rgb_ProTip_White.png');
+  }
 
-.important table td.icon .title:before {
-    background-image: url('/images/icons/white/rgb_Info_White.png');
+  .warning table td.icon .title:before {
+      background-image: url('/images/icons/white/rgb_WatchOut_White.png');
+  }
+
+  .important table td.icon .title:before {
+      background-image: url('/images/icons/white/rgb_Info_White.png');
+  }
+
+  /* Styling for code blocks*/
+  // inline code only
+  p>code, .admonitionblock code {
+    display: inline-block;
+    padding: .25em .5em;
+  }
+
+  // code blocks only
+  pre {
+    border-left: theme-color("coral") 3px solid;
+    display: block;
+    margin: 1em 1em 2em 1em;
+    padding: .75em 1.5em;
+  }
 }
