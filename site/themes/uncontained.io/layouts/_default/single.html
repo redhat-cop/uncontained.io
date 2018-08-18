@@ -1,10 +1,12 @@
 {{ partial "header.html" . }}
 	<main class="container">
 		<div class="row">
-			<article class="col-sm-10">
+			<article>
 				<h1>{{ .Title }}</h1>
-				{{ partial "date.html" . }}
-				{{ partial "author.html" . }}
+				<div class="meta">
+					{{ partial "date.html" . }}
+					{{ partial "author.html" . }}
+				</div>
 				<div>
 					{{ .Content }}
 				</div>
