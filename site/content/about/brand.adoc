@@ -5,12 +5,77 @@ linkTitle: Brand Elements
 
 = Branding and Styling for Uncontained
 
+This page serves as a design and styling guide for the site.
+
 == Admonitions
 
 NOTE: This is a _Note_ block
 
-TIP: This is a _Tip_ block
+TIP: This is a _Tip_ block with an `inline code block` in it.
 
 WARNING: This warns readers of something not to do
 
 IMPORTANT: This notifies of very critical information
+
+== Code Styling
+
+Here is a code block with no specific syntax highlighting:
+
+----
+...
+[OSEv3:vars]
+ansible_user=root
+
+deployment_type=openshift-enterprise
+openshift_release=v3.7
+
+openshift_master_api_port=443
+openshift_master_console_port=443
+openshift_portal_net=172.30.0.0/16
+osm_cluster_network_cidr=10.128.0.0/14
+
+openshift_master_cluster_hostname=console-int.c1-ocp.myorg.com <1>
+openshift_master_cluster_public_hostname=console.c1-ocp.myorg.com <2>
+
+openshift_master_default_subdomain=apps.c1-ocp.myorg.com <3>
+...
+----
+
+Here is a `code block` containing `ini` syntax:
+
+[source,ini]
+----
+# hosts file for c1-ocp.myorg.com
+[OSEv3:children]
+masters
+etcd
+nodes
+
+[OSEv3:vars]
+
+[masters]
+[etcd]
+[nodes]
+----
+
+Here is a code block containing `yaml`:
+
+[source,yaml]
+----
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: sample-pipeline
+  labels:
+    name: sample-pipeline
+spec:
+  strategy:
+    type: JenkinsPipeline
+    jenkinsPipelineStrategy:
+      jenkinsfile: |-
+        node("maven") {
+          stage("echo") {
+            println("Hello World")
+          }
+        }
+----

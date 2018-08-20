@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700);
+@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro:300,400,500,600,700);
 
 a, a:hover, a:active {
   color: theme-color("light-blue");
@@ -32,4 +33,11 @@ h3,
   font-size: 25px;
   font-weight: bold;
   letter-spacing: 2px;
+}
+
+pre, code {
+  font-family: "Source Code Pro";
+  font-weight: 500;
+  line-height: 23px;
+  color: theme-color("black");
 }
