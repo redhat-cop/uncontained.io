@@ -9,7 +9,6 @@
     {{- $author := ( index $.Site.Data.authors $authorID ) -}}
     {{- $i18nAuthor := ( index $author $lang ) -}}
     {{- $name := ( or $i18nAuthor.name $author.name ) -}}
-    {{- if gt $i 0 }}, {{ end -}}
     <a class='{{ if eq $author.group true }}group{{end}}' href='{{ ( print "authors" "/" $author.id ) | relLangURL }}'>
       {{- $name.display -}}
     </a>
