@@ -1,6 +1,7 @@
 .footer-main {
-  border-top: 1px solid theme-color("light");
-  padding: 10px;
+  background-color: theme-color("dark-blue");
+  color: white;
+  padding: 1em;
 
   p:last-child {
     margin-bottom: 0;

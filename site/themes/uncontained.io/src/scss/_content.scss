@@ -2,11 +2,14 @@ article {
   h1 {
     border-bottom: theme-color("medium-gray") 1px solid;
     margin: 0;
-    padding: .4em 0;
+    padding: .5em;
   }
 
+  &>div {
+    padding: 0 1.5em;
+  }
   .meta {
-    padding: 1.5em 0;
+    padding: 1.5em;
     color: theme-color("coral");
     a {
       color: theme-color("coral");
@@ -50,7 +53,7 @@ article {
     background-color: theme-color("dark-blue");
     box-shadow: 1px 1px 10px;
     padding: 1em 0;
-    margin: .3em 0 2em -1em;
+    margin: .3em 0 2em -1.8em;
     a {
       color: theme-color("light-blue");
     }

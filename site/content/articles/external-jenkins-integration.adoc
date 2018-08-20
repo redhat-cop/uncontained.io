@@ -18,12 +18,7 @@ v1.0, 2017-05-10
 
 include::site/layouts/variables.adoc[]
 
-== Overview
-
-
-The OpenShift Container Platform provides a number of features to support Continuous Integration and Continuous Delivery. Aside from its native build and deployment capabilities. 
-
-<!--more-->
+The OpenShift Container Platform provides a number of features to support Continuous Integration and Continuous Delivery. Aside from its native build and deployment capabilities.
 
 toc::[]
 

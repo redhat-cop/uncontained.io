@@ -1,13 +1,18 @@
 {{ partial "header.html" . }}
-	<main class="container">
+	<main class="container homepage">
 		{{ if .Content }}
 		<div>
 			{{ .Content }}
 		</div>
 		{{ end }}
-		{{ range .Paginator.Pages }}
-			{{ partial "summary.html" . }}
-		{{ end }}
-		{{ partial "pagination.html" . }}
+		<div class="row summaries">
+			<h2>Articles List</h2>
+			<h3></h3>
+			{{ range .Paginator.Pages }}
+				{{ partial "summary.html" . }}
+			{{ end }}
+			{{ partial "pagination.html" . }}
+
+		</div>
 	</main>
 {{ partial "footer.html" . }}

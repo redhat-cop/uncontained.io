@@ -21,10 +21,27 @@ $enable-shadows: false;
 
 // =Typography
 
-$font-family-sans-serif: 'Source Sans Pro', sans-serif;
+$font-family-sans-serif: 'Open Sans', sans-serif;
 
 $body-color: #000;
 $link-color: #00aae5;
 $link-hover-color: theme-color("primary");
 $headings-font-weight: 600;
 $code-color: $body-color;
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  2x: 1500px
+);
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  2x: 1440px
+);
