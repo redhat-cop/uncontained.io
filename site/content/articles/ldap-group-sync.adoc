@@ -17,10 +17,12 @@ v1.0, 2017-06-10
 :toc-title:
 
 include::site/layouts/variables.adoc[]
+
+This guide discusses the synchronization of groups defined in an LDAP server with OpenShift and is distinct from using an LDAP server to authenticate users to OpenShift. Please refer to the link:/playbooks/installation/ldap_integration{outfilesuffix}[LDAP Integration guide] for using an LDAP server as an identity provider to govern user authentication to OpenShift.
+
+<!--more-->
+
 toc::[]
-
-NOTE: This guide discusses the synchronization of groups defined in an LDAP server with OpenShift and is distinct from using an LDAP server to authenticate users to OpenShift. Please refer to the link:/playbooks/installation/ldap_integration{outfilesuffix}[LDAP Integration guide] for using an LDAP server as an identity provider to govern user authentication to OpenShift.
-
 The OpenShift Container Platform contains a fully functional Role Based Access Control (RBAC) system. Access to privileged resources can be granted on a per user basis or to a set of users, known as a Group. Many organizations leveraging an LDAP server to manage the authentication of users to OpenShift may want to also synchronize groups that may already be defined in an LDAP server with OpenShift to simplify the management into a single location.
 
 NOTE: Only users that have `cluster-admin` privileges may synchronize LDAP groups with OpenShift.

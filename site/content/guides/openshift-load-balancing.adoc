@@ -19,7 +19,16 @@ v1.0, 2015-10-30
 :toc-title:
 
 include::site/layouts/variables.adoc[]
+
+This guide will walk you through how to leverage Load Balancers for cluster and application high availability.
+
+<!--more-->
+
 toc::[]
+
+
+
+
 
 == Load Balancing For HA Applications
 
@@ -83,7 +92,7 @@ Requirements for a Full Integration include:
 
 In this way, the OpenShift router pods work as configuration agents for the F5. Rather than handling incoming web traffic, the pods just watch the OpenShift API for new routes to be created and pass that configuration information up to the F5 via its API to configure routes and handle traffic at the load balancer level.
 
-Through the use of tunnels provided by ramp nodes, the F5 BIG-IP(TM) is given the ability to directly send traffic to OpenShift pods.
+Through the use of tunnels provided by ramp nodes, the F5 BIG-IP(TM) is given:s/^M$// the ability to directly send traffic to OpenShift pods.
 
 TIP: By default, the use of a Ramp Node creates a single point of failure. To avoid this, you must configure a link:{docs_url}install_config/routing_from_edge_lb.html#establishing-a-tunnel-using-a-ramp-node[highly available ramp node].
 
