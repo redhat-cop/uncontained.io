@@ -19,8 +19,6 @@ include::site/layouts/variables.adoc[]
 
 This document is designed to ensure your OpenShift cluster nodes are ready for the installation of OpenShift via the advanced ansible installer
 
-<!--more-->
-
 toc::[]
 
 == Ensure ssh keys are propagated for ansible installer

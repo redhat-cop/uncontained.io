@@ -1,14 +1,25 @@
 {{ partial "header.html" . }}
-	<main class="container">
-		<div class="row">
-			<div class="col-sm-10">
-				{{ range first 3 .Paginator.Pages }}
+	<main class="container homepage">
+		<div class="row splash">
+			<div class="text">
+				<h2>Uncontained.io is pushing the boundaries when it comes to putting emerging technologies into practice in the enterprise</h2>
+				<p>We are a community of experts passionate about the part that technologies play in the digital trasnformation journey.</p>
+			</div>
+		</div>
+		<div class="row summaries">
+				<h2>Featured Articles</h2>
+				<h3><a href="/articles/">View all Content</a></h3>
+				{{ range first 3 .Pages }}
 					{{ partial "summary.html" . }}
 				{{ end }}
-				{{ partial "pagination.html" . }}
-				{{ partial "taxonomy.html" . }}
-				{{ partial "contribute.html" . }}
-			</div>
+		</div>
+		<!-- tags
+		<div class="row">
+			{{ partial "taxonomy.html" . }}
+		</div>
+	-->
+		<div class="row">
+			{{ partial "contribute.html" . }}
 		</div>
 	</main>
 {{ partial "footer.html" . }}

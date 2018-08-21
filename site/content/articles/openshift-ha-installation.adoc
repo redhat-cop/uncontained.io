@@ -20,13 +20,7 @@ v2.0, 2016-08-18
 
 include::site/layouts/variables.adoc[]
 
-
-
-== Overview
-
-This article proposes a reference architecture for a Highly Available installation of OpenShift. We will outline the architecture of such an installation and walk through the installation process.  
-
-<!--more-->
+This article proposes a reference architecture for a Highly Available installation of OpenShift. We will outline the architecture of such an installation and walk through the installation process.
 
 toc::[]
 
@@ -71,61 +65,6 @@ nodes
 [etcd]
 [nodes]
 ----
-
-```
-# hosts file for c1-ocp.myorg.com
-[OSEv3:children]
-masters
-etcd
-nodes
-
-[OSEv3:vars]
-
-[masters]
-[etcd]
-[nodes]
-```
-
-{{< highlight ini >}}
-```
-# hosts file for c1-ocp.myorg.com
-[OSEv3:children]
-masters
-etcd
-nodes
-
-[OSEv3:vars]
-
-[masters]
-[etcd]
-[nodes]
-```
-{{</ highlight>}}
-
-{{< highlight go "linenos=table,hl_lines=8 15-17,linenostart=199" >}}
-// GetTitleFunc returns a func that can be used to transform a string to
-// title case.
-//
-// The supported styles are
-//
-// - "Go" (strings.Title)
-// - "AP" (see https://www.apstylebook.com/)
-// - "Chicago" (see http://www.chicagomanualofstyle.org/home.html)
-//
-// If an unknown or empty style is provided, AP style is what you get.
-func GetTitleFunc(style string) func(s string) string {
-  switch strings.ToLower(style) {
-  case "go":
-    return strings.Title
-  case "chicago":
-    tc := transform.NewTitleConverter(transform.ChicagoStyle)
-    return tc.Title
-  default:
-    tc := transform.NewTitleConverter(transform.APStyle)
-    return tc.Title
-  }
-}
-{{< / highlight >}}
 
 We'll add to this file as we go.
 
@@ -181,6 +120,7 @@ This is the port that the Master console will be listening on. The default value
 
 Once networking decisions have been made, we should be able to add the following to the Ansible inventory file for the cluster:
 
+[source,ini]
 ----
 ...
 [OSEv3:vars]

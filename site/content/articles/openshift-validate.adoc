@@ -18,8 +18,6 @@ include::site/layouts/variables.adoc[]
 
 After having gone through the process of building an OpenShift environment, it's important to go through a few validation steps to ensure that all components are in proper working order. This document walks you through those steps.
 
-<!--more-->
-
 toc::[]
 
 == Validate Nodes

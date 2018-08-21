@@ -22,8 +22,6 @@ include::site/layouts/variables.adoc[]
 
 This guide will walk you through how to leverage Load Balancers for cluster and application high availability.
 
-<!--more-->
-
 toc::[]
 
 

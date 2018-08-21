@@ -1,6 +1,4 @@
 .header-main {
-  border-bottom: 1px solid theme-color("light");
-  margin-bottom: 30px;
   background-color: theme-color("dark-blue");
   padding: 15px 0;
   .container {
@@ -15,13 +13,14 @@
   color: $white;
   &:hover, &:focus {
     color: $black;
+    @include fontSize(25px);
     text-decoration: none;
   }
 }
 
 @include media-breakpoint-up(sm) {
   .logotype {
-    @include fontSize(50px);
+    @include fontSize(25px);
   }
 }
 

@@ -1,0 +1,102 @@
+/* container for summaries, with a horizontal tile layout */
+
+.homepage {
+  color: theme-color("gray");
+  .row {
+    padding: 1em 2em;
+    &>p {
+      padding: .3em 3em;
+    }
+  }
+  div>h2, div>h3 {
+    font-weight: 400;
+    letter-spacing: 1px;
+    padding: 1em 0em 1em 0em;
+    margin: 0;
+  }
+  div>h2 {
+    color: #333;
+    font-size: 1.3em;
+  }
+
+  $width: 14em;
+  $color: theme-color("light-blue");
+
+  .splash {
+    background-image: url("/images/banner-pattern.png");
+
+    color: white;
+    h2 {
+      color: white;
+    }
+  }
+}
+
+.summaries {
+  background-color: #eee;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  &>* {
+    flex: 1 1 25%;
+  }
+  &>h2, &>h3 {
+    flex: 1 1 50%;
+    justify-content: space-between;
+  }
+  &>h3 {
+    text-align: right;
+    a {
+      color: theme-color("medium-blue");
+    }
+  }
+}
+
+.summary {
+  background-color: theme-color("white");
+  height: 22em;
+  margin: 1em 2em;
+  padding-bottom: 1em;
+  h2 {
+    font-size: 1.1em;
+    a {
+    background-color: theme-color("dark-blue");
+    color: theme-color("white");
+    display: block;
+    padding: 1em;
+      &:hover, &:focus {
+        text-decoration: none;
+      }
+    }
+  }
+  p {
+    height: 13em;
+    margin-top: 1em;
+    overflow: hidden;
+    padding: 1em;
+  }
+  .read-more {
+    font-weight: 500;
+    margin-top: 2em;
+    a {
+      color: theme-color("dark-blue");
+      padding: 0.4em .8em;
+      &:hover, &:focus {
+        color: theme-color("medium-blue");
+        text-decoration: none;
+      }
+    }
+    .caret {
+      font-weight: 600;
+      font-size: 1.2em;
+    }
+  }
+}
+
+.summary:nth-child(3n - 1) {
+  margin-right: 0;
+}
+
+.summary:nth-child(3n + 0) {
+  margin-left: 0;
+}

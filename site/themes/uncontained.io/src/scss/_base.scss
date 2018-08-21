@@ -1,3 +1,27 @@
+body {
+  background-color: theme-color("gray");
+
+}
+
+main {
+  background-color: white;
+}
+
 img {
   @include img-fluid;
+}
+
+.center {
+  text-align: center;
+}
+
+.btn, .btn:hover, .btn:active {
+  background-color: theme-color("coral");
+  border: 0;
+  border-radius: 1em;
+  font-size: 1.25em;
+}
+
+.row {
+  display: block;
 }
