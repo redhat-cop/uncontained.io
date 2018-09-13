@@ -1,6 +1,8 @@
 body {
   background-color: theme-color("gray");
-
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 main {
@@ -22,6 +24,6 @@ img {
   font-size: 1.25em;
 }
 
-.row {
+.block {
   display: block;
 }
