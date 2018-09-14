@@ -35,8 +35,8 @@ tag = "tags"
 page = "/:slug/"
 
 [[menu.main]]
-name = "Repo"
-weight = -10
+name = "Contribute"
+weight = 1
 identifier = "repository"
 url = "https://github.com/redhat-cop/uncontained.io"
 

@@ -8,6 +8,7 @@ tags:
   - openshift
   - operations
 draft: false
+featured: true
 ---
 = Monitoring OpenShift
 Eric Sauer <esauer@redhat.com>

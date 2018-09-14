@@ -20,21 +20,22 @@
 <body>
 	<header class="header-main">
 		<div class="container">
-			<a href="{{ .Site.BaseURL }}" class="logotype"><img  alt="{{ .Site.Title }}" src="/images/logo/Uncontained.io_Logo_Horizontal_RGB_White.png" width="400" /></a>
-			<!-- Hide the main menu for now -->
-			<!-- <nav>
-				<ul>
-					{{ range .Site.Menus.main }}
-					<li><a href="{{ .URL | relURL }}">{{ .Name }}</a></li>
-					{{ end }}
-				</ul>
-			</nav> -->
-			<div class="search-container">
-				<form action="/action_page.php">
-					<input type="text" name="search">
-					<button type="submit"><i class="icon icon-search"></i></button>
-				</form>
-			</div>
-
+			<nav class="navbar navbar-expand-lg">
+				<a href="{{ .Site.BaseURL }}" class="navbar-brand logotype"><img  alt="{{ .Site.Title }}" src="/images/logo/Uncontained.io_Logo_Horizontal_RGB_White.png" width="400" /></a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav ml-auto mr-3">
+						{{ range .Site.Menus.main }}
+						<li class="navbar-item"><a class="nav-link" href="{{ .URL | relURL }}">{{ .Name }}</a></li>
+						{{ end }}
+					</ul>
+					<form action="/action_page.php" class="form-inline my-2 my-lg-0 search-container">
+						<input class="form-control" type="search" name="search">
+						<button type="submit"><i class="icon icon-search"></i></button>
+					</form>
+				</div>
+			</nav>
 		</div>
 	</header>

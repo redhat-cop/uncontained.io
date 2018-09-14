@@ -9,7 +9,7 @@
 		<div class="row summaries">
 				<h2>Featured Articles</h2>
 				<h3><a href="/articles/">View all Content</a></h3>
-				{{ range first 3 .Pages }}
+				{{ range (where .Site.Pages "Params.featured" true).ByDate }}
 					{{ partial "summary.html" . }}
 				{{ end }}
 		</div>
