@@ -8,6 +8,7 @@ tags:
   - jenkins
   - openshift
 draft: false
+featured: true
 ---
 = External Jenkins Integration
 Red Hat Containers & PaaS CoP

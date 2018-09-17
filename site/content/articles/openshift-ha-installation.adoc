@@ -10,6 +10,7 @@ tags:
   - loadbalancing
   - f5
 draft: false
+featured: true
 ---
 = Installing a Highly-Available OpenShift Cluster
 Red Hat Containers & PaaS CoP

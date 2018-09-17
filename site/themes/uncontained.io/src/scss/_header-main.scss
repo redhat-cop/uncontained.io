@@ -1,10 +1,5 @@
 .header-main {
   background-color: theme-color("dark-blue");
-  padding: 15px 0;
-  .container {
-    display: flex;
-    justify-content: space-between;
-  }
 }
 
 .logotype {
@@ -26,7 +21,7 @@
 
 .search-container {
   margin: auto 0;
-  input[type=text] {
+  input[type=search] {
     padding: 6px;
     font-size: 17px;
     border: none;
@@ -55,4 +50,10 @@
       }
     }
   }
+}
+
+.nav-link, .nav-link:hover, .nav-link:active {
+  color: theme-color("white");
+  font-size: 1.2em;
+  padding-left: 1em;
 }
