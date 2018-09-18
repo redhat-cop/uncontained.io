@@ -4,15 +4,17 @@
 
 toc::[]
 
-From the GitHub Manual of Style, which this style guide inherits from:
-
 > Words are an important part of how software works. Just as we have a style guide for our code, we have a style guide for our tone and our voice. Even though there may be dozens of people creating a product, it should still sound like we speak in one consistent voice.
 >
 > In other words, the way we write is just as important as the way we design. Consider these things when writing copy.
 
-Where possible, automated tests enforce style rules.
+_Reference: link:https://github.com/github/opensource.guide/blob/master/docs/styleguide.md[opensource.guide style guide]_
+
+This document provides content writer's with some guidance around how to structure new content contributions. We hope it is a valuable resource for you.
 
 == uncontained.io Content Standards
+
+uncontained.io content and documentation (README files) should be in written in link:http://asciidoc.org/[Asciidoc] format. If you're not familiar with it, we recommend the link:https://asciidoctor.org/docs/asciidoc-writers-guide/[Asciidoc Writer's Guide from Asciidoctor] as a great place to get started.
 
 === Follow standards for file names
 
@@ -46,7 +48,7 @@ For example:
 = Developing a Monitoring Strategy for an OpenShift Platform
 ----
 
-Additionally, section headers provide the basis for navigation via table of contents. Your section headers should use consistent language and proper nesting to convery structure of the document.
+Additionally, section headers provide the basis for navigation via table of contents. Your section headers should use consistent language and proper nesting to convey structure of the document.
 
 Section headers should follow a sequential order, such that a Table of Contents can be properly generated, and Proper nesting should be followed at all times.
 
@@ -78,11 +80,11 @@ Links should follow the following format:
 ----
 link:/path/to/file{outfilesuffix}[Link Name]
 ----
-The `{outfilesuffix}` parameter should replace the file type and is there to handle the translation from '.adoc' to '.html' when we publish this content to our web front end.
+{outfilesuffix} will be replaced with .html on uncontained.io and .adoc on GitHub.
 
 === Interlinking Content
 
-Whenever possible we try to have content refer to other guides & articles. Tying content together in a logical way helps us build up complete stories and solutions and even lead to other solutions.
+Whenever possible we try to have content refer to other content. Tying content together in a logical way helps us build up complete stories and solutions and even lead to other solutions.
 
 When linking to other content within the site, we like to take steps to make it as obvious as possible without ruining the flow of the doc. Here are some guidelines for formatting your links:
 
@@ -95,7 +97,7 @@ link:/guides/openshift-ha-installation{outfilesuffix}[Installing a Highly Availa
 rather than
 +
 ----
-link:/guides/openshift-ha-installation{outfilesuffix}{outfilesuffix}[click here!]
+link:/guides/openshift-ha-installation{outfilesuffix}[click here!]
 ----
 +
 2. Provide some context as to why you are providing this link. For example...
@@ -122,19 +124,23 @@ All written content should follow these principles:
 * **Brevity:** Keep it simple, link to outside content for deeper dives
 * **Curation:** Amplify community best practices vs. any individual's point of view
 
-Content should maintain a light-hearted, but wise (think classy, not overly excited) tone. Open source is fun! Readers should feel inspired, not discouraged, by the tone of your writing, and they should trust you to help them get started.
+Content should maintain a light-hearted, but wise (think classy, not overly excited) tone. Open source is fun! Readers should feel inspired, not discouraged, by the tone of your writing, and they should trust you to help them along their journey.
+
+Reference: link:https://github.com/github/opensource.guide/blob/master/docs/styleguide.md#content-principles[opensource.guide style guide]
 
 == Mentions
 
 When referring to people that use GitHub, use @mentions of their username instead of their full name.
 
 - :smile: As @sabre1041 put it...
-- :cry: As [Andrew Block](https://github.com/sabre1041) put it...
+- :cry: As link:https://github.com/sabre1041[Andrew Block] put it...
 
 When referring to a project on GitHub, link to the repository so others can dive deeper, if they choose.
 
-- :smile: @JaredBurck took a similar approach to [Dat](https://github.com/datproject/dat)...
+- :smile: @JaredBurck took a similar approach to link:https://github.com/datproject/dat[Dat]...
 - :cry: @JaredBurck took a similar approach to Dat...
+
+Reference: link:https://github.com/github/opensource.guide/blob/master/docs/styleguide.md#mentions[opensource.guide style guide]
 
 == Capitalization
 
@@ -150,3 +156,5 @@ The word "guides" is not capitalized when referring to the "uncontained.io guide
 - :smile: Welcome to uncontained.io guides!
 - :smile: The guide is meant to..
 - :cry: The goal of this Guide is to...
+
+Reference: link:https://github.com/github/opensource.guide/blob/master/docs/styleguide.md#capitalization[opensource.guide style guide]
