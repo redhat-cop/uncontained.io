@@ -27,8 +27,8 @@ items:
     runPolicy: Serial
     source:
       git:
-        uri: "https://github.com/etsauer/uncontained.io"
-        ref: "applier-builder-image"
+        uri: "https://github.com/redhat-cop/uncontained.io"
+        ref: "master"
     strategy:
       sourceStrategy:
         from:

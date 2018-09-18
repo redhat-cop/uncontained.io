@@ -12,3 +12,4 @@ themes/uncontained.io/static/dist/css/
 node_modules/
 dist/
 galaxy/
+site/static/js
