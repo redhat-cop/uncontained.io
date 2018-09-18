@@ -121,6 +121,40 @@ article {
     margin: 1em 1em 2em 1em;
     padding: .75em 1.5em;
   }
+
+  table {
+    th, td {
+      padding: .5em;
+      p {
+        margin: 0;
+      }
+    }
+    th {
+      color: theme-color("black");
+      font-weight: bold;
+    }
+    td {
+      color: theme-color("dark-gray");
+    }
+    .valign-top {
+      vertical-align: top;
+    }
+    caption {
+      caption-side: top;
+      font-weight: bold;
+      padding-bottom: .25rem;
+      padding-top: .5rem;
+      font-style: italic;
+    }
+  }
+  table.frame-all {
+    th, td {
+      border: theme-color("light-gray") 1px solid;
+    }
+    tr:nth-child(even), th {
+      background: theme-color("lighter-gray");
+    }
+  }
 }
 
 /* Styling for code blocks*/
