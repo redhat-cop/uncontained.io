@@ -45,7 +45,7 @@ If you don't see your idea listed, and you think it fits into the goals of this 
 
 ## Style guide
 
-This site is written in asciidoc format and is built using the [Asciidoctor plugin for Jekyll](https://github.com/asciidoctor/jekyll-asciidoc). If you're writing content, see the [style guide](./docs/style_guide.md) to help your prose match the rest of the Guides.
+This site is written in asciidoc format and is built using [Asciidoctor](https://asciidoctor.org/). If you're writing content, see the [style guide](./docs/style_guide.adoc) to help your prose match the rest of the Guides.
 
 ## Setting up your environment
 
