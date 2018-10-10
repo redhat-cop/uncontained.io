@@ -4,7 +4,15 @@ linkTitle: About
 menu: main
 weight: 1
 slug: about
-layout: single
+layout: aboutlayout
 ---
 
-About uncontained.io
+> Talking about DevOps practices, digital transformation journeys, and the impact of next generation technologies in an enterprise organization
+
+Uncontained.io began as a project in the Red Hat Container Community of Practice to share knowledge about OpenShift adoption with members of Red Hat's Consulting organization. We quickly realized that the guidance and knowledge we were sharing were worth publishing so that we could share it with customers, partners, and members of the community. So we began to publish this guidance to a public wiki site.
+
+We have since re-built that original space into a more cross-functional content hub, discussing a wide variety of technologies (mostly open sourced) in use in modern organizations today. We aim to suggest good practice methods of adopting such technologies in support of organizational goals of continuous improvement and better market agility.
+
+In addition to technology implementation & adoption, we'll cover aspects of organizational transformation that go along with the use of more modern technology, and will hopefully help you connect some of the dots between concepts and practices, and technical implementations, to provide a more holistic picture than similar content sites that have come before and inspired us.
+
+We hope you find something valuable to help you along your journey.

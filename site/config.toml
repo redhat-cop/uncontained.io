@@ -21,6 +21,10 @@ pygmentsStyle = "friendly"
 # Missing translations will default to this content language
 defaultContentLanguage = "en"
 
+[params.splash]
+tagline = "On containers, cloud, and digital transformation."
+text = "We are a community of experts passionate about open source emerging technologies at play in the digital transformation journey. Our aim is to provide valuable community resources to IT Organizations attempting to adopt open source and cloud technologies with an intent towards DevOps or lean methodologies."
+
 [params.error404]
 title = "Page not found"
 message = "The requested page couldn't be found."
