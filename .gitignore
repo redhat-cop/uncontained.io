@@ -13,3 +13,4 @@ node_modules/
 dist/
 galaxy/
 site/static/js
+.openshift/params/prod-cluster-credentials

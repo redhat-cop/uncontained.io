@@ -1,0 +1,30 @@
+---
+apiVersion: v1
+kind: Template
+metadata:
+  name: promoter-sa-template
+  labels:
+    template-type: deployment
+objects:
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: promoter
+    namespace: ${NAMESPACE}
+- apiVersion: v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: null
+    name: edit
+    namespace: ${NAMESPACE}
+  roleRef:
+    name: edit
+  subjects:
+  - kind: ServiceAccount
+    name: promoter
+    namespace: ${NAMESPACE}
+  userNames:
+  - system:serviceaccount:${NAMESPACE}:promoter
+parameters:
+  - name: NAMESPACE

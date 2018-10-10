@@ -4,6 +4,6 @@ items:
 - kind: ProjectRequest
   apiVersion: v1
   metadata:
-    name: uncontained--prototype
+    name: uncontained
     creationTimestam: null
   displayName: Uncontained - Prototype
