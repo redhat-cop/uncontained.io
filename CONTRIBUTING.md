@@ -97,15 +97,29 @@ Run the following to pull in applier:
 ansible-galaxy install -r requirements.yml -p galaxy
 ```
 
-To deploy to a _development_ cluster, run:
+Log into your _Prod_ OpenShift cluster, and run the following command.
+    ```
+    $ oc login <prod cluster>
+    ...
+    $ ansible-playbook -i .applier-prod/ galaxy/openshift-applier/playbooks/openshift-cluster-seed.yml
+    ```
+One of the things that was created by ansible is a `ServiceAccount` that will be used for promoting your app from _Dev_ to _Prod_. We'll need to extract its credentials so that our pipeline can use that account.
+    ```
+    $ TOKEN=$(oc serviceaccounts get-token promoter -n field-guides-prod)
+    ```
+We need to create the the *prod-api-credentials* param file so our pipeline will be able to verify a successful deployment to production.
+    ```
+    $ echo "TOKEN=${TOKEN}
+    API_URL=<API_URL>
+    REGISTRY_URL=<REGISTRY URL>
+    SECRET_NAME=other-cluster-credentials" > .openshift/params/prod-cluster-credentials
+    ```
+
+Now, deploy your pipeline and dev environment to your _development_ cluster:
 
 ```
+oc login <dev cluster>
 ansible-playbook -i .applier/ galaxy/openshift-applier/playbooks/openshift-cluster-seed.yml
-```
-
-To deploy to managed prototype environment, run:
-```
-ansible-playbook -i .applier/ galaxy/openshift-applier/playbooks/openshift-cluster-seed.yml -e filter_tags=prototype
 ```
 
 ### Migrating Content from OpenShift-Playbooks
