@@ -85,7 +85,6 @@ objects:
                   container('builder') {
                     sh 'npm install'
                     sh 'npm run build'
-                    sh 'find .'
                   }
                 }
               }
@@ -155,20 +154,6 @@ objects:
                 }
               }
 
-              stage('Go-Live Gate') {
-                steps {
-                  script {
-                    input message: 'Uncontained.io is has been deployed to Production. Would you like to Go Live?'
-                  }
-                }
-              }
-
-              stage ('Cut Over Route') {
-                steps{
-                  applyTemplate(projectname: "${NAMESPACE}", templateFile: ".openshift/templates/route-prod.yml", parameterFile: ".openshift/params/route-prod", clusterUrl: api, clusterToken: token)
-                }
-              }
-
             }
           }
 
@@ -176,8 +161,7 @@ objects:
       - type: ConfigChange
       - type: GitHub
         github:
-          secretReference:
-            name: d8g73hc87
+          secret: d8g73hc87
 parameters:
 - name: APP_NAME
 - name: OUTPUT_IMAGE
