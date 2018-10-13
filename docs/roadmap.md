@@ -8,7 +8,7 @@ We started by focusing on open source containers, because they play a critical r
 
 * [x] Create a first set of guides that help creators start and use their own open source containers
 * [x] Make the guides public and release it as an open source project
-* [x] Expand [Contributing to uncontained.io on GitHub](https://github.com/redhat-cop/CONTRIBUTING.md) to include community best practices for contributors.
+* [x] Expand [Contributing to uncontained.io on GitHub](https://github.com/redhat-cop/CONTRIBUTING.adoc) to include community best practices for contributors.
 * [ ] Foster healthy community dynamics so the guides become a place to codify community best practices
 
 ### Q1 2018

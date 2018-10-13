@@ -12,7 +12,7 @@ cc: @redhat-cop/cant-contain-this
 
 -----
 
-- [ ] Have you followed the [contributing guidelines](https://github.com/redhat-cop/uncontained.io/blob/master/CONTRIBUTING.md)?
+- [ ] Have you followed the [contributing guidelines](https://github.com/redhat-cop/uncontained.io/blob/master/CONTRIBUTING.adoc)?
 - [ ] Have you explained what your changes do, and why they add value to the uncontained.io guides?
 
 -----
