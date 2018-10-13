@@ -43,7 +43,7 @@ descending order of need):
 * Fix editorial inconsistencies, inaccuracies, or stale content
 * Add tutorials, examples, or anecdotes that help illustrate a point
 * Revise language to be more approachable and friendly
-* Propose a new guide (link:./docs/new_guides.md[here’s how])
+* Propose a new guide (link:./docs/new_guides.adoc[here’s how])
 
 Interested in making a contribution? Read on!
 

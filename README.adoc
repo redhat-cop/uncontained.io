@@ -37,7 +37,7 @@ Roadmap
 ~~~~~~~
 
 We’ve shared our vision and priorities for this project in our
-link:docs/roadmap.md[roadmap].
+link:docs/roadmap.adoc[roadmap].
 
 [[contributing]]
 Contributing
