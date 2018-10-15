@@ -6,7 +6,6 @@ copyright = ""
 theme = "uncontained.io"
 
 disqusShortname = ""
-googleAnalytics = ""
 
 Paginate = 10
 preserveTaxonomyNames = true
@@ -20,6 +19,9 @@ pygmentsStyle = "friendly"
 
 # Missing translations will default to this content language
 defaultContentLanguage = "en"
+
+[params.integrations]
+googleAnalyticsID = "UA-107719124-1"
 
 [params.splash]
 tagline = "On containers, cloud, and digital transformation."

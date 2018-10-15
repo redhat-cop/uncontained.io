@@ -11,7 +11,7 @@ In the root of this repository, run `hugo serve -D --noHTTPCache` to start the H
 Then, go to `themes/uncontained.io` and run these commands:
 ```
 npm install
-npm run watch
+npm start
 ```
 
 Now, when you edit a file in `src`, the following will happen:
