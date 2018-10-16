@@ -90,6 +90,9 @@ article {
         &.content {
           padding: 0 1.5em 0 0;
         }
+        code {
+          color: theme-color("white");
+        }
       }
     }
   }
@@ -177,20 +180,4 @@ article {
       background: theme-color("lighter-gray");
     }
   }
-}
-
-/* Styling for code blocks*/
-
-// inline code only
-p>code, .admonitionblock code {
-  display: inline-block;
-  padding: .25em .5em;
-}
-
-// code blocks only
-pre {
-  border-left: theme-color("coral") 3px solid;
-  display: block;
-  margin: 1em 1em 2em 1em;
-  padding: .75em 1.5em;
 }
