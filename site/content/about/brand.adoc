@@ -79,3 +79,18 @@ spec:
           }
         }
 ----
+
+== Table Styling
+
+.Table Title
+[width="100%",cols="3,6,10",options="header"]
+|=========================================================
+|Column1 Heading |Another Header |And one more
+
+|Row 1 value |A description of the row | `$ a related code snippet`
+
+|Ro1 2 value|The description of row 2. This one is a littler longer and gives us an opportunity to see how text might wrap.
+| `# This is a code block for row 2`
+|Some other stuff |This is the last row, let's see if anything's different | _Some formatted text_
+
+|=========================================================

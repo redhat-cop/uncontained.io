@@ -65,28 +65,34 @@ article {
       font-size: 1.1em;
       table-layout: fixed;
       width: 100%;
-      td.icon {
-        font-size: 2em;
-        text-align: center;
-        width: 2.5em;
-        .title {
-          line-height: 0;
-          text-indent: -9999px;
-          visibility: hidden;
+      td {
+        color: theme-color("white");
+        &.icon {
+          font-size: 2em;
+          text-align: center;
+          width: 2.5em;
+          .title {
+            line-height: 0;
+            text-indent: -9999px;
+            visibility: hidden;
+          }
+          .title:before {
+            background-size: 1.5em auto;
+            background-repeat: no-repeat;
+            content: "";
+            display: block;
+            height: 1.5em;
+            margin: 0 .5em 0 .5em;
+            width: 1.5em;
+            visibility: visible;
+          }
         }
-        .title:before {
-          background-size: 1.5em auto;
-          background-repeat: no-repeat;
-          content: "";
-          display: block;
-          height: 1.5em;
-          margin: 0 .5em 0 .5em;
-          width: 1.5em;
-          visibility: visible;
+        &.content {
+          padding: 0 1.5em 0 0;
         }
-      }
-      td.content {
-        padding: 0 1.5em 0 0;
+        code {
+          color: theme-color("white");
+        }
       }
     }
   }
@@ -174,20 +180,4 @@ article {
       background: theme-color("lighter-gray");
     }
   }
-}
-
-/* Styling for code blocks*/
-
-// inline code only
-p>code, .admonitionblock code {
-  display: inline-block;
-  padding: .25em .5em;
-}
-
-// code blocks only
-pre {
-  border-left: theme-color("coral") 3px solid;
-  display: block;
-  margin: 1em 1em 2em 1em;
-  padding: .75em 1.5em;
 }
