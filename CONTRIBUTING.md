@@ -37,11 +37,47 @@ Before we get started, here are a few things we expect from you (and that you sh
 
 ## How to contribute
 
-If you'd like to contribute, start by searching through the GitHub [issues](https://github.com/redhat-cop/uncontained.io/issues), [pull requests](https://github.com/redhat-cop/uncontained.io/pulls), and Trello  [cards](https://trello.com/b/JMaxIjCy/cant-contain-this) to see whether someone else has raised a similar idea or question.
+If you'd like to contribute, start by searching through the GitHub [issues](https://github.com/redhat-cop/uncontained.io/issues) and [pull requests](https://github.com/redhat-cop/uncontained.io/pulls) to see whether someone else has raised a similar idea or question.
 
 If you don't see your idea listed, and you think it fits into the goals of this guide, do one of the following:
 * **If your contribution is minor,** such as a typo fix, open a pull request.
 * **If your contribution is major,** such as a new article or category, start by opening an issue first. That way, other people can weigh in on the discussion before you do any work.
+
+### Contributing a new article
+
+See our guide on [contributing new content](./docs/new_articles.md).
+
+### Migrating Content from OpenShift-Playbooks
+
+This site is the evolution of the [Openshift Playbooks](https://github.com/redhat-cop/openshift-playbooks) site.
+
+Migrating content from there to here is fairly straightforward, but involves some work.
+
+1. A migration script can be used to translate documents from the [openshift-playbooks](https://github.com/redhat-cop/openshift-playbooks) repo.
+
+    Usage:
+    ```
+    ./migrate-doc.sh [path/playbook-doc] [path/uncontained-doc]
+    ```
+
+    Example:
+    ```
+    ./migrate-doc.sh continuous_delivery/external-jenkins-integration.adoc guides/external-jenkins-integration.adoc
+    ```
+2. Next, start the test site using the [container image](#containerized-hugo-environment-quickstart-guide) or [native hugo](#native-hugo-environment-quickstart-guide).
+3. Navigate to the content you migrated and ensure that:
+  * all content renders correctly
+  * there are no broken links (we recommend using a link checker like [this one for Firefox](https://addons.mozilla.org/en-US/firefox/addon/linkchecker/) or [this one for Chrome](https://chrome.google.com/webstore/detail/broken-link-checker/nibppfobembgfmejpjaaeocbogeonhch?hl=en))
+  * if the guide or article links to other guides, or articles, we suggest you migrate those as well.
+4. Examine front matter. Ensure `title` is reader friendly, and that the `date` represents the date written, not the date migrated.
+
+### Helping us with Site Styling, User Experience, etc.
+
+The styling for the site is contained within a [Hugo Theme](https://gohugo.io/themes/). The source code for the theme is located in this repo at [./site/themes/uncontained.io](./site/themes/uncontained.io).
+
+Specifically, the code for our HTML Layouts can be found in [./site/themes/uncontained.io/layouts/](./site/themes/uncontained.io/layouts/). The CSS code can be found in [./site/themes/uncontained.io/src/scss](./site/themes/uncontained.io/src/scss/).
+
+See [Building and Developing the site](#building-and-developing-the-site) for instructions on how to perform local testing of changes.
 
 ## Style guide
 
@@ -121,30 +157,6 @@ Now, deploy your pipeline and dev environment to your _development_ cluster:
 oc login <dev cluster>
 ansible-playbook -i .applier/ galaxy/openshift-applier/playbooks/openshift-cluster-seed.yml
 ```
-
-### Migrating Content from OpenShift-Playbooks
-
-This site is the evolution of the [Openshift Playbooks](https://github.com/redhat-cop/openshift-playbooks) site.
-
-Migrating content from there to here is fairly straightforward, but involves some work.
-
-1. A migration script can be used to translate documents from the [openshift-playbooks](https://github.com/redhat-cop/openshift-playbooks) repo.
-
-    Usage:
-    ```
-    ./migrate-doc.sh [path/playbook-doc] [path/uncontained-doc]
-    ```
-
-    Example:
-    ```
-    ./migrate-doc.sh continuous_delivery/external-jenkins-integration.adoc guides/external-jenkins-integration.adoc
-    ```
-2. Next, start the test site using the [container image](#containerized-hugo-environment-quickstart-guide) or [native hugo](#native-hugo-environment-quickstart-guide).
-3. Navigate to the content you migrated and ensure that:
-  * all content renders correctly
-  * there are no broken links (we recommend using a link checker like [this one for Firefox](https://addons.mozilla.org/en-US/firefox/addon/linkchecker/) or [this one for Chrome](https://chrome.google.com/webstore/detail/broken-link-checker/nibppfobembgfmejpjaaeocbogeonhch?hl=en))
-  * if the guide or article links to other guides, or articles, we suggest you migrate those as well.
-4. Examine front matter. Ensure `title` is reader friendly, and that the `date` represents the date written, not the date migrated.
 
 ## Contribution review process
 

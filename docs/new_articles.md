@@ -1,8 +1,8 @@
-# Proposing a new guide
+# Proposing a new articles
 
 Thanks for your interest in suggesting a new uncontained.io guide! Your suggestions help us decide what to work on next.
 
-## If you'd like to propose a new guide:
+## If you'd like to propose a new articles
 
 1. **[Open an issue](https://github.com/redhat-cop/uncontained.io/issues)** with your suggestion. Please explain:
   * Why the topic is broadly useful to uncontained.io contributors
@@ -12,7 +12,18 @@ Thanks for your interest in suggesting a new uncontained.io guide! Your suggesti
 
 At this point, we may decide the topic doesn't warrant a new guide and close the issue, or we may recommend adding the information to an existing guide. That's okay! All suggestions are welcomed contributions, because they help us understand what our community is thinking.
 
-## If we decide to move forward on a new guide, we will:
+## If you would like to work on a new article
+
+Start by cloning this repo.
+
+Create a new guide using `hugo`:
+
+```
+cd ./site/
+hugo new articles/my-new-article.adoc
+```
+
+## If we decide to move forward on a new article, we will
 
 - [ ] Label your issue ```research```
 - [ ] Collect existing community resources (links, blog posts, projects) on your issue. Everybody is welcome to contribute.
