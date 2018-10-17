@@ -1,11 +1,13 @@
-{{- $header := ( $.Params.taxonomy.title | default "Topics" ) -}}
 
-{{- $tags := ( $.Params.tags | default $.Site.Taxonomies.tags ) -}}
-<div class="taxonomy">
-  <h2>{{ $header }}</h2>
-  <ul class="tags">
-    {{ range $tag := $tags }}
-    <li><a href="{{ "/tags/" | relLangURL }}{{ $tag | urlize }}">{{ $tag }}</a> </li>
-    {{ end }}
-  </ul>
-</div>
+{{ if isset $.Params "tags" }}
+  {{- $header := ( $.Params.taxonomy.title | default "Topics" ) -}}
+
+  <div class="taxonomy">
+    <h2>{{ $header }}</h2>
+    <ul class="tags">
+      {{ range $tag := $.Params.tags }}
+      <li><a href="{{ "/tags/" | relLangURL }}{{ $tag | urlize }}">{{ $tag }}</a> </li>
+      {{ end }}
+    </ul>
+  </div>
+{{ end }}
