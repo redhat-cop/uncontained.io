@@ -1,5 +1,5 @@
 PLAYBOOKS_SITE=~/src/openshift-playbooks/playbooks/
-UNCONTAINED_SITE=~/src/uncontained.io/content/
+UNCONTAINED_SITE=~/src/uncontained.io/site/
 PLAYBOOK=${1}
 DOC=${2}
 
@@ -23,13 +23,15 @@ done
 content=${content//link:#/link:#_}
 
 # Create uncontained doc
-rm -f ${UNCONTAINED_SITE}${DOC}
-hugo new ${DOC}
+rm -f ${UNCONTAINED_SITE}/content/${DOC}
+pushd ${UNCONTAINED_SITE}
+  hugo new ${DOC}
+popd
 
 # Grab frontmatter and combine with content
-frontmatter=$(cat ${UNCONTAINED_SITE}${DOC})
+frontmatter=$(cat ${UNCONTAINED_SITE}/content/${DOC})
 frontmatter=$(echo "${frontmatter}" | sed "s/draft: true/draft: false/")
-cat > ${UNCONTAINED_SITE}${DOC} <<zz_uncontained_content
+cat > ${UNCONTAINED_SITE}/content/${DOC} <<zz_uncontained_content
 ${frontmatter}
 ${content}
 zz_uncontained_content
