@@ -23,7 +23,9 @@ cd ./site/
 hugo new articles/my-new-article.adoc
 ```
 
-## If we decide to move forward on a new article, we will
+From here, you can start to develop your content. Check out our [contend model](./content_model.md) and [style guide](./style_guide.md) for more guidance on writing and structuring your content.
+
+## Typical Workflow for New Content Creation
 
 - [ ] Label your issue ```research```
 - [ ] Collect existing community resources (links, blog posts, projects) on your issue. Everybody is welcome to contribute.
