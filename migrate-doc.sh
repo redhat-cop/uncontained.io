@@ -6,6 +6,13 @@ DOC=${2}
 # Grab content from existing playbook
 content="$(cat ${PLAYBOOKS_SITE}${PLAYBOOK})"
 
+# Migrate images in content
+images=$(echo "${content}" | awk '/image::/' | sed 's/image:://' | sed 's/\[.*\]//')
+for i in ${images}; do
+  echo "Migrating image ${PLAYBOOKS_SITE}/../$i to ${UNCONTAINED_SITE}/static/$i";
+  cp ${PLAYBOOKS_SITE}/../$i ${UNCONTAINED_SITE}/static/$i
+done
+
 # Strip existing frontmatter
 content=$(echo "${content}" | sed -n '/^= .*/,$p')
 
