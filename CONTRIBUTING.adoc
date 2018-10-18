@@ -1,6 +1,5 @@
 [[contributing-to-uncontained.io]]
-Contributing to Uncontained.io
-------------------------------
+= Contributing to Uncontained.io
 
 Thanks for checking out the uncontained.io guides! We’re excited to hear
 and learn from you. Your experiences will benefit others who read and
@@ -10,8 +9,7 @@ We’ve put together the following guidelines to help you figure out where
 you can best be helpful.
 
 [[table-of-contents]]
-Table of Contents
-~~~~~~~~~~~~~~~~~
+== Table of Contents
 
 1.  link:#types-of-contributions-were-looking-for[Types of contributions
 we’re looking for]
@@ -23,8 +21,7 @@ we’re looking for]
 7.  link:#community[Community]
 
 [[types-of-contributions-were-looking-for]]
-Types of contributions we’re looking for
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== Types of contributions we’re looking for
 
 This project is an attempt at establish and document some guiding
 principles and, dare we say it, best practices in the open source
@@ -43,13 +40,12 @@ descending order of need):
 * Fix editorial inconsistencies, inaccuracies, or stale content
 * Add tutorials, examples, or anecdotes that help illustrate a point
 * Revise language to be more approachable and friendly
-* Propose a new guide (link:./docs/new_guides.adoc[here’s how])
+* Propose a new guide (link:./docs/new_guides.md[here’s how])
 
 Interested in making a contribution? Read on!
 
 [[ground-rules-expectations]]
-Ground rules & expectations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== Ground rules & expectations
 
 Before we get started, here are a few things we expect from you (and
 that you should expect from others):
@@ -59,7 +55,7 @@ all come from different backgrounds and projects, which means we likely
 have different perspectives on ``how open source is done.'' Try to
 listen to others rather than convince them that your way is correct.
 * Uncontained.io guides are released with a
-link:./CODE_OF_CONDUCT.adoc[Contributor Code of Conduct]. By participating
+link:./CODE_OF_CONDUCT.md[Contributor Code of Conduct]. By participating
 in this project, you agree to abide by its terms.
 * If you open a pull request, please ensure that your contribution
 passes all tests. If there are test failures, you will need to address
@@ -69,8 +65,7 @@ don’t add references or links to things you or your employer have
 created as others will do so if they appreciate it.
 
 [[how-to-contribute]]
-How to contribute
-~~~~~~~~~~~~~~~~~
+== How to contribute
 
 If you’d like to contribute, start by searching through the GitHub
 https://github.com/redhat-cop/uncontained.io/issues[issues],
@@ -86,8 +81,7 @@ first. That way, other people can weigh in on the discussion before you
 do any work.
 
 [[style-guide]]
-Style guide
-~~~~~~~~~~~
+== Style guide
 
 This site is written in asciidoc format and is built using
 https://asciidoctor.org/[Asciidoctor]. If you’re writing content, see
@@ -95,8 +89,7 @@ the link:./docs/style_guide.adoc[style guide] to help your prose match
 the rest of the Guides.
 
 [[setting-up-your-environment]]
-Setting up your environment
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== Setting up your environment
 
 This site is powered by https://gohugo.io/[Hugo]. Running it on your
 local machine only requires a working
@@ -106,8 +99,7 @@ method (for obvious reasons) instead of your native operating system,
 but you may choose either environment setup.
 
 [[building-and-developing-the-site]]
-Building and Developing the Site
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+=== Building and Developing the Site
 
 Uncontained.io uses the https://gohugo.io/[Hugo static site generator]
 to translate Asciidoc into an HTML site. We wrap this functionality in
@@ -126,8 +118,7 @@ Our Hugo + Gulp setup is based on the
 https://github.com/netlify/victor-hugo[victor-hugo] boilerplate.
 
 [[run-the-live-preview]]
-Run the Live Preview
-++++++++++++++++++++
+==== Run the Live Preview
 
 The live preview provides an embedded server in which you can test the
 site locally, and watch changes being made as you develop.
@@ -147,8 +138,7 @@ You should be able to view the site by browsing to
 http://localhost:3000/.
 
 [[build-the-site]]
-Build the Site
-++++++++++++++
+==== Build the Site
 
 The site build will simple generate all of the site html, css,
 javascript, etc. This is the process we use to build and publish the
@@ -159,8 +149,7 @@ npm run build
 ....
 
 [[deploying-to-openshift]]
-Deploying to OpenShift
-++++++++++++++++++++++
+==== Deploying to OpenShift
 
 Uncontained.io is built and hosted on OpenShift, and deployed using
 https://github.com/redhat-cop/openshift-applier[OpenShift Applier]
@@ -184,8 +173,7 @@ ansible-playbook -i .applier/ galaxy/openshift-applier/playbooks/openshift-clust
 ....
 
 [[migrating-content-from-openshift-playbooks]]
-Migrating Content from OpenShift-Playbooks
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+=== Migrating Content from OpenShift-Playbooks
 
 This site is the evolution of the
 https://github.com/redhat-cop/openshift-playbooks[Openshift Playbooks]
@@ -220,8 +208,7 @@ you migrate those as well.
 the `date` represents the date written, not the date migrated.
 
 [[contribution-review-process]]
-Contribution review process
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== Contribution review process
 
 This repo is currently maintained by @jaredburck, @etsauer, and
 @sabre1041, who have commit access. They will likely review your
@@ -230,8 +217,7 @@ bump the thread or @-mention a maintainer or
 `@redhat-cop/cant-contain-this` to review your contribution.
 
 [[community]]
-Community
-~~~~~~~~~
+== Community
 
 Discussions about uncontained.io takes place within this repository’s
 https://github.com/redhat-cop/uncontained.io/issues[Issues] and

@@ -1,6 +1,5 @@
 [[legal-disclaimer]]
-Legal Disclaimer
-~~~~~~~~~~~~~~~~
+== Legal Disclaimer
 
 Red Hat is not a law firm. As such, Red Hat does not provide legal
 advice. The material in these guides does not constitute legal advice
@@ -25,8 +24,7 @@ have any legal questions, you should consult with your own legal counsel
 before moving forward.
 
 [[licenses]]
-Licenses
-~~~~~~~~
+== Licenses
 
 Content is copyright © uncontained.io authors, released under
 https://creativecommons.org/licenses/by-sa/4.0/[CC-BY-SA-4.0], which
@@ -58,8 +56,7 @@ licenses.
 https://creativecommons.org/licenses/by-sa/4.0/[image:https://i.creativecommons.org/l/by-sa/4.0/88x31.png[creativecommons]]
 
 [[permissions]]
-Permissions
-~~~~~~~~~~~
+== Permissions
 
 Screenshots and images from other projects are used with permissions
 below.

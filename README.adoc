@@ -1,6 +1,5 @@
 [[uncontained.io]]
-uncontained.io
---------------
+= uncontained.io
 
 https://travis-ci.org/redhat-cop/uncontained.io[image:https://travis-ci.org/redhat-cop/uncontained.io.svg?branch=master[Build
 Status]]
@@ -11,8 +10,7 @@ Containers, Cloud, and Digital Transformation guidance for the
 Enterprise.
 
 [[background]]
-Background
-~~~~~~~~~~
+== Background
 
 The first sets of uncontained.io guides were created and curated by Red
 Hat Consultants, along with input from outside community reviewers, but
@@ -33,37 +31,33 @@ what’s scary, and what’s simply confusing about running and using
 containers & cloud technologies.
 
 [[roadmap]]
-Roadmap
-~~~~~~~
+== Roadmap
 
 We’ve shared our vision and priorities for this project in our
-link:docs/roadmap.adoc[roadmap].
+link:docs/roadmap.md[roadmap].
 
 [[contributing]]
-Contributing
-~~~~~~~~~~~~
+== Contributing
 
 This site is powered by https://gohugo.io/[Hugo]. Our goal is for this
 project to reflect community best practices, so we’d love your input!
 Got a question or an idea? Check out our
-link:/CONTRIBUTING.adoc[contributing guidelines] for ways to offer
+link:/CONTRIBUTING.md[contributing guidelines] for ways to offer
 feedback and contribute.
 
 [[licenses]]
-Licenses
-~~~~~~~~
+== Licenses
 
 Content is released under
 https://creativecommons.org/licenses/by-sa/4.0/[CC-BY-SA-4.0]. See
-link:notices.adoc[notices] for complete details, including attribution
+link:notices.md[notices] for complete details, including attribution
 guidelines, contribution terms, and software and third-party licenses
 and permissions.
 
 https://creativecommons.org/licenses/by-sa/4.0/[image:https://i.creativecommons.org/l/by-sa/4.0/88x31.png[creativecommons]]
 
 [[acknowledgments]]
-Acknowledgments
-~~~~~~~~~~~~~~~
+== Acknowledgments
 
 The working group for the initial release of uncontained.io consisted of
 *@jaredburck, @etsauer, @sabre1041, @rdebeasi, @oybed* and *Phyllis
@@ -77,9 +71,8 @@ legal, and anyone missed, thank you for your time and effort to help the
 uncontained.io project.
 
 [[disclaimer]]
-Disclaimer
-~~~~~~~~~~
+== Disclaimer
 
 While we’ve got advice about running containers and open source
 technologies, we are not lawyers. Be sure to read our
-link:notices.adoc#legal-disclaimer[disclaimer] before diving in.
+link:notices.md#legal-disclaimer[disclaimer] before diving in.
