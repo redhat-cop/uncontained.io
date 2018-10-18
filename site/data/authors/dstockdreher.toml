@@ -1,0 +1,11 @@
+id = "dstockdreher"
+
+[email]
+username = "dstockdr"
+host = "redhat.com"
+
+[name]
+display = "Drew Stockdreher"
+
+[social]
+github = "dstockdreher"

@@ -10,7 +10,7 @@ content="$(cat ${PLAYBOOKS_SITE}${PLAYBOOK})"
 content=$(echo "${content}" | sed -n '/^= .*/,$p')
 
 # Do some reformatting of content
-content=$(echo "${content}" | sed 's/include::..\/..\/_includes\/variables.adoc\[\]/include::layouts\/variables.adoc\[\]/')
+content=$(echo "${content}" | sed 's/include::..\/..\/_includes\/variables.adoc\[\]/include::site\/layouts\/variables.adoc\[\]/')
 # TODO: Reformat anchor tags.
 # Old format: link:#syncing-images-using-satellite-6
 # new format: link:#_syncing_images_using-satellite-6
