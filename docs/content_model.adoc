@@ -1,6 +1,5 @@
 [[content-model]]
-Content Model
--------------
+= Content Model
 
 Uncontained.io guides help individuals, communities, and companies
 embrace open source software. It explains not only how to accomplish a
@@ -23,8 +22,7 @@ Everything written in the guides should fall into one of the following
 categories.
 
 [[editorial-guides]]
-Editorial Guides
-~~~~~~~~~~~~~~~~
+== Editorial Guides
 
 Editorial guides are long form documents that may have multiple
 contributors that dive deep into a specific topic (for example,
@@ -35,8 +33,7 @@ meant to be read from beginning to end, they have a table of contents to
 help the reader quickly skim the content and find a relevant subsection.
 
 [[article-guides]]
-Article Guides
-~~~~~~~~~~~~~~
+== Article Guides
 
 Article guides are short form documents, opinion pieces, ideas from
 individuals on a specific topic (for example, ``Creating a Custom Role''
@@ -44,15 +41,13 @@ or ``Measuring success''). They may contain visuals and anecdotes to
 illustrate their point.
 
 [[tutorial-guides]]
-Tutorial Guides
-^^^^^^^^^^^^^^^
+=== Tutorial Guides
 
 A tutorial is a specific type of article that has a specific expected
 content structure.
 
 [[design-elements]]
-Design Elements
-~~~~~~~~~~~~~~~
+== Design Elements
 
 If you’re writing an article or tutorial guide, here are some smaller
 design elements that enrich the content experience. We use them to draw
@@ -60,23 +55,20 @@ the reader’s attention and break up walls of text; therefore, they
 should all get some sort of visual treatment.
 
 [[pull-quote]]
-Pull quote
-^^^^^^^^^^
+=== Pull quote
 
 We use quotes in the guide to illustrate a point through an anecdote.
 Pull quotes should highlight real people and their experiences.
 
 [[image]]
-Image
-^^^^^
+=== Image
 
 Images help visually illustrate a point. Some images are instructive,
 such as a graph. Other images are visual, such as a webpage screenshot.
 We should have lots of these.
 
 [[data-vignette]]
-Data vignette
-^^^^^^^^^^^^^
+=== Data vignette
 
 Whereas pull quotes and images help ground ideas in something specific
 and concrete, data vignettes help connect ideas to bigger systems.
@@ -86,24 +78,21 @@ enough information to help readers understand why they should pay
 attention to a certain idea.
 
 [[historical-vignette]]
-Historical vignette
-^^^^^^^^^^^^^^^^^^^
+=== Historical vignette
 
 Historical vignettes are fun anecdotes that keep a reader’s attention.
 They make community members the heroes of the story, and help pass down
 cultural knowledge.
 
 [[content-taxonomy-tags]]
-Content taxonomy tags
-^^^^^^^^^^^^^^^^^^^^^
+=== Content taxonomy tags
 
 Content taxonomy tags are categories or classifications (a term or
 phrase) that is added to a web publication that relates the specific
 publication to other contents that are similarly tagged.
 
 [[tag-clouds]]
-Tag clouds
-^^^^^^^^^^
+=== Tag clouds
 
 A tag cloud (word cloud, or weighted list in visual design) is a visual
 representation of text data, typically used to depict keyword metadata

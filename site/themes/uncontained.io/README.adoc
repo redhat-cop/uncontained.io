@@ -1,15 +1,13 @@
 [[uncontained.io-theme]]
-Uncontained.io theme
---------------------
+= Uncontained.io theme
 
 Based on the http://themes.gohugo.io/theme/blank/[Blank starter theme]
 
 [[developing]]
-Developing
-~~~~~~~~~~
+== Developing
 
 Follow the instructions in
-https://github.com/redhat-cop/uncontained.io/blob/master/CONTRIBUTING.adoc#setting-up-your-environment[setting
+https://github.com/redhat-cop/uncontained.io/blob/master/CONTRIBUTING.md#setting-up-your-environment[setting
 up your environment] to get up and running with Hugo and the tools we
 use to build uncontained.io.
 
@@ -32,8 +30,7 @@ Now, when you edit a file in `src`, the following will happen:
 4.  Hugo will auto-reload the page in your browser.
 
 [[building]]
-Building
-~~~~~~~~
+== Building
 
 To build the site:
 
@@ -45,8 +42,7 @@ hugo
 ....
 
 [[css-framework]]
-CSS Framework
-~~~~~~~~~~~~~
+== CSS Framework
 
 We are using a pared-down version of https://getbootstrap.com/[Bootstrap
 4], customized as per the
@@ -57,8 +53,7 @@ Bootstrap JS. To see which Bootstrap modules we’re using, see
 https://github.com/twbs/bootstrap/blob/v4-dev/scss/bootstrap.scss[bootstrap.scss].
 
 [[sasscss-code-standards]]
-Sass/CSS Code Standards
-~~~~~~~~~~~~~~~~~~~~~~~
+== Sass/CSS Code Standards
 
 In lieu of formal code standards, here are some general guidelines:
 
@@ -70,8 +65,7 @@ dashes (no underscores, double dashes, etc.).
 * Prefer configuring the framework to overriding it.
 
 [[resources]]
-Resources
-^^^^^^^^^
+=== Resources
 
 * https://getbootstrap.com/docs/4.1/extend/approach/[Bootstrap -
 Approach]

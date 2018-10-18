@@ -1,14 +1,11 @@
 [[personas]]
-Personas
---------
+= Personas
 
 [[community-contributor]]
-1. Community Contributor
-~~~~~~~~~~~~~~~~~~~~~~~~
+== 1. Community Contributor
 
 [[characteristics]]
-Characteristics
-^^^^^^^^^^^^^^^
+=== Characteristics
 
 * Moderately to expertly experienced with containers and related
 technologies
@@ -20,27 +17,23 @@ with the world'')
 * May have no ninja points or would like to join and become a ninja
 
 [[primary-goals]]
-Primary Goals
-^^^^^^^^^^^^^
+=== Primary Goals
 
 * Wants to share their knowledge of containers with the world
 * Wants people to actually use these guides and give feedback
 * Wants to give back or become a thought leader
 
 [[frustrationspain-points]]
-Frustrations/Pain Points
-^^^^^^^^^^^^^^^^^^^^^^^^
+=== Frustrations/Pain Points
 
 * May not know how or where to begin to contribute
 * May not know what to work on or is needed
 
 [[core-contributor]]
-2. Core Contributor
-~~~~~~~~~~~~~~~~~~~
+== 2. Core Contributor
 
 [[characteristics-1]]
-Characteristics
-^^^^^^^^^^^^^^^
+=== Characteristics
 
 * Expertly experienced with containers and related technologies
 * Feels a sense of ownership over the idea (``I want to share this with
@@ -54,26 +47,22 @@ container technologies
 * May have ninja points or looking to advance in ninja belt color
 
 [[primary-goals-1]]
-Primary Goals
-^^^^^^^^^^^^^
+=== Primary Goals
 
 * Wants to share their knowledge of containers with the world
 * Wants people to actually use these guides and give feedback
 * Wants to give back by sharing their expertise and thought leadership
 
 [[frustrationspain-points-1]]
-Frustrations/Pain Points
-^^^^^^^^^^^^^^^^^^^^^^^^
+=== Frustrations/Pain Points
 
 * Feeling burned out, exhausted from open source work
 
 [[community-reviewer]]
-3. Community Reviewer
-~~~~~~~~~~~~~~~~~~~~~
+== 3. Community Reviewer
 
 [[characteristics-2]]
-Characteristics
-^^^^^^^^^^^^^^^
+=== Characteristics
 
 * Experienced with containers and related technologies
 * Wants to share ownership of the project (``I want to build this with
@@ -84,27 +73,23 @@ others'')
 * Likely manages projects on their own time (volunteer work)
 
 [[primary-goals-2]]
-Primary Goals
-^^^^^^^^^^^^^
+=== Primary Goals
 
 * Get people to participate, contribute back to the project
 * Make sure everybody involved with the project is happy and has a good
 experience
 
 [[frustrationspain-points-2]]
-Frustrations/Pain Points
-^^^^^^^^^^^^^^^^^^^^^^^^
+=== Frustrations/Pain Points
 
 * Managing a community is exhausting, especially when it’s volunteer
 work
 
 [[core-reviewer]]
-4. Core Reviewer
-~~~~~~~~~~~~~~~~
+== 4. Core Reviewer
 
 [[characteristics-3]]
-Characteristics
-^^^^^^^^^^^^^^^
+=== Characteristics
 
 * Experienced with containers and related technologies
 * Wants to share ownership of the project (``I want to build this with
@@ -115,27 +100,23 @@ others'')
 * Likely manages projects on their own time (volunteer work)
 
 [[primary-goals-3]]
-Primary Goals
-^^^^^^^^^^^^^
+=== Primary Goals
 
 * Get people to participate, contribute back to the project
 * Make sure everybody involved with the project is happy and has a good
 experience
 
 [[frustrationspain-points-3]]
-Frustrations/Pain Points
-^^^^^^^^^^^^^^^^^^^^^^^^
+=== Frustrations/Pain Points
 
 * Managing a community is exhausting, especially when it’s volunteer
 work
 
 [[red-hat-corporate-employees]]
-5. Red Hat Corporate employees
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== 5. Red Hat Corporate employees
 
 [[characteristics-4]]
-Characteristics
-^^^^^^^^^^^^^^^
+=== Characteristics
 
 * Teams of employees working at Red Hat, primarily consulting, and
 includes multiple other business units across the organization, such as
@@ -150,8 +131,7 @@ work
 ownership in a formal capacity
 
 [[primary-goals-4]]
-Primary Goals
-^^^^^^^^^^^^^
+=== Primary Goals
 
 * Improve brand and reputation
 ** Attract new technical talent for recruiting (make sure people hear
@@ -162,8 +142,7 @@ about it)
 experience
 
 [[frustrationspain-points-4]]
-Frustrations/Pain Points
-^^^^^^^^^^^^^^^^^^^^^^^^
+=== Frustrations/Pain Points
 
 * Balancing community + supporting corporate needs
 ** (For community: being a good corporate citizen, respecting cultural

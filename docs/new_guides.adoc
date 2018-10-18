@@ -1,13 +1,11 @@
 [[proposing-a-new-guide]]
-Proposing a new guide
----------------------
+= Proposing a new guide
 
 Thanks for your interest in suggesting a new uncontained.io guide! Your
 suggestions help us decide what to work on next.
 
 [[if-youd-like-to-propose-a-new-guide]]
-If you’d like to propose a new guide:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== If you’d like to propose a new guide:
 
 1.  *https://github.com/redhat-cop/uncontained.io/issues[Open an issue]*
 with your suggestion. Please explain:
@@ -25,8 +23,7 @@ existing guide. That’s okay! All suggestions are welcomed contributions,
 because they help us understand what our community is thinking.
 
 [[if-we-decide-to-move-forward-on-a-new-guide-we-will]]
-If we decide to move forward on a new guide, we will:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== If we decide to move forward on a new guide, we will:
 
 * [ ] Label your issue `research`
 * [ ] Collect existing community resources (links, blog posts, projects)
