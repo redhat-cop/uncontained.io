@@ -11,8 +11,9 @@
 			{{ range .Paginator.Pages }}
 				{{ partial "summary.html" . }}
 			{{ end }}
+		</div>
+		<div class="row">
 			{{ partial "pagination.html" . }}
-
 		</div>
 	</main>
 {{ partial "footer.html" . }}

@@ -1,0 +1,21 @@
+namespace: field-guides-prod
+
+openshift_cluster_content:
+- object: projects
+  content:
+  - name: "create environments"
+    file: "{{ inventory_dir }}/../.openshift/projects/projects-prod.yml"
+    action: create
+    namespace: "{{ namespace }}"
+  - name: "create promoter account"
+    template: "{{ inventory_dir }}/../.openshift/templates/promoter-sa.yml"
+    params_from_vars:
+      NAMESPACE: "{{ namespace }}"
+    namespace: "{{ namespace }}"
+- object: deployments
+  content:
+  - name: "deply prod environment"
+    template: "{{ inventory_dir }}/../.openshift/templates/deployment.yml"
+    namespace: "{{ namespace }}"
+    params_from_vars:
+      APP_NAME: site-v2

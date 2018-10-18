@@ -8,7 +8,7 @@ objects:
 - apiVersion: v1
   kind: ImageStream
   metadata:
-    name: site
+    name: ${APP_NAME}
   spec:
     dockerImageRepository: ${UPSTREAM_IMAGE_REPO}
     importPolicy:
@@ -18,17 +18,17 @@ objects:
   metadata:
     creationTimestamp: null
     labels:
-      app: site
-    name: site
+      app: ${APP_NAME}
+    name: ${APP_NAME}
   spec:
     host: ${HOSTNAME}
     port:
-      targetPort: 8443-tcp
-    tls:
-      termination: ${TERMINATION}
+      targetPort: 8080-tcp
+#    tls:
+#      termination: ${TERMINATION}
     to:
       kind: Service
-      name: site
+      name: ${APP_NAME}
       weight: 100
     wildcardPolicy: None
 - apiVersion: v1
@@ -37,14 +37,14 @@ objects:
     creationTimestamp: null
     generation: 1
     labels:
-      app: site
-    name: site
+      app: ${APP_NAME}
+    name: ${APP_NAME}
   spec:
     replicas: 2
     revisionHistoryLimit: 10
     selector:
-      app: site
-      deploymentconfig: site
+      app: ${APP_NAME}
+      deploymentconfig: ${APP_NAME}
     strategy:
       activeDeadlineSeconds: 21600
       resources: {}
@@ -60,8 +60,8 @@ objects:
         annotations:
         creationTimestamp: null
         labels:
-          app: site
-          deploymentconfig: site
+          app: ${APP_NAME}
+          deploymentconfig: ${APP_NAME}
       spec:
         containers:
         - image:
@@ -71,7 +71,7 @@ objects:
               port: 8080
             initialDelaySeconds: 15
             timeoutSeconds: 1
-          name: site
+          name: ${APP_NAME}
           ports:
           - containerPort: 8080
             protocol: TCP
@@ -94,31 +94,30 @@ objects:
         volumes:
         - name: cert-volume
           secret:
-            secretName: site-int-cert
+            secretName: ${APP_NAME}-int-cert
         - name: config-volume
           configMap:
-            name: site-config
+            name: ${APP_NAME}-config
     test: false
     triggers:
     - type: ConfigChange
     - imageChangeParams:
         automatic: true
         containerNames:
-        - site
+        - ${APP_NAME}
         from:
           kind: ImageStreamTag
-          name: site:latest
-          namespace: uncontained--prototype
+          name: ${APP_NAME}:latest
       type: ImageChange
 - apiVersion: v1
   kind: Service
   metadata:
     annotations:
-      service.alpha.openshift.io/serving-cert-secret-name: site-int-cert
+      service.alpha.openshift.io/serving-cert-secret-name: ${APP_NAME}-int-cert
     creationTimestamp: null
     labels:
-      app: site
-    name: site
+      app: ${APP_NAME}
+    name: ${APP_NAME}
   spec:
     ports:
     - name: 8080-tcp
@@ -130,14 +129,14 @@ objects:
       protocol: TCP
       targetPort: 8443
     selector:
-      app: site
-      deploymentconfig: site
+      app: ${APP_NAME}
+      deploymentconfig: ${APP_NAME}
     sessionAffinity: None
     type: ClusterIP
 - apiVersion: v1
   kind: ConfigMap
   metadata:
-    name: site-config
+    name: ${APP_NAME}-config
   data:
     tls-server.conf: |-
       # HTTPS server
@@ -168,6 +167,9 @@ objects:
         ssl_prefer_server_ciphers   on;
       }
 parameters:
+  - name: APP_NAME
+    required: true
+    value: site
   - name: HOSTNAME
   - name: TERMINATION
   - name: UPSTREAM_IMAGE_REPO
