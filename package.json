@@ -10,6 +10,7 @@
     "build-preview": "gulp build-preview",
     "start": "gulp server",
     "start-preview": "gulp server-preview",
+    "test": "gulp test",
     "lint": "eslint src"
   },
   "author": "",
@@ -25,6 +26,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.11.6",
     "bootstrap": "^4.1.0",
+    "broken-link-checker": "^0.7.8",
     "browser-sync": "^2.23.7",
     "css-loader": "^0.28.11",
     "eslint-plugin-import": "^2.11.0",

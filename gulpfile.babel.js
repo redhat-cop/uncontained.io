@@ -8,6 +8,7 @@ import webpack from "webpack";
 import webpackConfig from "./webpack.conf";
 import sass from "gulp-sass";
 import sourcemaps from "gulp-sourcemaps";
+import linkChecker from "./test/link-checker";
 
 const browserSync = BrowserSync.create();
 
@@ -29,6 +30,9 @@ gulp.task("server-preview", ["hugo-preview", "sass", "js", "fonts", "asciidoctor
 // Build/production tasks
 gulp.task("build", ["sass", "js", "fonts", "asciidoctor-check"], (cb) => buildSite(cb, [], "production"));
 gulp.task("build-preview", ["sass", "js", "fonts", "asciidoctor-check"], (cb) => buildSite(cb, hugoArgsPreview, "production"));
+
+// Run Automated Tests
+gulp.task("test", (cb) => runTests(cb));
 
 // Compile SCSS into CSS
 gulp.task("sass", function(done) {
@@ -109,4 +113,16 @@ function buildSite(cb, options, environment = "development") {
       cb("Hugo build failed");
     }
   });
+}
+
+function runTests() {
+  var siteUrl = "http://localhost:3000/";
+  var options = {
+    filterLevel: 3
+  };
+
+  var checker = new linkChecker();
+
+  checker.run(siteUrl, options);
+
 }
