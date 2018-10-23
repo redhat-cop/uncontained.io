@@ -139,7 +139,7 @@ Migrating content from there to here is fairly straightforward, but involves som
     ```
     ./migrate-doc.sh continuous_delivery/external-jenkins-integration.adoc guides/external-jenkins-integration.adoc
     ```
-2. Next, start the test site using the [container image](#containerized-hugo-environment-quickstart-guide) or [native hugo](#native-hugo-environment-quickstart-guide)
+2. Next, start the test site using the [container image](#containerized-hugo-environment-quickstart-guide) or [native hugo](#native-hugo-environment-quickstart-guide).
 3. Navigate to the content you migrated and ensure that:
   * all content renders correctly
   * there are no broken links (we recommend using a link checker like [this one for Firefox](https://addons.mozilla.org/en-US/firefox/addon/linkchecker/) or [this one for Chrome](https://chrome.google.com/webstore/detail/broken-link-checker/nibppfobembgfmejpjaaeocbogeonhch?hl=en))
