@@ -1,26 +1,42 @@
 # Content Model
-Uncontained.io guides help individuals, communities, and companies embrace open source software. It explains not only how to accomplish a task, but why you'd want to, and how that task fits into the larger story of consuming, contributing to, and producing open source software containers and related technologies.
+Uncontained.io guides help individuals, communities, and companies embrace open source software. It explains not only how to accomplish a task, but why you'd want to, and how that task fits into a larger story of organizations undergoing a digital transformation.
 
 This content was originally created and curated by Red Hat's PaaS Community of Practice, and covers topics that are very relevant to Red Hat users, but it is not specific to Red Hat products.
 
-For content that is specific to Red Hat products, see:
+Everything written on uncontained.io should fall into one of the following categories.
 
-- docs.openshift.com - gets existing users unstuck and back to work utilizing OpenShift Container Platform.
-- access.redhat.com -  support, documentation, and more about all Red Hat specific products and services for all users.
+## Articles
 
-Everything written in the guides should fall into one of the following categories.
+Simply put, an _article_ is any single piece of content.
+- A `title`
+- A `date`
+- An `author` (or authors)
+- A `category` (see below for Category options)
+- Optionally:
+  - One or more `tags`
+  - One or more `collections` that the article is a part of
 
-## Editorial Guides
+While meant to be read from beginning to end, articles have a table of contents to help the reader quickly skim the content and find a relevant subsection.
 
-Editorial guides are long form documents that may have multiple contributors  that dive deep into a specific topic (for example, "Getting Started with Containers" or "Installing a Highly Available OpenShift Cluster"). They may contain visuals and anecdotes to illustrate their point and may provide very opinionated guidance. While meant to be read from beginning to end, they have a table of contents to help the reader quickly skim the content and find a relevant subsection.
+### Implementation Guides
 
-## Article Guides
+_Implementation guides_ are long form articles that provide an approach to solving an organizational problem using technology. These articles may have multiple contributors, contain visuals and anecdotes to illustrate their point and may provide opinionated guidance.
 
- Article guides are short form documents, opinion pieces, ideas from individuals on a specific topic (for example, "Creating a Custom Role" or "Measuring success"). They may contain visuals and anecdotes to illustrate their point.
+### Add-Ons
 
-### Tutorial Guides
+An _add-on_ article (a.k.a an Appendix) is a piece of content that is associated with another article, but would have broken up the flow or the primary content or otherwise makes more sense to live separately. Typically, an add-on should start by stating the assumption that the reader first reads and understands the originating article before getting into the meat of the content.
 
-A tutorial is a specific type of article that has a specific expected content structure.
+### Tutorials
+
+A tutorial is a walk-through using commands and code that are used to teach a concept.
+
+### Deep Dives (a.k.a Funamentals Guides)
+
+A _deep dive_ or _fundamentals guide_ will cover a specific topic area in order to provide some fundamental base knowledge that will be needed or assumed in other implementation guides (for example, "Getting Started with Containers").
+
+## Collections
+
+A _collection_ is an entirely different content format, intended to provide a way of grouping together multiple articles in a way that provides a more wholistic message. We are still in development of the _collections_ model right now, and will post more soon.
 
 ## Design Elements
 
