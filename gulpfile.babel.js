@@ -116,13 +116,36 @@ function buildSite(cb, options, environment = "development") {
 }
 
 function runTests() {
-  var siteUrl = "http://localhost:3000/";
-  var options = {
-    filterLevel: 3
-  };
+  process.on('uncaughtException', function (err) {
+      console.log(err);
+  });
+  var min = Math.ceil(10000);
+  var max = Math.floor(65535);
+  var portNum = Math.floor(Math.random() * (max - min)) + min;
+  testSetup(portNum, function(){
+    var siteUrl = "http://localhost:" + portNum + "/";
+    var options = {
+      filterLevel: 3
+    };
 
-  var checker = new linkChecker();
+    var checker = new linkChecker();
 
-  checker.run(siteUrl, options);
+    checker.run(siteUrl, options);
+
+  });
+
+}
+
+function testSetup(port, cb) {
+  browserSync.init({
+    server: {
+      baseDir: "./dist"
+    },
+    port: port,
+    ui: {
+      port: port + 1
+    },
+    open: false
+  }, cb);
 
 }
