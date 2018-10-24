@@ -18,7 +18,7 @@ v1.0, 2017-06-10
 
 include::site/layouts/variables.adoc[]
 
-This guide discusses the synchronization of groups defined in an LDAP server with OpenShift and is distinct from using an LDAP server to authenticate users to OpenShift. Please refer to the link:/playbooks/installation/ldap_integration{outfilesuffix}[LDAP Integration guide] for using an LDAP server as an identity provider to govern user authentication to OpenShift.
+This guide discusses the synchronization of groups defined in an LDAP server with OpenShift and is distinct from using an LDAP server to authenticate users to OpenShift. Please refer to the link:/articles/openshift-ldap-integration/[LDAP Integration guide] for using an LDAP server as an identity provider to govern user authentication to OpenShift.
 
 toc::[]
 The OpenShift Container Platform contains a fully functional Role Based Access Control (RBAC) system. Access to privileged resources can be granted on a per user basis or to a set of users, known as a Group. Many organizations leveraging an LDAP server to manage the authentication of users to OpenShift may want to also synchronize groups that may already be defined in an LDAP server with OpenShift to simplify the management into a single location.
@@ -37,7 +37,7 @@ The process of synchronizing groups defined in an LDAP server with OpenShift req
 
 The client configuration file is a _yaml_ based file that defines a `LDAPSyncConfig` resource and containers the parameters to connect to the LDAP server along with the mapping groups and their users.
 
-NOTE: In the link:/playbooks/installation/ldap_integration{outfilesuffix}[LDAP Integration for Authentication guide], an link:/playbooks/installation/ldap_integration{outfilesuffix}#example-ldap-tree-structure[example LDAP tree structure] was provided as a use case and will be used during this discussion to synchronize groups from LDAP to OpenShift.
+NOTE: In the link:/articles/openshift-ldap-integration/[LDAP Integration for Authentication guide], an link:/articles/openshift-ldap-integration/#_example_ldap_tree_structure[example LDAP tree structure] was provided as a use case and will be used during this discussion to synchronize groups from LDAP to OpenShift.
 
 === Connectivity
 

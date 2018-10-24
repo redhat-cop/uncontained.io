@@ -1,7 +1,7 @@
 ---
 date: "2018-02-24T01:19:49-05:00"
 title: "Load Balancing Integration for OpenShift"
-authors: []
+authors: [etsauer, oybed]
 categories:
   - Deep Dive
 tags:
@@ -23,10 +23,6 @@ include::site/layouts/variables.adoc[]
 This guide will walk you through how to leverage Load Balancers for cluster and application high availability.
 
 toc::[]
-
-
-
-
 
 == Load Balancing For HA Applications
 

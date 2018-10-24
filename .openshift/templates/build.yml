@@ -76,7 +76,7 @@ objects:
             stages {
               stage ('Fetch Source Code') {
                 steps {
-                  git url: "https://github.com/redhat-cop/uncontained.io"
+                  git url: "${APPLICATION_SOURCE_REPO}", branch: "${APPLICATION_SOURCE_REF}"
                 }
               }
 
@@ -164,7 +164,11 @@ objects:
 
             }
           }
-
+        env:
+          - name: APPLICATION_SOURCE_REPO
+            value: ${APPLICATION_SOURCE_REPO}
+          - name: APPLICATION_SOURCE_REF
+            value: ${APPLICATION_SOURCE_REF}
     triggers:
       - type: ConfigChange
       - type: GitHub
@@ -175,3 +179,7 @@ parameters:
 - name: OUTPUT_IMAGE
 - name: OUTPUT_IMAGE_TYPE
 - name: PUSH_SECRET
+- name: APPLICATION_SOURCE_REPO
+  value: https://github.com/redhat-cop/uncontained.io
+- name: APPLICATION_SOURCE_REF
+  value: master
