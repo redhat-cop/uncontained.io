@@ -131,7 +131,7 @@ In the form presented, enter the values as described in the table below:
 
 |=========================================================
 
-image::images/external-jenkins-credentials.png[title=Jenkins credentials]
+image::/images/external-jenkins-credentials.png[title=Jenkins credentials]
 
 Since the Jenkins integration with OpenShift makes use of several independent plugins, each has their own type of credential in which they make use of the OAuth token. The _OpenShift Token_ kind is used by the OpenShift Sync plugin, but the _OpenShift OAuth Token_ kind is used by the Kubernetes Plugin. Create a second credential using the values in the tables below to account for the Kubernetes plugin using a similar process as described above.
 
@@ -334,7 +334,7 @@ oc create -f sample-pipeline.yaml
 
 Jenkins should automatically pick up the creation of the BuildConfig and create a new job called `<project_name>/sample-pipeline`
 
-image::images/external-jenkins-synced-job.png[title=Synchronized Jenkins Job from an OpenShift BuildConfig]
+image::/images/external-jenkins-synced-job.png[title=Synchronized Jenkins Job from an OpenShift BuildConfig]
 
 === Dynamic Slave Execution
 
@@ -344,8 +344,8 @@ From the Jenkins overview page, select the job that was automatically created.
 
 Select *Build Now* link on the left side to initiate the build process. Once complete, a visualization of the pipeline and its status displayed similar to the following:
 
-image::images/external-jenkins-build.png[title=Successful Jenkins Build]
+image::/images/external-jenkins-build.png[title=Successful Jenkins Build]
 
 The pipeline can also be viewed within the OpenShift web console by navigating to *Builds* -> *Pipelines* from within the target project.
 
-image::images/external-jenkins-ocp-pipeline.png[title=OpenShift Pipelines]
+image::/images/external-jenkins-ocp-pipeline.png[title=OpenShift Pipelines]
