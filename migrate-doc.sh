@@ -6,11 +6,18 @@ DOC=${2}
 # Grab content from existing playbook
 content="$(cat ${PLAYBOOKS_SITE}${PLAYBOOK})"
 
+# Migrate images in content
+images=$(echo "${content}" | awk '/image::/' | sed 's/image:://' | sed 's/\[.*\]//')
+for i in ${images}; do
+  echo "Migrating image ${PLAYBOOKS_SITE}/../$i to ${UNCONTAINED_SITE}/static/$i";
+  cp ${PLAYBOOKS_SITE}/../$i ${UNCONTAINED_SITE}/static/$i
+done
+
 # Strip existing frontmatter
 content=$(echo "${content}" | sed -n '/^= .*/,$p')
 
 # Do some reformatting of content
-content=$(echo "${content}" | sed 's/include::..\/..\/_includes\/variables.adoc\[\]/include::layouts\/variables.adoc\[\]/')
+content=$(echo "${content}" | sed 's/include::..\/..\/_includes\/variables.adoc\[\]/include::site\/layouts\/variables.adoc\[\]/')
 # TODO: Reformat anchor tags.
 # Old format: link:#syncing-images-using-satellite-6
 # new format: link:#_syncing_images_using-satellite-6
