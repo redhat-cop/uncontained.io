@@ -34,13 +34,6 @@ function run(siteUrl, options) {
     },
     junk: function(result)
     {
-      // if (logOptions.excludeFilteredLinks === true)
-      // {
-      //   result.__cli_excluded = true;
-      //
-      //   data.page.excludedLinks++;
-      //   data.total.excludedLinks++;
-      // }
 
       data.page.totalLinks++;
       data.total.links++;

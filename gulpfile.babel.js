@@ -119,8 +119,8 @@ function runTests() {
   process.on('uncaughtException', function (err) {
       console.log(err);
   });
-  var min = Math.ceil(10000);
-  var max = Math.floor(65535);
+  var min = 10000;
+  var max = 65535;
   var portNum = Math.floor(Math.random() * (max - min)) + min;
   testSetup(portNum, function(){
     var siteUrl = "http://localhost:" + portNum + "/";
