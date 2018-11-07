@@ -125,7 +125,11 @@ function runTests() {
   testSetup(portNum, function(){
     var siteUrl = "http://localhost:" + portNum + "/";
     var options = {
-      filterLevel: 3
+      filterLevel: 3,
+      excludedKeywords: [
+        "cluster.local",
+        "myorg.com"
+      ]
     };
 
     var checker = new linkChecker();

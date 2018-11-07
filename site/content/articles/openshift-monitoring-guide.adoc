@@ -112,4 +112,4 @@ link:https://blog.openshift.com/full-cluster-part-3-capacity-management/[The thi
 == What's Next?
 
 * Monitoring Tooling Implementations (Coming Soon!)
-* link:../app_dev/APM_guidance{outfilesuffix}[Application Performance Monitoring Guidance]
+* link:http://v1.uncontained.io/playbooks/app_dev/APM_guidance{outfilesuffix}[Application Performance Monitoring Guidance]
