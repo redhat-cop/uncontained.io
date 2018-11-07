@@ -125,6 +125,9 @@ objects:
               }
 
               stage('Promote to Prod') {
+                when {
+                  branch 'master'
+                }
                 agent {
                   kubernetes {
                     label 'promotion-slave'
