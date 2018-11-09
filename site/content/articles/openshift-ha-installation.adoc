@@ -213,7 +213,7 @@ To integrate with an external load balancer, at minimum, you'll need to create:
 * A passthrough VIP and back-end pool for the Master hosts
 * A passthrough VIP and back-end pool for the Infrastructure hosts
 
-See our link:/guides/openshift-load-balancing[Integrating External Loadbalancers] guide for more details on this.
+See our link:/articles/openshift-load-balancing[Integrating External Loadbalancers] guide for more details on this.
 
 ==== Option 2: Use the Integrated HAProxy Balancer
 
@@ -923,7 +923,7 @@ openshift_node_kubelet_args="{'kube-reserved': ['cpu=250m,memory=500M'], <1>
 
 === Validating Pre-requisites
 
-Once we have everything prepped, it's a good idea to run through our link:/guides/openshift-pre-install[OpenShift Pre-Install Validation Checklist].
+Once we have everything prepped, it's a good idea to run through our link:/articles/openshift-pre-install[OpenShift Pre-Install Validation Checklist].
 
 Or alternatively, you could just run this link:https://github.com/redhat-cop/openshift-toolkit/tree/master/validation/[pre-install validation script].
 
@@ -941,10 +941,10 @@ The install will run for 15-20 minutes. Good time for a coffee break.
 
 == Validating the Cluster
 
-link:/guides/openshift-validate[Validating an OpenShift Install]
+link:/articles/openshift-validate[Validating an OpenShift Install]
 
 == What's Next?
 
-* link:/guides/openshift-admin-overview[Overview of OpenShift for Administrators]
+* link:/articles/openshift-admin-overview[Overview of OpenShift for Administrators]
 * link:/articles/openshift-custom-certificates[Configuring OpenShift to use Custom Certificates]
 * link:/articles/openshift-ldap-integration[Adding LDAP for Authentication]

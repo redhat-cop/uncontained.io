@@ -8,6 +8,7 @@ import webpack from "webpack";
 import webpackConfig from "./webpack.conf";
 import sass from "gulp-sass";
 import sourcemaps from "gulp-sourcemaps";
+import linkChecker from "./test/link-checker";
 
 const browserSync = BrowserSync.create();
 
@@ -29,6 +30,9 @@ gulp.task("server-preview", ["hugo-preview", "sass", "js", "fonts", "asciidoctor
 // Build/production tasks
 gulp.task("build", ["sass", "js", "fonts", "asciidoctor-check"], (cb) => buildSite(cb, [], "production"));
 gulp.task("build-preview", ["sass", "js", "fonts", "asciidoctor-check"], (cb) => buildSite(cb, hugoArgsPreview, "production"));
+
+// Run Automated Tests
+gulp.task("test", (cb) => runTests(cb));
 
 // Compile SCSS into CSS
 gulp.task("sass", function(done) {
@@ -109,4 +113,43 @@ function buildSite(cb, options, environment = "development") {
       cb("Hugo build failed");
     }
   });
+}
+
+function runTests() {
+  process.on('uncaughtException', function (err) {
+      console.log(err);
+  });
+  var min = 10000;
+  var max = 65535;
+  var portNum = Math.floor(Math.random() * (max - min)) + min;
+  testSetup(portNum, function(){
+    var siteUrl = "http://localhost:" + portNum + "/";
+    var options = {
+      filterLevel: 3,
+      excludedKeywords: [
+        "cluster.local",
+        "myorg.com"
+      ]
+    };
+
+    var checker = new linkChecker();
+
+    checker.run(siteUrl, options);
+
+  });
+
+}
+
+function testSetup(port, cb) {
+  browserSync.init({
+    server: {
+      baseDir: "./dist"
+    },
+    port: port,
+    ui: {
+      port: port + 1
+    },
+    open: false
+  }, cb);
+
 }

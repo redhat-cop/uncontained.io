@@ -1,13 +1,16 @@
 ---
 
 namespace: uncontained
+display_name: Uncontained.io Pipeline
 
 openshift_cluster_content:
 - object: Environment Setup
   content:
   - name: Create Projects
-    file: "{{ inventory_dir }}/../.openshift/projects/projects.yml"
+    template: "{{ inventory_dir }}/../.openshift/projects/projects.yml"
     action: create
+    params_from_vars:
+      NAMESPACE: "{{ namespace }}"
 - object: Pre-requisites
   content:
   - name: Static Files

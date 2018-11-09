@@ -1,7 +1,7 @@
 ---
 date: "2017-08-29T00:48:13-04:00"
 title: "Openshift Monitoring Guide"
-authors: []
+authors: [redhat-cop]
 categories:
   - 'Field Guide'
 tags:
@@ -25,7 +25,7 @@ toc::[]
 
 == Overview
 
-NOTE: Before reading this guide, we recommend first reading link:/playbooks/installation/admin_overview.html[An Overview of OpenShift for System Admins].
+NOTE: Before reading this guide, we recommend first reading link:/articles/openshift-admin-overview/[An Overview of OpenShift for System Admins].
 
 The following document intends to provide starting guidance on how to build a monitoring approach for OpenShift. In it, we will present a suggested categorization of _checks_ that would form the basis for items that should usually generate an alert of some kind in a production cluster.
 
@@ -114,4 +114,4 @@ link:https://blog.openshift.com/full-cluster-part-3-capacity-management/[The thi
 == What's Next?
 
 * Monitoring Tooling Implementations (Coming Soon!)
-* link:../app_dev/APM_guidance{outfilesuffix}[Application Performance Monitoring Guidance]
+* link:http://v1.uncontained.io/playbooks/app_dev/APM_guidance{outfilesuffix}[Application Performance Monitoring Guidance]
