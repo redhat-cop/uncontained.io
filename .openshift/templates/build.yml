@@ -51,6 +51,7 @@ objects:
           [$class: "GitSCMSource",
           remote: "https://github.com/redhat-cop/pipeline-library.git"])
 
+          //def n = new org.redhatcop.util.notifications()
           production_namespace="field-guides-prod"
 
           openshift.withCluster() {
@@ -68,6 +69,8 @@ objects:
             env.api = sh(script:"set +x; echo ${encodedAPI} | base64 --decode", returnStdout: true)
           }
 
+          //n.notifyBuild('STARTED', rocketchat_url)
+
           pipeline {
             agent {
               label 'hugo-builder'
@@ -76,6 +79,7 @@ objects:
             stages {
               stage ('Fetch Source Code') {
                 steps {
+                  hygieiaBuildPublishStep buildStatus: 'InProgress'
                   git url: "${APPLICATION_SOURCE_REPO}", branch: "${APPLICATION_SOURCE_REF}"
                 }
               }
@@ -87,15 +91,27 @@ objects:
                     sh 'npm run build'
                   }
                 }
+                post {
+                  failure {
+                    hygieiaBuildPublishStep buildStatus: 'Failure'
+                  }
+                  aborted {
+                    hygieiaBuildPublishStep buildStatus: 'Aborted'
+                  }
+                  success {
+                    hygieiaBuildPublishStep buildStatus: 'Success'
+                  }
+                }
               }
 
+              /*
               stage ('Run Automated Tests') {
                 steps {
                   container('builder') {
                     sh 'npm test'
                   }
                 }
-              }
+              }*/
 
               stage ('Build Container Image') {
                 steps {
@@ -122,12 +138,14 @@ objects:
                     }
                   }
                 }
+                post {
+                  success {
+                    hygieiaDeployPublishStep applicationName: 'uncontained', artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: '${BUILD_NUMBER}-dev', buildStatus: 'Success', environmentName: 'development'
+                  }
+                }
               }
 
               stage('Promote to Prod') {
-                when {
-                  branch 'master'
-                }
                 agent {
                   kubernetes {
                     label 'promotion-slave'
@@ -160,12 +178,27 @@ objects:
                       }
 
                     }
+                    hygieiaDeployPublishStep applicationName: 'uncontained', artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: '${BUILD_NUMBER}-prod', buildStatus: 'Success', environmentName: 'production'
                   }
-
                 }
               }
-
             }
+
+            /*
+            post {
+              success {
+                script {
+
+                  //n.notifyBuild('SUCCESSFUL', rocketchat_url)
+                }
+              }
+              failure {
+                script {
+                  //n.notifyBuild('FAILED', rocketchat_url)
+                }
+              }
+            }*/
+
           }
         env:
           - name: APPLICATION_SOURCE_REPO
