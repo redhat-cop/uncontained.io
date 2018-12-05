@@ -1,21 +1,26 @@
-namespace: field-guides-prod
+namespace: hygieia-pcarney
+ci_cd_namespace: uncontained
+app_name: hygieia-testing-pcarney
 
 openshift_cluster_content:
 - object: projects
   content:
-  - name: "create environments"
-    file: "{{ inventory_dir }}/../.openshift/projects/projects-prod.yml"
+  - name: "create {{ namespace }} environment"
+    template: "{{ inventory_dir }}/../.openshift/projects/projects.yml"
     action: create
+    params_from_vars:
+      NAMESPACE: "{{ namespace }}"
     namespace: "{{ namespace }}"
   - name: "create promoter account"
     template: "{{ inventory_dir }}/../.openshift/templates/promoter-sa.yml"
     params_from_vars:
       NAMESPACE: "{{ namespace }}"
+      JENKINS_NAMESPACE: "{{ ci_cd_namespace }}"
     namespace: "{{ namespace }}"
 - object: deployments
   content:
-  - name: "deply prod environment"
+  - name: "deploy to {{ namespace }} environment"
     template: "{{ inventory_dir }}/../.openshift/templates/deployment.yml"
     namespace: "{{ namespace }}"
     params_from_vars:
-      APP_NAME: site-v2
+      APP_NAME: "{{ app_name }}"
