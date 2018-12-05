@@ -26,3 +26,6 @@ test:
 stage:
   NAMESPACE: "{{ stage_namespace }}"
   DISPLAY_NAME: "Uncontained.io - Stage"
+#prod:
+#  NAMESPACE: "{{ prod_namespace }}"
+#  DISPLAY_NAME: "Uncontained.io - Prod"
