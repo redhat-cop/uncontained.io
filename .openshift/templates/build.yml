@@ -131,7 +131,7 @@ objects:
                 }
               }
 
-              stage ('Deploy to Dev'){
+              stage ('Deploy to ${dev_namespace}'){
                 steps {
                   script {
                     openshift.withCluster() {
@@ -147,15 +147,17 @@ objects:
                 }
               }
 
-              stage ('Verify Deployment to Dev') {
+              stage ('Verify Deployment to ${dev_namespace}') {
                 steps {
                   script {
                     openshift.withCluster() {
-                      def dcObj = openshift.selector('dc', APP_NAME).object()
-                      def podSelector = openshift.selector('pod', [deployment: "${APP_NAME}-${dcObj.status.latestVersion}"])
-                      podSelector.untilEach {
-                          echo "pod: ${it.name()}"
-                          return it.object().status.containerStatuses[0].ready
+                      openshift.withProject("${dev_namespace}"){
+                        def dcObj = openshift.selector('dc', APP_NAME).object()
+                        def podSelector = openshift.selector('pod', [deployment: "${APP_NAME}-${dcObj.status.latestVersion}"])
+                        podSelector.untilEach {
+                            echo "pod: ${it.name()}"
+                            return it.object().status.containerStatuses[0].ready
+                        }
                       }
                     }
                   }
