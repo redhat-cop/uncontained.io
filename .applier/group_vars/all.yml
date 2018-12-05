@@ -11,8 +11,8 @@ site_build:
   OUTPUT_IMAGE: "{{ app_name }}:latest"
   OUTPUT_IMAGE_TYPE: ImageStreamTag
   PUSH_SECRET: "name: builder-token-4k28b"
-  APPLICATION_SOURCE_REPO: https://github.com/redhat-cop/uncontained.io
-  APPLICATION_SOURCE_REF: master
+  APPLICATION_SOURCE_REPO: https://github.com/pcarney8/uncontained.io
+  APPLICATION_SOURCE_REF: etsauer-integrate-hygieia
 
 ci_cd:
   NAMESPACE: "{{ ci_cd_namespace }}"
