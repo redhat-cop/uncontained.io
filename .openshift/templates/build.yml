@@ -54,7 +54,6 @@ objects:
 
           openshift.withCluster() {
             env.NAMESPACE = openshift.project()
-            env.APP_NAME = "${env.JOB_NAME}".replaceAll(/-?pipeline-?/, '').replaceAll(/-?${env.NAMESPACE}-?\/?/, '')
 
             env.localToken = readFile('/var/run/secrets/kubernetes.io/serviceaccount/token').trim()
 
@@ -77,16 +76,20 @@ objects:
             stages {
               stage ('Fetch Source Code') {
                 steps {
+                  script {
                   hygieiaBuildPublishStep buildStatus: 'InProgress'
                   git url: "${APPLICATION_SOURCE_REPO}", branch: "${APPLICATION_SOURCE_REF}"
-                 
-                  env.groupVars = readYaml file: '.applier/inventory/group_vars/all.yml'
+
+                  def groupVars = readYaml file: '.applier/group_vars/all.yml'
+
                   env.ci_cd_namespace = """${groupVars.ci_cd_namespace}"""
                   env.dev_namespace = """${groupVars.dev_namespace}"""
                   env.test_namespace = """${groupVars.test_namespace}"""
                   env.stage_namespace = """${groupVars.stage_namespace}"""
+                  env.APP_NAME = """${groupVars.app_name}"""
                   //env.prod_namespace = """${groupVars.prod_namespace}"""
- 
+
+                  }
                 }
               }
 
@@ -140,9 +143,6 @@ objects:
                         tagImage(sourceImagePath: "${NAMESPACE}", sourceImageName: "${APP_NAME}", toImagePath: "${dev_namespace}", toImageName: "${APP_NAME}", toImageTag: "latest")
                       }
                     }
-                    sh 'mkdir dist/'
-                    sh 'touch dist/index.html'
-                    hygieiaDeployPublishStep applicationName: 'uncontained', artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: '${BUILD_NUMBER}-test', buildStatus: 'Success', environmentName: 'test'
                   }
                 }
               }
@@ -164,7 +164,7 @@ objects:
                 }
                 post {
                   success {
-                    hygieiaDeployPublishStep applicationName: 'uncontained', artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: '${BUILD_NUMBER}-${dev_namespace}', buildStatus: 'Success', environmentName: '${dev_namespace}'
+                    hygieiaDeployPublishStep applicationName: "${APP_NAME}", artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: "${BUILD_NUMBER}-${dev_namespace}", buildStatus: 'Success', environmentName: "${dev_namespace}"
                   }
                 }
               }
@@ -195,7 +195,7 @@ objects:
                     }
                     sh 'mkdir dist/'
                     sh 'touch dist/index.html'
-                    hygieiaDeployPublishStep applicationName: 'uncontained', artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: '${BUILD_NUMBER}-${test_namespace}', buildStatus: 'Success', environmentName: '${test_namespace}'
+                    hygieiaDeployPublishStep applicationName: "${APP_NAME}", artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: "${BUILD_NUMBER}-${test_namespace}", buildStatus: 'Success', environmentName: "${test_namespace}"
                   }
                 }
               }
@@ -226,13 +226,50 @@ objects:
                     }
                     sh 'mkdir dist/'
                     sh 'touch dist/index.html'
-                    hygieiaDeployPublishStep applicationName: 'uncontained', artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: '${BUILD_NUMBER}-${stage_namespace}', buildStatus: 'Success', environmentName: '${stage_namespace}'
+                    hygieiaDeployPublishStep applicationName: "${APP_NAME}", artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: "${BUILD_NUMBER}-${stage_namespace}", buildStatus: 'Success', environmentName: "${stage_namespace}"
                   }
                 }
               }
             }
 
             /*
+            stage('Promote to Prod') {
+              agent {
+                kubernetes {
+                  label 'promotion-slave'
+                  cloud 'openshift'
+                  serviceAccount 'jenkins'
+                  containerTemplate {
+                    name 'jnlp'
+                    image "docker-registry.default.svc:5000/${NAMESPACE}/jenkins-slave-image-mgmt"
+                    alwaysPullImage true
+                    workingDir '/tmp'
+                    args '${computer.jnlpmac} ${computer.name}'
+                    ttyEnabled false
+                  }
+                }
+              }
+              steps {
+                script {
+                  openshift.withCluster() {
+
+                    openshift.withProject() {
+                      def imageRegistry = openshift.selector( 'is', "${APP_NAME}").object().status.dockerImageRepository
+                      echo "Promoting ${imageRegistry} -> ${registry}/${production_namespace}/${APP_NAME}"
+                      sh """
+                      set +x
+                      skopeo copy --remove-signatures \
+                        --src-creds openshift:${localToken} --src-cert-dir=/run/secrets/kubernetes.io/serviceaccount/ \
+                        --dest-creds openshift:${token}  --dest-tls-verify=false \
+                        docker://${imageRegistry} docker://${registry}/${production_namespace}/${APP_NAME}
+                      """
+                    }
+
+                  }
+                }
+
+              }
+            }
             post {
               success {
                 script {

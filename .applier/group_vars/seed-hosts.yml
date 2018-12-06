@@ -24,6 +24,13 @@ openshift_cluster_content:
     tags:
       - project
       - project-{{ test_namespace }}
+  - name: Create {{ stage_namespace }} Project
+    template: "{{ inventory_dir }}/../.openshift/projects/projects.yml"
+    action: create
+    params_from_vars: "{{ stage }}"
+    tags:
+      - project
+      - project-{{ stage_namespace }}
 - object: Pre-requisites
   content:
   - name: Static Files
@@ -63,6 +70,11 @@ openshift_cluster_content:
       NAMESPACE: "{{ dev_namespace }}"
       JENKINS_NAMESPACE: "{{ ci_cd_namespace }}"
     namespace: "{{ dev_namespace }}"
+    tags:
+      - deploy
+      - deploy-{{ dev_namespace }}
+      - deploy-{{ dev_namespace }}-promoter
+      - deploy-promoters
   - name: Deployment - {{ dev_namespace }}
     template: "{{ inventory_dir }}/../.openshift/templates/deployment.yml"
     params_from_vars:
@@ -71,6 +83,7 @@ openshift_cluster_content:
     tags:
       - deploy
       - deploy-{{ dev_namespace }}
+      - deploy-{{ dev_namespace }}-app
 - object: App Deployment {{ test_namespace }}
   content:
   - name: "create promoter account for {{ test_namespace }}"
@@ -79,6 +92,11 @@ openshift_cluster_content:
       NAMESPACE: "{{ test_namespace }}"
       JENKINS_NAMESPACE: "{{ ci_cd_namespace }}"
     namespace: "{{ test_namespace }}"
+    tags:
+      - deploy
+      - deploy-{{ test_namespace }}
+      - deploy-{{ test_namespace }}-promoter
+      - deploy-promoters
   - name: Deployment - {{ test_namespace }}
     template: "{{ inventory_dir }}/../.openshift/templates/deployment.yml"
     params_from_vars:
@@ -87,6 +105,7 @@ openshift_cluster_content:
     tags:
       - deploy
       - deploy-{{ test_namespace }}
+      - deploy-{{ test_namespace }}-app
 - object: App Deployment {{ stage_namespace }}
   content:
   - name: "create promoter account for {{ stage_namespace }}"
@@ -95,6 +114,11 @@ openshift_cluster_content:
       NAMESPACE: "{{ stage_namespace }}"
       JENKINS_NAMESPACE: "{{ ci_cd_namespace }}"
     namespace: "{{ stage_namespace }}"
+    tags:
+      - deploy
+      - deploy-{{ stage_namespace }}
+      - deploy-{{ stage_namespace }}-promoter
+      - deploy-promoters
   - name: Deployment - {{ stage_namespace }}
     template: "{{ inventory_dir }}/../.openshift/templates/deployment.yml"
     params_from_vars:
@@ -103,3 +127,4 @@ openshift_cluster_content:
     tags:
       - deploy
       - deploy-{{ stage_namespace }}
+      - deploy-{{ stage_namespace }}-app

@@ -1,7 +1,7 @@
 ci_cd_namespace: uncontained
 dev_namespace: uncontained-dev
-test_namespace: uncontainted-test
-stage_namespace: uncontainted-stage
+test_namespace: uncontained-test
+stage_namespace: uncontained-stage
 #prod_namespace: uncontained
 
 app_name: hygieia-testing-pcarney
