@@ -16,3 +16,4 @@ site/static/js
 .openshift/params/prod-cluster-credentials
 .DS_Store
 package-lock.json
+.idea

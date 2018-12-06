@@ -1,45 +1,130 @@
 ---
 
-namespace: uncontained
-display_name: Uncontained.io Pipeline
-
 openshift_cluster_content:
 - object: Environment Setup
   content:
-  - name: Create Projects
+  - name: Create {{ ci_cd_namespace }} Project
     template: "{{ inventory_dir }}/../.openshift/projects/projects.yml"
     action: create
-    params_from_vars:
-      NAMESPACE: "{{ namespace }}"
+    params_from_vars: "{{ ci_cd }}"
+    tags:
+      - project
+      - project-{{ ci_cd_namespace }}
+  - name: Create {{ dev_namespace }} Project
+    template: "{{ inventory_dir }}/../.openshift/projects/projects.yml"
+    action: create
+    params_from_vars: "{{ dev }}"
+    tags:
+      - project
+      - project-{{ dev_namespace }}
+  - name: Create {{ test_namespace }} Project
+    template: "{{ inventory_dir }}/../.openshift/projects/projects.yml"
+    action: create
+    params_from_vars: "{{ test }}"
+    tags:
+      - project
+      - project-{{ test_namespace }}
+  - name: Create {{ stage_namespace }} Project
+    template: "{{ inventory_dir }}/../.openshift/projects/projects.yml"
+    action: create
+    params_from_vars: "{{ stage }}"
+    tags:
+      - project
+      - project-{{ stage_namespace }}
 - object: Pre-requisites
   content:
   - name: Static Files
     file: "{{ inventory_dir }}/../.openshift/files/"
-    namespace: "{{ namespace }}"
+    namespace: "{{ ci_cd_namespace }}"
   - name: Apply Image Build
     template: https://raw.githubusercontent.com/redhat-cop/containers-quickstarts/v1.3/jenkins-slaves/templates/jenkins-slave-image-mgmt-template.yml
-    #params_from_vars:
-    namespace: "{{ namespace }}"
+    namespace: "{{ ci_cd_namespace }}"
+    tags:
+      - pre-req
   - name: Slave config
     template: "{{ inventory_dir }}/../.openshift/templates/slave-configmap.yml"
     params_from_vars:
-      NAMESPACE: "{{ namespace }}"
+      NAMESPACE: "{{ ci_cd_namespace }}"
+    tags:
+      - pre-req
   - name: Prod cluster credential
     template: "{{ inventory_dir }}/../.openshift/templates/cluster-secret.yml"
     params: "{{ inventory_dir }}/../.openshift/params/prod-cluster-credentials"
-    namespace: "{{ namespace }}"
-- object: App Deployment
-  content:
-  - name: Deployment - development
-    template: "{{ inventory_dir }}/../.openshift/templates/deployment.yml"
-    params_from_vars:
-      APP_NAME: site-v2
-    namespace: "{{ namespace }}"
+    namespace: "{{ ci_cd_namespace }}"
+    tags:
+      - pre-req
 - object: Build Pipeline
   content:
   - name: Build Pipeline
     template: "{{ inventory_dir }}/../.openshift/templates/build.yml"
-    params: "{{ inventory_dir }}/../.openshift/params/site-build-dev"
+    params_from_vars: "{{ site_build }}"
+    namespace: "{{ ci_cd_namespace }}"
+    tags:
+      - build
+      - pipeline
+- object: App Deployment {{ dev_namespace }}
+  content:
+  - name: "create promoter account for {{ dev_namespace }}"
+    template: "{{ inventory_dir }}/../.openshift/templates/promoter-sa.yml"
     params_from_vars:
-      APP_NAME: site-v2
-    namespace: "{{ namespace }}"
+      NAMESPACE: "{{ dev_namespace }}"
+      JENKINS_NAMESPACE: "{{ ci_cd_namespace }}"
+    namespace: "{{ dev_namespace }}"
+    tags:
+      - deploy
+      - deploy-{{ dev_namespace }}
+      - deploy-{{ dev_namespace }}-promoter
+      - deploy-promoters
+  - name: Deployment - {{ dev_namespace }}
+    template: "{{ inventory_dir }}/../.openshift/templates/deployment.yml"
+    params_from_vars:
+      APP_NAME: "{{ app_name }}"
+    namespace: "{{ dev_namespace }}"
+    tags:
+      - deploy
+      - deploy-{{ dev_namespace }}
+      - deploy-{{ dev_namespace }}-app
+- object: App Deployment {{ test_namespace }}
+  content:
+  - name: "create promoter account for {{ test_namespace }}"
+    template: "{{ inventory_dir }}/../.openshift/templates/promoter-sa.yml"
+    params_from_vars:
+      NAMESPACE: "{{ test_namespace }}"
+      JENKINS_NAMESPACE: "{{ ci_cd_namespace }}"
+    namespace: "{{ test_namespace }}"
+    tags:
+      - deploy
+      - deploy-{{ test_namespace }}
+      - deploy-{{ test_namespace }}-promoter
+      - deploy-promoters
+  - name: Deployment - {{ test_namespace }}
+    template: "{{ inventory_dir }}/../.openshift/templates/deployment.yml"
+    params_from_vars:
+      APP_NAME: "{{ app_name }}"
+    namespace: "{{ test_namespace }}"
+    tags:
+      - deploy
+      - deploy-{{ test_namespace }}
+      - deploy-{{ test_namespace }}-app
+- object: App Deployment {{ stage_namespace }}
+  content:
+  - name: "create promoter account for {{ stage_namespace }}"
+    template: "{{ inventory_dir }}/../.openshift/templates/promoter-sa.yml"
+    params_from_vars:
+      NAMESPACE: "{{ stage_namespace }}"
+      JENKINS_NAMESPACE: "{{ ci_cd_namespace }}"
+    namespace: "{{ stage_namespace }}"
+    tags:
+      - deploy
+      - deploy-{{ stage_namespace }}
+      - deploy-{{ stage_namespace }}-promoter
+      - deploy-promoters
+  - name: Deployment - {{ stage_namespace }}
+    template: "{{ inventory_dir }}/../.openshift/templates/deployment.yml"
+    params_from_vars:
+      APP_NAME: "{{ app_name }}"
+    namespace: "{{ stage_namespace }}"
+    tags:
+      - deploy
+      - deploy-{{ stage_namespace }}
+      - deploy-{{ stage_namespace }}-app

@@ -721,7 +721,7 @@ create ltm virtual infra.c1-ocp.myorg.com-https pool infra.c1-ocp.myorg.com-http
 ===== Master LB
 
 ----
-add lb monitor ocp-master HTTPS -httpRequest “GET /healthz”
+add lb monitor MON_ocp-master HTTP-ECV -send "GET /healthz" -recv ok -LRTM DISABLED -secure YES
 add serviceGroup ose-console_443_sslbridge SSL_BRIDGE -maxClient 0 -maxReq 0 -cip DISABLED -usip NO -useproxyport YES -cltTimeout 180 -svrTimeout 360 -CKA YES -TCPB YES -CMP NO
 add lb vserver ose-console_443_sslbridge SSL_BRIDGE 192.168.10.101 443 -persistenceType SSLSESSION -timeout 60 -cltTimeout 180
 bind lb vserver ose-console_443_sslbridge ose-console_443_sslbridge
@@ -733,7 +733,7 @@ bind serviceGroup ose-console_443_sslbridge openshift-master-3.c1-ocp.myorg.com 
 ===== Infra Node / Router LB
 
 ----
-add lb monitor ocp-router HTTP -destPort 1936 -httpRequest “GET /healthz”
+add lb monitor MON_ocp-router HTTP -respCode 200 -httpRequest "GET /healthz" -LRTM DISABLED -destPort 1936 -netProfile Monitor_SNIP
 add serviceGroup ose-wildcard_443_sslbridge SSL_BRIDGE -maxClient 0 -maxReq 0 -cip DISABLED -usip NO -useproxyport YES -cltTimeout 180 -svrTimeout 360 -CKA YES -TCPB YES -CMP NO
 add lb vserver ose-wildcard_443_sslbridge SSL_BRIDGE 192.168.10.102 443 -persistenceType SSLSESSION -timeout 60 -cltTimeout 180
 bind lb vserver ose-wildcard_443_sslbridge ose-wildcard_443_sslbridge
