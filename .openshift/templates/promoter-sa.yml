@@ -26,5 +26,7 @@ objects:
     namespace: ${NAMESPACE}
   userNames:
   - system:serviceaccount:${NAMESPACE}:promoter
+  - system:serviceaccount:${JENKINS_NAMESPACE}:jenkins
 parameters:
   - name: NAMESPACE
+  - name: JENKINS_NAMESPACE

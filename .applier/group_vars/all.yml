@@ -1,0 +1,31 @@
+ci_cd_namespace: uncontained
+dev_namespace: uncontained-dev
+test_namespace: uncontained-test
+stage_namespace: uncontained-stage
+prod_namespace: field-guides-prod
+
+app_name: site-v2
+
+site_build:
+  APP_NAME: "{{ app_name }}"
+  OUTPUT_IMAGE: "{{ app_name }}:latest"
+  OUTPUT_IMAGE_TYPE: ImageStreamTag
+  PUSH_SECRET: "name: builder-token-4k28b"
+  APPLICATION_SOURCE_REPO: https://github.com/redhat-cop/uncontained.io
+  APPLICATION_SOURCE_REF: master
+
+ci_cd:
+  NAMESPACE: "{{ ci_cd_namespace }}"
+  DISPLAY_NAME: "Uncontained.io Pipeline"
+dev:
+  NAMESPACE: "{{ dev_namespace }}"
+  DISPLAY_NAME: "Uncontained.io - Dev"
+test:
+  NAMESPACE: "{{ test_namespace }}"
+  DISPLAY_NAME: "Uncontained.io - Test"
+stage:
+  NAMESPACE: "{{ stage_namespace }}"
+  DISPLAY_NAME: "Uncontained.io - Stage"
+#prod:
+#  NAMESPACE: "{{ prod_namespace }}"
+#  DISPLAY_NAME: "Uncontained.io - Prod"
