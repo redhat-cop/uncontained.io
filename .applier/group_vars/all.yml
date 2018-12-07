@@ -4,7 +4,7 @@ test_namespace: uncontained-test
 stage_namespace: uncontained-stage
 prod_namespace: field-guides-prod
 
-app_name: uncontained
+app_name: site-v2
 
 site_build:
   APP_NAME: "{{ app_name }}"
