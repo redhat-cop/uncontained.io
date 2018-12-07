@@ -48,15 +48,15 @@ To support connectivity between OpenShift and Jenkins, the following network lev
 
 The majority of the capabilities provided by the integration between OpenShift and Jenkins are made possible through a collection of Jenkins plugins.
 
-* link:https://wiki.jenkins-ci.org/display/JENKINS/OpenShift+Pipeline+Plugin[OpenShift Pipeline] - The ability to trigger actions in OpenShift, such as starting a build or deployment.
-* link:https://wiki.jenkins-ci.org/display/JENKINS/OpenShift+Sync+Plugin[OpenShift Sync] - Synchronizing the state of Jenkins jobs and OpenShift objects (BuildConfigs) in order to facilitate integrated pipelines.
+* link:https://plugins.jenkins.io/openshift-pipeline[OpenShift Pipeline] - The ability to trigger actions in OpenShift, such as starting a build or deployment.
+* link:https://plugins.jenkins.io/openshift-sync[OpenShift Sync] - Synchronizing the state of Jenkins jobs and OpenShift objects (BuildConfigs) in order to facilitate integrated pipelines.
 
 IMPORTANT: As of version `0.9.2`, the Openshift Sync plugin *requires* version `1.6.1` of both the link:https://updates.jenkins-ci.org/download/plugins/blueocean-commons/[Blueocean-commons] and link:https://updates.jenkins-ci.org/download/plugins/blueocean-rest/[Blueocean-rest] plugins. Users may have to downgrade the versions of these plugins that come preinstalled with Jenkins. How to do so is beyond the scope of this article.
 
-* link:https://wiki.jenkins-ci.org/display/JENKINS/Kubernetes+Plugin[Kubernetes Plugin] - The ability to trigger actions in OpenShift, such as starting a build or deployment.
-* link:https://wiki.jenkins-ci.org/display/JENKINS/OpenShift+Client+Plugin[OpenShift Client Plugin] - Jenkins Pipeline DSL for interacting with OpenShift.
+* link:https://plugins.jenkins.io/kubernetes[Kubernetes Plugin] - The ability to trigger actions in OpenShift, such as starting a build or deployment.
+* link:https://plugins.jenkins.io/openshift-client[OpenShift Client Plugin] - Jenkins Pipeline DSL for interacting with OpenShift.
 
-NOTE: Starting in OpenShift version 3.4, the included Jenkins image provided by the platform began to leverage the link:https://wiki.jenkins-ci.org/display/JENKINS/OpenShift+Login+Plugin[OpenShift Login Plugin]  which enabled integrated authentication between OpenShift and Jenkins. The process for configuring this plugin in an externally facing Jenkins instance will not be covered in this article
+NOTE: Starting in OpenShift version 3.4, the included Jenkins image provided by the platform began to leverage the link:https://plugins.jenkins.io/openshift-login[OpenShift Login Plugin]  which enabled integrated authentication between OpenShift and Jenkins. The process for configuring this plugin in an externally facing Jenkins instance will not be covered in this article
 
 Each of these plugins must be installed within an existing Jenkins instance. As a Jenkins user with administrator access, login to Jenkins and navigate to *Manage Jenkins* -> *Plugin Manager*. Click on the *Available* tab and search for the plugins listed above. Check the box next to each of the plugins and when complete, select *Download now and install after restart*.
 
