@@ -87,7 +87,7 @@ objects:
                   env.test_namespace = """${groupVars.test_namespace}"""
                   env.stage_namespace = """${groupVars.stage_namespace}"""
                   env.APP_NAME = """${groupVars.app_name}"""
-                  //env.prod_namespace = """${groupVars.prod_namespace}"""
+                  env.production_namespace = """${groupVars.prod_namespace}"""
 
                   }
                 }
@@ -232,7 +232,6 @@ objects:
               }
             }
 
-            /*
             stage('Promote to Prod') {
               agent {
                 kubernetes {
@@ -270,6 +269,7 @@ objects:
 
               }
             }
+            /*
             post {
               success {
                 script {

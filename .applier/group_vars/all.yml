@@ -2,17 +2,17 @@ ci_cd_namespace: uncontained
 dev_namespace: uncontained-dev
 test_namespace: uncontained-test
 stage_namespace: uncontained-stage
-#prod_namespace: uncontained
+prod_namespace: field-guides-prod
 
-app_name: hygieia-testing-pcarney
+app_name: uncontained
 
 site_build:
   APP_NAME: "{{ app_name }}"
   OUTPUT_IMAGE: "{{ app_name }}:latest"
   OUTPUT_IMAGE_TYPE: ImageStreamTag
   PUSH_SECRET: "name: builder-token-4k28b"
-  APPLICATION_SOURCE_REPO: https://github.com/pcarney8/uncontained.io
-  APPLICATION_SOURCE_REF: etsauer-integrate-hygieia
+  APPLICATION_SOURCE_REPO: https://github.com/etsauer/uncontained.io
+  APPLICATION_SOURCE_REF: integrate-hygieia
 
 ci_cd:
   NAMESPACE: "{{ ci_cd_namespace }}"
