@@ -134,7 +134,7 @@ objects:
                 }
               }
 
-              stage ('Deploy to ${dev_namespace}'){
+              stage ('Deploy to Dev'){
                 steps {
                   script {
                     openshift.withCluster() {
@@ -147,7 +147,7 @@ objects:
                 }
               }
 
-              stage ('Verify Deployment to ${dev_namespace}') {
+              stage ('Verify Deployment to Dev') {
                 steps {
                   script {
                     openshift.withCluster() {
@@ -169,7 +169,7 @@ objects:
                 }
               }
 
-              stage('Promote to ${test_namespace}') {
+              stage('Promote to Test') {
                 agent {
                   kubernetes {
                     label 'promotion-slave'
@@ -200,7 +200,7 @@ objects:
                 }
               }
 
-              stage('Promote to ${stage_namespace}') {
+              stage('Promote to Stage') {
                 agent {
                   kubernetes {
                     label 'promotion-slave'
@@ -230,43 +230,45 @@ objects:
                   }
                 }
               }
-            }
 
-            stage('Promote to Prod') {
-              agent {
-                kubernetes {
-                  label 'promotion-slave'
-                  cloud 'openshift'
-                  serviceAccount 'jenkins'
-                  containerTemplate {
-                    name 'jnlp'
-                    image "docker-registry.default.svc:5000/${NAMESPACE}/jenkins-slave-image-mgmt"
-                    alwaysPullImage true
-                    workingDir '/tmp'
-                    args '${computer.jnlpmac} ${computer.name}'
-                    ttyEnabled false
-                  }
-                }
-              }
-              steps {
-                script {
-                  openshift.withCluster() {
-
-                    openshift.withProject() {
-                      def imageRegistry = openshift.selector( 'is', "${APP_NAME}").object().status.dockerImageRepository
-                      echo "Promoting ${imageRegistry} -> ${registry}/${production_namespace}/${APP_NAME}"
-                      sh """
-                      set +x
-                      skopeo copy --remove-signatures \
-                        --src-creds openshift:${localToken} --src-cert-dir=/run/secrets/kubernetes.io/serviceaccount/ \
-                        --dest-creds openshift:${token}  --dest-tls-verify=false \
-                        docker://${imageRegistry} docker://${registry}/${production_namespace}/${APP_NAME}
-                      """
+              stage('Promote to Prod') {
+                agent {
+                  kubernetes {
+                    label 'promotion-slave'
+                    cloud 'openshift'
+                    serviceAccount 'jenkins'
+                    containerTemplate {
+                      name 'jnlp'
+                      image "docker-registry.default.svc:5000/${NAMESPACE}/jenkins-slave-image-mgmt"
+                      alwaysPullImage true
+                      workingDir '/tmp'
+                      args '${computer.jnlpmac} ${computer.name}'
+                      ttyEnabled false
                     }
-
                   }
                 }
+                steps {
+                  script {
+                    openshift.withCluster() {
 
+                      openshift.withProject() {
+                        def imageRegistry = openshift.selector( 'is', "${APP_NAME}").object().status.dockerImageRepository
+                        echo "Promoting ${imageRegistry} -> ${registry}/${production_namespace}/${APP_NAME}"
+                        sh """
+                        set +x
+                        skopeo copy --remove-signatures \
+                          --src-creds openshift:${localToken} --src-cert-dir=/run/secrets/kubernetes.io/serviceaccount/ \
+                          --dest-creds openshift:${token}  --dest-tls-verify=false \
+                          docker://${imageRegistry} docker://${registry}/${production_namespace}/${APP_NAME}
+                        """
+                        sh 'mkdir dist/ && touch dist/index.html'
+                        hygieiaDeployPublishStep applicationName: "${APP_NAME}", artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: "${BUILD_NUMBER}-${production_namespace}", buildStatus: 'Success', environmentName: "${production_namespace}"
+                      }
+
+                    }
+                  }
+
+                }
               }
             }
             /*
