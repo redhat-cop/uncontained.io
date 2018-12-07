@@ -53,6 +53,20 @@ openshift_cluster_content:
     namespace: "{{ ci_cd_namespace }}"
     tags:
       - pre-req
+  - name: Hygieia Jenkins Plugin
+    template: "https://raw.githubusercontent.com/redhat-cop/containers-quickstarts/master/jenkins-masters/hygieia-plugin/.openshift/templates/hygieia-plugin.yml"
+    namespace: "{{ ci_cd_namespace }}"
+  - name: Jenkins Master Image
+    template: "https://raw.githubusercontent.com/redhat-cop/containers-quickstarts/master/jenkins-masters/hygieia-plugin/.openshift/templates/jenkins-s2i.yml"
+    namespace: "{{ ci_cd_namespace }}"
+  - name: Deploy Jenkins Master
+    template: "https://raw.githubusercontent.com/redhat-cop/containers-quickstarts/master/jenkins-masters/hygieia-plugin/.openshift/templates/jenkins-ephemeral.yml"
+    namespace: "{{ ci_cd_namespace }}"
+    params_from_vars:
+      JENKINS_IMAGE_STREAM_TAG: jenkins2-s2i:latest
+      NAMESPACE: "{{ ci_cd_namespace }}"
+      HYGIEIA_API_URL: "{{ hygieia_url }}"
+      HYGIEIEA_API_TOKEN: "{{ hygieia_token }}"
 - object: Build Pipeline
   content:
   - name: Build Pipeline
