@@ -128,7 +128,8 @@ function runTests() {
       filterLevel: 3,
       excludedKeywords: [
         "cluster.local",
-        "myorg.com"
+        "myorg.com",
+        "wiki.jenkins-ci.org"
       ]
     };
 
