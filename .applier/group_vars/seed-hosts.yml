@@ -60,7 +60,7 @@ openshift_cluster_content:
     template: "https://raw.githubusercontent.com/redhat-cop/containers-quickstarts/master/jenkins-masters/hygieia-plugin/.openshift/templates/jenkins-s2i.yml"
     namespace: "{{ ci_cd_namespace }}"
   - name: Deploy Jenkins Master
-    template: "https://raw.githubusercontent.com/redhat-cop/containers-quickstarts/master/jenkins-masters/hygieia-plugin/.openshift/templates/jenkins-ephemeral.yml"
+    template: "{{ inventory_dir }}/../.openshift/templates/jenkins-ephemeral.yml"
     namespace: "{{ ci_cd_namespace }}"
     params_from_vars:
       JENKINS_IMAGE_STREAM_TAG: jenkins2-s2i:latest
