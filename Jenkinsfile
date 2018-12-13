@@ -96,29 +96,29 @@ pipeline {
 
     stage ('Verify Deployment to Dev') {
       steps {
-        container('builder') {
-          script {
-            openshift.withCluster() {
-              openshift.withProject("${dev_namespace}"){
-                // Verify all pods come up healthy
-                def dcObj = openshift.selector('dc', APP_NAME).object()
-                def podSelector = openshift.selector('pod', [deployment: "${APP_NAME}-${dcObj.status.latestVersion}"])
-                podSelector.untilEach {
-                    echo "pod: ${it.name()}"
-                    return it.object().status.containerStatuses[0].ready
-                }
-
-                // Smoke Test
-                def routeObj = openshift.selector('route', APP_NAME).object()
-                def proto = 'http://'
-                if (routeObj.spec.tls != null) {
-                  proto = 'https://'
-                }
-                env.TEST_URL = "${proto}${routeObj.spec.host}"
-                sh 'npm run smoke'
+        script {
+          openshift.withCluster() {
+            openshift.withProject("${dev_namespace}"){
+              // Verify all pods come up healthy
+              def dcObj = openshift.selector('dc', APP_NAME).object()
+              def podSelector = openshift.selector('pod', [deployment: "${APP_NAME}-${dcObj.status.latestVersion}"])
+              podSelector.untilEach {
+                  echo "pod: ${it.name()}"
+                  return it.object().status.containerStatuses[0].ready
               }
+
+              // Smoke Test
+              def routeObj = openshift.selector('route', APP_NAME).object()
+              def proto = 'http://'
+              if (routeObj.spec.tls != null) {
+                proto = 'https://'
+              }
+              env.TEST_URL = "${proto}${routeObj.spec.host}"
             }
           }
+        }
+        container('builder') {
+          sh "export TEST_URL=${env.TEST_URL} && npm run smoke"
         }
       }
       post {
