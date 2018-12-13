@@ -61,14 +61,13 @@ pipeline {
       }
     }
 
-    /*
     stage ('Run Automated Tests') {
       steps {
         container('builder') {
           sh 'npm test'
         }
       }
-    }*/
+    }
 
     stage ('Build Container Image') {
       steps {
