@@ -14,6 +14,7 @@ openshift_cluster_content:
     template: "{{ inventory_dir }}/../.openshift/templates/promoter-sa.yml"
     params_from_vars:
       NAMESPACE: "{{ namespace }}"
+      JENKINS_NAMESPACE: "{{ namespace }}"
     namespace: "{{ namespace }}"
 - object: deployments
   content:
