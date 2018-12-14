@@ -52,10 +52,22 @@ objects:
       jenkinsPipelineStrategy:
         jenkinsfilePath: Jenkinsfile
         env:
+          - name: APP_NAME
+            value: ${APP_NAME}
           - name: APPLICATION_SOURCE_REPO
             value: ${APPLICATION_SOURCE_REPO}
           - name: APPLICATION_SOURCE_REF
             value: ${APPLICATION_SOURCE_REF}
+          - name: CI_CD_NAMESPACE
+            value: ${CI_CD_NAMESPACE}
+          - name: DEV_NAMESPACE
+            value: ${DEV_NAMESPACE}
+          - name: TEST_NAMESPACE
+            value: ${TEST_NAMESPACE}
+          - name: STAGE_NAMESPACE
+            value: ${STAGE_NAMESPACE}
+          - name: PROD_NAMESPACE
+            value: ${PROD_NAMESPACE}
     triggers:
       - type: ConfigChange
       - type: GitHub
@@ -70,3 +82,8 @@ parameters:
   value: https://github.com/redhat-cop/uncontained.io
 - name: APPLICATION_SOURCE_REF
   value: master
+- name: CI_CD_NAMESPACE
+- name: DEV_NAMESPACE
+- name: TEST_NAMESPACE
+- name: STAGE_NAMESPACE
+- name: PROD_NAMESPACE

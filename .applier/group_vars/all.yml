@@ -1,4 +1,6 @@
 namespace: uncontained
+app_name: site-v2
+
 ci_cd_namespace: "{{ namespace }}"
 dev_namespace: "{{ namespace }}-dev"
 test_namespace: "{{ namespace }}-test"
@@ -7,8 +9,6 @@ prod_namespace: field-guides-prod
 source_repo: https://github.com/redhat-cop/uncontained.io
 source_ref: master
 
-app_name: site-v2
-
 site_build:
   APP_NAME: "{{ app_name }}"
   OUTPUT_IMAGE: "{{ app_name }}:latest"
@@ -16,6 +16,11 @@ site_build:
   PUSH_SECRET: "name: builder-token-4k28b"
   APPLICATION_SOURCE_REPO: "{{ source_repo}}"
   APPLICATION_SOURCE_REF: "{{source_ref}}"
+  CI_CD_NAMESPACE: "{{ ci_cd_namespace }}"
+  DEV_NAMESPACE: "{{ dev_namespace }}"
+  TEST_NAMESPACE: "{{ test_namespace }}"
+  STAGE_NAMESPACE: "{{ stage_namespace }}"
+  PROD_NAMESPACE: "{{ prod_namespace }}"
 
 ci_cd:
   NAMESPACE: "{{ ci_cd_namespace }}"
