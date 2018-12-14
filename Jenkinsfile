@@ -28,15 +28,6 @@ pipeline {
         hygieiaBuildPublishStep buildStatus: 'InProgress'
         git url: "${APPLICATION_SOURCE_REPO}", branch: "${APPLICATION_SOURCE_REF}"
 
-        def groupVars = readYaml file: '.applier/group_vars/all.yml'
-
-        env.ci_cd_namespace = """${groupVars.ci_cd_namespace}"""
-        env.dev_namespace = """${groupVars.dev_namespace}"""
-        env.test_namespace = """${groupVars.test_namespace}"""
-        env.stage_namespace = """${groupVars.stage_namespace}"""
-        env.APP_NAME = """${groupVars.app_name}"""
-        env.production_namespace = """${groupVars.prod_namespace}"""
-
         }
       }
     }
@@ -86,8 +77,8 @@ pipeline {
         script {
           openshift.withCluster() {
             openshift.withProject() {
-              echo "Promoting via tag from ${NAMESPACE} to ${dev_namespace}/${APP_NAME}"
-              tagImage(sourceImagePath: "${NAMESPACE}", sourceImageName: "${APP_NAME}", toImagePath: "${dev_namespace}", toImageName: "${APP_NAME}", toImageTag: "latest")
+              echo "Promoting via tag from ${NAMESPACE} to ${DEV_NAMESPACE}/${APP_NAME}"
+              tagImage(sourceImagePath: "${NAMESPACE}", sourceImageName: "${APP_NAME}", toImagePath: "${DEV_NAMESPACE}", toImageName: "${APP_NAME}", toImageTag: "latest")
             }
           }
         }
@@ -98,7 +89,7 @@ pipeline {
       steps {
         script {
           openshift.withCluster() {
-            openshift.withProject("${dev_namespace}"){
+            openshift.withProject("${DEV_NAMESPACE}"){
               // Verify all pods come up healthy
               def dcObj = openshift.selector('dc', APP_NAME).object()
               def podSelector = openshift.selector('pod', [deployment: "${APP_NAME}-${dcObj.status.latestVersion}"])
@@ -123,7 +114,7 @@ pipeline {
       }
       post {
         success {
-          hygieiaDeployPublishStep applicationName: "${APP_NAME}", artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: "${BUILD_NUMBER}-${dev_namespace}", buildStatus: 'Success', environmentName: "${dev_namespace}"
+          hygieiaDeployPublishStep applicationName: "${APP_NAME}", artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: "${BUILD_NUMBER}-${DEV_NAMESPACE}", buildStatus: 'Success', environmentName: "${DEV_NAMESPACE}"
         }
       }
     }
@@ -148,13 +139,13 @@ pipeline {
         script {
           openshift.withCluster() {
             openshift.withProject() {
-              echo "Promoting via tag from ${NAMESPACE} to ${test_namespace}/${APP_NAME}"
-              tagImage(sourceImagePath: "${NAMESPACE}", sourceImageName: "${APP_NAME}", toImagePath: "${test_namespace}", toImageName: "${APP_NAME}", toImageTag: "latest")
+              echo "Promoting via tag from ${NAMESPACE} to ${TEST_NAMESPACE}/${APP_NAME}"
+              tagImage(sourceImagePath: "${NAMESPACE}", sourceImageName: "${APP_NAME}", toImagePath: "${TEST_NAMESPACE}", toImageName: "${APP_NAME}", toImageTag: "latest")
             }
           }
           sh 'mkdir dist/'
           sh 'touch dist/index.html'
-          hygieiaDeployPublishStep applicationName: "${APP_NAME}", artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: "${BUILD_NUMBER}-${test_namespace}", buildStatus: 'Success', environmentName: "${test_namespace}"
+          hygieiaDeployPublishStep applicationName: "${APP_NAME}", artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: "${BUILD_NUMBER}-${TEST_NAMESPACE}", buildStatus: 'Success', environmentName: "${TEST_NAMESPACE}"
         }
       }
     }
@@ -179,13 +170,13 @@ pipeline {
         script {
           openshift.withCluster() {
             openshift.withProject() {
-              echo "Promoting via tag from ${NAMESPACE} to ${stage_namespace}/${APP_NAME}"
-              tagImage(sourceImagePath: "${NAMESPACE}", sourceImageName: "${APP_NAME}", toImagePath: "${stage_namespace}", toImageName: "${APP_NAME}", toImageTag: "latest")
+              echo "Promoting via tag from ${NAMESPACE} to ${STAGE_NAMESPACE}/${APP_NAME}"
+              tagImage(sourceImagePath: "${NAMESPACE}", sourceImageName: "${APP_NAME}", toImagePath: "${STAGE_NAMESPACE}", toImageName: "${APP_NAME}", toImageTag: "latest")
             }
           }
           sh 'mkdir dist/'
           sh 'touch dist/index.html'
-          hygieiaDeployPublishStep applicationName: "${APP_NAME}", artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: "${BUILD_NUMBER}-${stage_namespace}", buildStatus: 'Success', environmentName: "${stage_namespace}"
+          hygieiaDeployPublishStep applicationName: "${APP_NAME}", artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: "${BUILD_NUMBER}-${STAGE_NAMESPACE}", buildStatus: 'Success', environmentName: "${STAGE_NAMESPACE}"
         }
       }
     }
@@ -212,16 +203,16 @@ pipeline {
 
             openshift.withProject() {
               def imageRegistry = openshift.selector( 'is', "${APP_NAME}").object().status.dockerImageRepository
-              echo "Promoting ${imageRegistry} -> ${registry}/${production_namespace}/${APP_NAME}"
+              echo "Promoting ${imageRegistry} -> ${registry}/${PROD_NAMESPACE}/${APP_NAME}"
               sh """
               set +x
               skopeo copy --remove-signatures \
                 --src-creds openshift:${localToken} --src-cert-dir=/run/secrets/kubernetes.io/serviceaccount/ \
                 --dest-creds openshift:${token}  --dest-tls-verify=false \
-                docker://${imageRegistry} docker://${registry}/${production_namespace}/${APP_NAME}
+                docker://${imageRegistry} docker://${registry}/${PROD_NAMESPACE}/${APP_NAME}
               """
               sh 'mkdir dist/ && touch dist/index.html'
-              hygieiaDeployPublishStep applicationName: "${APP_NAME}", artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: "${BUILD_NUMBER}-${production_namespace}", buildStatus: 'Success', environmentName: "${production_namespace}"
+              hygieiaDeployPublishStep applicationName: "${APP_NAME}", artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: "${BUILD_NUMBER}-${PROD_NAMESPACE}", buildStatus: 'Success', environmentName: "${PROD_NAMESPACE}"
             }
 
           }
