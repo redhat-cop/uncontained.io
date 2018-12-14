@@ -15,6 +15,15 @@ const browserSync = BrowserSync.create();
 // Hugo arguments
 const hugoArgsDefault = ["-d", "../dist", "-s", "site", "-v"];
 const hugoArgsPreview = ["--buildDrafts", "--buildFuture"];
+const linkCheckerOptions = {
+  filterLevel: 3,
+  excludedKeywords: [
+    "cluster.local",
+    "myorg.com",
+    "wiki.jenkins-ci.org"
+  ]
+};
+
 
 // Some debugging
 gutil.log("Current dir:" + process.env.PWD);
@@ -33,6 +42,7 @@ gulp.task("build-preview", ["sass", "js", "fonts", "asciidoctor-check"], (cb) =>
 
 // Run Automated Tests
 gulp.task("test", (cb) => runTests(cb));
+gulp.task("smoke", (cb) => runSmokeTest());
 
 // Compile SCSS into CSS
 gulp.task("sass", function(done) {
@@ -124,18 +134,9 @@ function runTests() {
   var portNum = Math.floor(Math.random() * (max - min)) + min;
   testSetup(portNum, function(){
     var siteUrl = "http://localhost:" + portNum + "/";
-    var options = {
-      filterLevel: 3,
-      excludedKeywords: [
-        "cluster.local",
-        "myorg.com",
-        "wiki.jenkins-ci.org"
-      ]
-    };
-
     var checker = new linkChecker();
 
-    checker.run(siteUrl, options);
+    checker.run(siteUrl, linkCheckerOptions);
 
   });
 
@@ -153,4 +154,17 @@ function testSetup(port, cb) {
     open: false
   }, cb);
 
+}
+
+function runSmokeTest() {
+  var siteUrl
+  if (process.env.TEST_URL === undefined) {
+    siteUrl = 'http://localhost:8080/';
+  }
+  else {
+    siteUrl = process.env.TEST_URL
+  }
+
+  var checker = new linkChecker();
+  checker.run(siteUrl, linkCheckerOptions)
 }

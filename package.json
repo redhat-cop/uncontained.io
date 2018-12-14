@@ -11,6 +11,7 @@
     "start": "gulp server",
     "start-preview": "gulp server-preview",
     "test": "gulp test",
+    "smoke": "gulp smoke",
     "lint": "eslint src"
   },
   "author": "",

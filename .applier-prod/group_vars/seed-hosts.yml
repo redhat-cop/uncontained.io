@@ -1,6 +1,5 @@
-namespace: hygieia-pcarney
-ci_cd_namespace: uncontained
-app_name: hygieia-testing-pcarney
+namespace: field-guides-prod
+app_name: site-v2
 
 openshift_cluster_content:
 - object: projects
@@ -15,7 +14,6 @@ openshift_cluster_content:
     template: "{{ inventory_dir }}/../.openshift/templates/promoter-sa.yml"
     params_from_vars:
       NAMESPACE: "{{ namespace }}"
-      JENKINS_NAMESPACE: "{{ ci_cd_namespace }}"
     namespace: "{{ namespace }}"
 - object: deployments
   content:
