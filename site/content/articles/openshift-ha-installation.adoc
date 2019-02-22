@@ -907,14 +907,15 @@ NOTE: OpenShift will use all the resources supplied to it from the node for the 
 ----
 openshift_node_groups=[{'name': 'node-config-master',  'labels': ['node-role.kubernetes.io/master=true' ],'edits': [{ 'key': 'kubeletArguments.kube-reserved','value': ['cpu=100m,memory=128M']}, { 'key': 'kubeletArguments.system-reserved','value': ['cpu=100m,memory=256M']},{ 'key': 'kubeletArguments.pods-per-core','value': ['10']},{ 'key': 'kubeletArguments.max-pods','value': ['250']},{ 'key': 'kubeletArguments.maximum-dead-containers','value': ['5']},{ 'key': 'kubeletArguments.maximum-dead-containers-per-container','value': ['1']},{ 'key': 'kubeletArguments.image-gc-high-threshold','value': ['80']},{ 'key': 'kubeletArguments.image-gc-low-threshold','value': ['60']}]},{'name': 'node-config-infra',   'labels': ['node-role.kubernetes.io/infra=true'  ],'edits':[{ 'key': 'kubeletArguments.kube-reserved','value': ['cpu=100m,memory=128M']},{ 'key': 'kubeletArguments.system-reserved','value': ['cpu=100m,memory=256M']},{ 'key': 'kubeletArguments.pods-per-core','value': ['10']},{ 'key': 'kubeletArguments.max-pods','value': ['250']},{ 'key': 'kubeletArguments.maximum-dead-containers','value': ['5']},{ 'key': 'kubeletArguments.maximum-dead-containers-per-container','value': ['1']},{ 'key': 'kubeletArguments.image-gc-high-threshold','value': ['80']},{ 'key': 'kubeletArguments.image-gc-low-threshold','value': ['60']}]},{'name': 'node-config-compute', 'labels': ['node-role.kubernetes.io/compute=true'],'edits':[{ 'key': 'kubeletArguments.kube-reserved','value': ['cpu=100m,memory=128M']},{ 'key': 'kubeletArguments.system-reserved','value': ['cpu=100m,memory=256M']},{ 'key': 'kubeletArguments.pods-per-core','value': ['10']},{ 'key': 'kubeletArguments.max-pods','value': ['250']},{ 'key': 'kubeletArguments.maximum-dead-containers','value': ['5']},{ 'key': 'kubeletArguments.maximum-dead-containers-per-container','value': ['1']},{ 'key': 'kubeletArguments.image-gc-high-threshold','value': ['80']},{ 'key': 'kubeletArguments.image-gc-low-threshold','value': ['60']}]},{'name': 'node-config-master-infra',  'labels': ['node-role.kubernetes.io/infra=true' ,'node-role.kubernetes.io/master=true' ]},{'name': 'node-config-all-in-one',  'labels': ['node-role.kubernetes.io/infra=true', 'node-role.kubernetes.io/master=true' ,'node-role.kubernetes.io/compute=true' ]}]
 ----
-<1>  kubeletArguments.kube-reserved = Resources reserved for node components
-<2>  kubeletArguments.system-reserved = Resources reserved for the remaining system components
-<3>  kubeletArguments.maximum-dead-containers-per-container = The number of instances to retain per pod container
-<4>  kubeletArguments.maximum-dead-containers = node removes the dead containers, all files inside those containers are removed as well
-<5>  kubeletArguments.pods-per-core = How many pods will be allowed to run per core
-<6>  kubeletArguments.max-pods = Max number of pods on a node
-<7>  kubeletArguments.image-gc-high-threshold = The percent of disk usage which triggers image garbage collection
-<8>  kubeletArguments.image-gc-low-threshold = The percent of disk usage to which image garbage collection attempts to free
+
+*  kubeletArguments.kube-reserved = Resources reserved for node components
+*  kubeletArguments.system-reserved = Resources reserved for the remaining system components
+*  kubeletArguments.maximum-dead-containers-per-container = The number of instances to retain per pod container
+*  kubeletArguments.maximum-dead-containers = node removes the dead containers, all files inside those containers are removed as well
+*  kubeletArguments.pods-per-core = How many pods will be allowed to run per core
+*  kubeletArguments.max-pods = Max number of pods on a node
+*  kubeletArguments.image-gc-high-threshold = The percent of disk usage which triggers image garbage collection
+*  kubeletArguments.image-gc-low-threshold = The percent of disk usage to which image garbage collection attempts to free
 
 === Validating Pre-requisites
 
