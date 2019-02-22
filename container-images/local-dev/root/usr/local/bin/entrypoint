@@ -7,7 +7,9 @@ fi
 npm install
 
 if [ $# -eq 0 ]; then
-  bash
+  npm start
+elif [ "$1" == "bash"]; then
+  exec "$@"
 else
   npm $@
 fi
