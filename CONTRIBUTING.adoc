@@ -1,22 +1,16 @@
 = Contributing to Uncontained.io
 
+:toc: macro
+:toc-title: Contents
+
+toc::[]
+
 Thanks for checking out the uncontained.io guides! We’re excited to hear
 and learn from you. Your experiences will benefit others who read and
 use these guides.
 
 We’ve put together the following guidelines to help you figure out where
 you can best be helpful.
-
-== Table of Contents
-
-1.  link:#types-of-contributions-were-looking-for[Types of contributions
-we’re looking for]
-2.  link:#ground-rules--expectations[Ground rules & expectations]
-3.  link:#how-to-contribute[How to contribute]
-4.  link:#style-guide[Style guide]
-5.  link:#setting-up-your-environment[Setting up your environment]
-6.  link:#contribution-review-process[Contribution review process]
-7.  link:#community[Community]
 
 == Types of contributions we’re looking for
 
@@ -59,6 +53,91 @@ them before we can merge your contribution.
 * When adding content, please consider if it is widely valuable. Please
 don’t add references or links to things you or your employer have
 created as others will do so if they appreciate it.
+
+== Getting set up for local development
+
+Before you begin contributing, its important to get your local machine set up to run and test the site. For convenience, we provide a link:container-images/local-dev/[container image] that contains all of the development tools. The simplest way to run the image is as follows:
+
+....
+docker run quay.io/redhat-cop/uncontained
+....
+
+This will run uncontained.io from an embedded copy of the source code baked into the image.
+
+=== Building and Developing the Site
+
+Uncontained.io uses the https://gohugo.io/[Hugo static site generator]
+to translate Asciidoc into an HTML site. We wrap this functionality in
+https://gulpjs.com/[Gulp] to streamline the build and test process.
+Familiarity with Gulp, Webpack, and https://nodejs.org/[Node.js] is expected if you want to be able to change the functionality of the build. Our Hugo + Gulp setup is based on the
+https://github.com/netlify/victor-hugo[victor-hugo] boilerplate.
+
+If you are only interested in developing content, however, all you need is familiarity with link:https://asciidoctor.org/docs/asciidoc-writers-guide/[Writing AsciiDoc].
+
+All you need to get set up is to clone the repository.
+
+....
+git clone https://github.com/redhat-cop/uncontained.io.git
+cd uncontained.io/
+....
+
+==== Run the Live Preview
+
+The live preview provides an embedded server in which you can test the
+site locally, and watch changes being made as you develop. You can start the server, running from your local copy of the code using the container image:
+
+....
+docker run -u $(id -u) -v ${PWD}:/uncontained.io:Z -it --net=host uncontained
+....
+
+The container also accepts extra arguments which it feeds to `npm`. For example, if you’d like to also include _draft_ content like
+`hugo server --buildDrafts --buildFuture`, we've created a script entry in our package.json for that:
+
+....
+docker run -u $(id -u) -v ${PWD}:/uncontained.io:Z -it --net=host uncontained run start-preview
+....
+
+You should be able to view the site by browsing to
+http://localhost:3000/.
+
+==== Build the Site
+
+The site build will simple generate all of the site html, css,
+javascript, etc. This is the process we use to build and publish the
+site.
+
+....
+docker run -u $(id -u) -v ${PWD}:/uncontained.io:Z -it --net=host uncontained run build
+....
+
+==== Deploying to OpenShift
+
+Uncontained.io is built and hosted on OpenShift, and deployed using
+https://github.com/redhat-cop/openshift-applier[OpenShift Applier]
+
+Run the following to pull in applier:
+
+....
+ansible-galaxy install -r requirements.yml -p galaxy
+....
+
+Log into your _Prod_ OpenShift cluster, and run the following command.
+`$ oc login <prod cluster>     ...     $ ansible-playbook -i .applier-prod/ galaxy/openshift-applier/playbooks/openshift-cluster-seed.yml`
+One of the things that was created by ansible is a `ServiceAccount` that
+will be used for promoting your app from _Dev_ to _Prod_. We’ll need to
+extract its credentials so that our pipeline can use that account.
+`$ TOKEN=$(oc serviceaccounts get-token promoter -n field-guides-prod)`
+We need to create the the _prod-api-credentials_ param file so our
+pipeline will be able to verify a successful deployment to production.
+`$ echo "TOKEN=${TOKEN}     API_URL=<API_URL>     REGISTRY_URL=<REGISTRY URL>     SECRET_NAME=other-cluster-credentials" > .openshift/params/prod-cluster-credentials`
+
+Now, deploy your pipeline and dev environment to your _development_
+cluster:
+
+....
+oc login <dev cluster>
+ansible-playbook -i .applier/ galaxy/openshift-applier/playbooks/openshift-cluster-seed.yml
+....
 
 == How to contribute
 
@@ -131,91 +210,6 @@ This site is written in asciidoc format and is built using
 https://asciidoctor.org/[Asciidoctor]. If you’re writing content, see
 the link:./docs/style_guide.adoc[style guide] to help your prose match
 the rest of the Guides.
-
-== Setting up your environment
-
-This site is powered by https://gohugo.io/[Hugo]. Running it on your
-local machine only requires a working
-https://gohugo.io/getting-started/installing[Hugo] installation, either
-natively or a docker container. We recommend using the docker container
-method (for obvious reasons) instead of your native operating system,
-but you may choose either environment setup.
-
-=== Building and Developing the Site
-
-Uncontained.io uses the https://gohugo.io/[Hugo static site generator]
-to translate Asciidoc into an HTML site. We wrap this functionality in
-https://gulpjs.com/[Gulp] to streamline the build and test process.
-Running the site requires https://nodejs.org/[Node.js]. Once installed,
-you should have all you need to build, test and develop. To get started,
-set up your local environment.
-
-....
-git clone https://github.com/redhat-cop/uncontained.io.git
-cd uncontained.io/
-npm install
-....
-
-Our Hugo + Gulp setup is based on the
-https://github.com/netlify/victor-hugo[victor-hugo] boilerplate.
-
-==== Run the Live Preview
-
-The live preview provides an embedded server in which you can test the
-site locally, and watch changes being made as you develop.
-
-....
-npm start
-....
-
-or, if you’d like to also include _draft_ content like
-`hugo server --buildDrafts --buildFuture`:
-
-....
-npm run start-preview
-....
-
-You should be able to view the site by browsing to
-http://localhost:3000/.
-
-==== Build the Site
-
-The site build will simple generate all of the site html, css,
-javascript, etc. This is the process we use to build and publish the
-site.
-
-....
-npm run build
-....
-
-==== Deploying to OpenShift
-
-Uncontained.io is built and hosted on OpenShift, and deployed using
-https://github.com/redhat-cop/openshift-applier[OpenShift Applier]
-
-Run the following to pull in applier:
-
-....
-ansible-galaxy install -r requirements.yml -p galaxy
-....
-
-Log into your _Prod_ OpenShift cluster, and run the following command.
-`$ oc login <prod cluster>     ...     $ ansible-playbook -i .applier-prod/ galaxy/openshift-applier/playbooks/openshift-cluster-seed.yml`
-One of the things that was created by ansible is a `ServiceAccount` that
-will be used for promoting your app from _Dev_ to _Prod_. We’ll need to
-extract its credentials so that our pipeline can use that account.
-`$ TOKEN=$(oc serviceaccounts get-token promoter -n field-guides-prod)`
-We need to create the the _prod-api-credentials_ param file so our
-pipeline will be able to verify a successful deployment to production.
-`$ echo "TOKEN=${TOKEN}     API_URL=<API_URL>     REGISTRY_URL=<REGISTRY URL>     SECRET_NAME=other-cluster-credentials" > .openshift/params/prod-cluster-credentials`
-
-Now, deploy your pipeline and dev environment to your _development_
-cluster:
-
-....
-oc login <dev cluster>
-ansible-playbook -i .applier/ galaxy/openshift-applier/playbooks/openshift-cluster-seed.yml
-....
 
 == Contribution review process
 
