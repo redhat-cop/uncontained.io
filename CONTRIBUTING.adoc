@@ -87,14 +87,14 @@ The live preview provides an embedded server in which you can test the
 site locally, and watch changes being made as you develop. You can start the server, running from your local copy of the code using the container image:
 
 ....
-docker run -u $(id -u) -v ${PWD}:/uncontained.io:Z -it uncontained
+docker run -u $(id -u) -v ${PWD}:/uncontained.io:Z -it --net=host uncontained
 ....
 
 The container also accepts extra arguments which it feeds to `npm`. For example, if you’d like to also include _draft_ content like
 `hugo server --buildDrafts --buildFuture`, we've created a script entry in our package.json for that:
 
 ....
-docker run -u $(id -u) -v ${PWD}:/uncontained.io:Z -it uncontained run start-preview
+docker run -u $(id -u) -v ${PWD}:/uncontained.io:Z -it --net=host uncontained run start-preview
 ....
 
 You should be able to view the site by browsing to
@@ -107,7 +107,7 @@ javascript, etc. This is the process we use to build and publish the
 site.
 
 ....
-docker run -u $(id -u) -v ${PWD}:/uncontained.io:Z -it uncontained run build
+docker run -u $(id -u) -v ${PWD}:/uncontained.io:Z -it --net=host uncontained run build
 ....
 
 ==== Deploying to OpenShift
