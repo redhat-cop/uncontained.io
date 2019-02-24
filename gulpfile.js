@@ -1,14 +1,12 @@
-import gulp from "gulp";
-import {spawn} from "child_process";
-import hugoBin from "hugo-bin";
-import gutil from "gulp-util";
-import flatten from "gulp-flatten";
-import BrowserSync from "browser-sync";
-import webpack from "webpack";
-import webpackConfig from "./webpack.conf";
-import sass from "gulp-sass";
-import sourcemaps from "gulp-sourcemaps";
-import linkChecker from "./test/link-checker";
+var gulp = require('gulp');
+var {spawn} = require('child_process');
+var hugoBin = require('hugo-bin');
+var gutil = require('gulp-util');
+var flatten = require('gulp-flatten');
+var BrowserSync = require('browser-sync');
+var sass = require('gulp-sass');
+var sourcemaps = require('gulp-sourcemaps');
+var linkChecker = require('./test/link-checker');
 
 const browserSync = BrowserSync.create();
 
@@ -29,20 +27,8 @@ const linkCheckerOptions = {
 gutil.log("Current dir:" + process.env.PWD);
 
 // Development tasks
-gulp.task("hugo", (cb) => buildSite(cb));
-gulp.task("hugo-preview", (cb) => buildSite(cb, hugoArgsPreview));
-
-// Run server tasks
-gulp.task("server", ["hugo", "sass", "js", "fonts", "asciidoctor-check"], (cb) => runServer(cb));
-gulp.task("server-preview", ["hugo-preview", "sass", "js", "fonts", "asciidoctor-check"], (cb) => runServer(cb));
-
-// Build/production tasks
-gulp.task("build", ["sass", "js", "fonts", "asciidoctor-check"], (cb) => buildSite(cb, [], "production"));
-gulp.task("build-preview", ["sass", "js", "fonts", "asciidoctor-check"], (cb) => buildSite(cb, hugoArgsPreview, "production"));
-
-// Run Automated Tests
-gulp.task("test", (cb) => runTests(cb));
-gulp.task("smoke", (cb) => runSmokeTest());
+gulp.task("hugo", gulp.series((cb) => buildSite(cb)));
+gulp.task("hugo-preview", gulp.series((cb) => buildSite(cb, hugoArgsPreview)));
 
 // Compile SCSS into CSS
 gulp.task("sass", function(done) {
@@ -59,17 +45,8 @@ gulp.task("sass", function(done) {
 
 // Compile Javascript
 gulp.task("js", (cb) => {
-  const myConfig = Object.assign({}, webpackConfig);
-
-  webpack(myConfig, (err, stats) => {
-    if (err) throw new gutil.PluginError("webpack", err);
-    gutil.log("[webpack]", stats.toString({
-      colors: true,
-      progress: true
-    }));
-    browserSync.reload();
-    cb();
-  });
+  browserSync.reload();
+  cb();
 });
 
 // Move all fonts in a flattened directory
@@ -95,6 +72,18 @@ gulp.task("asciidoctor-check", (cb) => {
   });
 });
 
+// Run server tasks
+gulp.task("server", gulp.series(gulp.parallel("hugo", "sass", "js", "fonts", "asciidoctor-check"), (cb) => runServer(cb)));
+gulp.task("server-preview", gulp.series(gulp.parallel("hugo-preview", "sass", "js", "fonts", "asciidoctor-check"), (cb) => runServer(cb)));
+
+// Build/production tasks
+gulp.task("build", gulp.series(gulp.parallel("sass", "js", "fonts", "asciidoctor-check"), (cb) => buildSite(cb, [], "production")));
+gulp.task("build-preview", gulp.series(gulp.parallel("sass", "js", "fonts", "asciidoctor-check"), (cb) => buildSite(cb, hugoArgsPreview, "production")));
+
+// Run Automated Tests
+gulp.task("test", gulp.series((cb) => runTests(cb)));
+gulp.task("smoke", gulp.series((cb) => runSmokeTest()));
+
 // Development server with browsersync
 function runServer() {
   browserSync.init({
@@ -102,8 +91,8 @@ function runServer() {
       baseDir: "./dist"
     }
   });
-  gulp.watch("./site/themes/*/src/**/*.scss", ["sass"])
-  gulp.watch(["./site/**/*", "!./site/themes/*/src/**"], ["hugo"]);
+  gulp.watch("./site/themes/*/src/**/*.scss", gulp.parallel(["sass"]));
+  gulp.watch(["./site/**/*", "!./site/themes/*/src/**"], gulp.parallel(["hugo"]));
 }
 
 /**
