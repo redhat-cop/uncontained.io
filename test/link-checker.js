@@ -1,6 +1,6 @@
-import blc from "broken-link-checker";
-import chalk from "chalk";
-import humanizeDuration from "humanize-duration";
+var blc = require('broken-link-checker');
+var chalk = require('chalk');
+var humanizeDuration = require('humanize-duration');
 
 function linkChecker() {
   this.run = run;
