@@ -118,7 +118,7 @@ openshift_hosted_registry_routecertificates={"certfile": "/path/to/registry.apps
 
 === Other components
 
-For other components like Logging & Metrics, the approach for fronting services with custom certs can be found in link:{docs_url}admin_solutions/certificate_management.html[Administrator Solutions for Certificate Management].
+For other components like Logging & Metrics, the approach for fronting services with custom certs can be found in link:{docs_url}install_config/certificate_customization.html[Administrator Solutions for Certificate Management].
 
 === Run Ansible
 
@@ -134,7 +134,7 @@ Additional information and reading can be found in the following places.
 
 * link:{docs_url}install_config/certificate_customization.html[Official Docs on Certificate Customization]
 * link:{docs_url}install_config/redeploying_certificates.html[Official Docs on Redeploying Expired Certificates]
-* link:{docs_url}admin_solutions/certificate_management.html[Official Docs on Certificate Management for Services]
+* link:{docs_url}install_config/certificate_customization.html[Official Docs on Certificate Management for Services]
 
 == What's Next?
 

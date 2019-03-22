@@ -511,10 +511,10 @@ Once we have our hosts created and add to DNS, we can add them to the bottom of 
 ----
 ...
 [masters]
-openshift-master-[1:3].c1-ocp.myorg.com 
+openshift-master-[1:3].c1-ocp.myorg.com
 
 [etcd]
-openshift-master-[1:3].c1-ocp.myorg.com 
+openshift-master-[1:3].c1-ocp.myorg.com
 
 [nodes]
 openshift-master-[1:3].c1-ocp.myorg.com openshift_node_group_name="node-config-master"
@@ -532,7 +532,7 @@ ansible -i c1-ocp.myorg.com/hosts OSEv3 -m ping
 
 === Create Standalone Registry
 
-During the install, OpenShift will need pull images from Red Hat in order to spin up services like the Integrated Registry and Router as well as some base images for Pods, S2I builders, etc. In most cases, access to the link:https://registry.access.redhat.com[Red Hat Public Registry] is blocked or restricted by web proxies. The link:{docs_url}install_config/install/disconnected_install.html#disconnected-syncing-images[Official Documentation] on how to work with this suggests pulling images to some internet accessible machine, and creating a `.tar` file to manually distribute them to all hosts in the cluster. While this works just fine, a more long term solution is to establish a standalone registry and seed it with the images that OpenShift will require. We can then point OpenShift to that standalone registry instead of Red Hat's and allow it to pull those images as it normally would. This allows us to establish a much simpler and more automatable process for updating those images when need be.
+During the install, OpenShift will need pull images from Red Hat in order to spin up services like the Integrated Registry and Router as well as some base images for Pods, S2I builders, etc. In most cases, access to the link:https://registry.access.redhat.com[Red Hat Public Registry] is blocked or restricted by web proxies. The link:{docs_url}install/disconnected_install.html#disconnected-syncing-images[Official Documentation] on how to work with this suggests pulling images to some internet accessible machine, and creating a `.tar` file to manually distribute them to all hosts in the cluster. While this works just fine, a more long term solution is to establish a standalone registry and seed it with the images that OpenShift will require. We can then point OpenShift to that standalone registry instead of Red Hat's and allow it to pull those images as it normally would. This allows us to establish a much simpler and more automatable process for updating those images when need be.
 
 We outline two options here for standing up a bootstrap registry. The first is to stand up a very simple docker registry which will have wide-open permissions (no authentication). The second, using OpenShift's Atomic Enterprise Registry, will allow us to require authentication and also provide a simple web console to help manage the images in the registry.
 
@@ -688,11 +688,11 @@ TODO
 
 ==== Custom Yum Repos
 
-The procedure for creating custom yum repos is documented in the link:{docs_url}install_config/install/disconnected_install.html#disconnected-syncing-repos[Official Documentation]
+The procedure for creating custom yum repos is documented in the link:{docs_url}install/disconnected_install.html#disconnected-syncing-repos[Official Documentation]
 
 ==== Subscribing Directly to Red Hat
 
-The process for subscribing directly to Red Hat is covered in the link:{docs_url}install_config/install/host_preparation.html#host-registration[Official Documentation].
+The process for subscribing directly to Red Hat is covered in the link:{docs_url}install/host_preparation.html#host-registration[Official Documentation].
 
 === Configure Load Balancer
 
@@ -863,7 +863,7 @@ NOTE: The `rhel-7-fast-datapath-rpms` channel is only required for OpenShift Con
 
 During the link:#_provision_servers[Provision Servers] step of this guide, we provisioned all of our nodes (including the masters) with docker volumes attached as `/dev/vdb`. We'll now install and configure docker to use that volume for all local docker storage.
 
-NOTE: There are other options for configuring docker storage. They are outlined in the link:{docs_url}install_config/install/host_preparation.html#configuring-docker-storage[Official Docs].
+NOTE: There are other options for configuring docker storage. They are outlined in the link:{docs_url}install/host_preparation.html#configuring-docker-storage[Official Docs].
 
 We can do this simply with a single ansible command across all of our nodes.
 
