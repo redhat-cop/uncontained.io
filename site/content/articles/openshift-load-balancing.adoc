@@ -120,7 +120,7 @@ image::/images/load_balancing_masters_simple.png[Simple Passthrough for OpenShif
 * Domain Name for VIP registered in DNS
   ** Domain name will become value of both `openshift_master_cluster_public_hostname` and `openshift_master_cluster_hostname` in OpenShift Installer
   ** For this example, we will give our VIP an FQDN: *paas.myorg.com*
-* Master hosts created and prepped per link:{docs_url}install_config/install/prerequisites.html[Install Prerequisites]
+* Master hosts created and prepped per link:{docs_url}install/prerequisites.html[Install Prerequisites]
 
 WARNING: The OpenShift Web Console heavily utilizes WebSockets for many of the rich interface features like tailing pod logs, watching a deployment, or getting a terminal of a pod. While most enterprise load balancers support Web Sockets, they often need to be explicitly enabled for a particular VIP/Profile/etc.
 
@@ -203,7 +203,7 @@ node02.myorg.com openshift_node_labels="{'region': 'primary', 'zone': 'west'}"
 
 ===== 3. Run the Advanced Installer
 
-Run the installer per the instructions in the link:{docs_url}install_config/install/advanced_install.html#running-the-advanced-installation[Advanced Insallation Guide]
+Run the installer per the instructions in the link:{docs_url}install/running_install.html[Running the Install Documentation]
 
 === Custom Certificate SSL Termination (Production)
 
@@ -232,7 +232,7 @@ image::/images/load_balancing_masters_prod.png[Production Ready Load Balancing f
 * FQDN for each VIP registered in DNS
   ** FQDN for _external_ VIP will become value of `openshift_master_cluster_public_hostname` in OpenShift Installer (i.e. paas.myorg.com)
   ** FQDN for _internal_ VIP will become value of `openshift_master_cluster_hostname` in OpenShift Installer (i.e. paas-internal.myorg.com)
-* Master hosts created and prepped per link:{docs_url}install_config/install/prerequisites.html[Install Prerequisites]
+* Master hosts created and prepped per link:{docs_url}install/prerequisites.html[Install Prerequisites]
 
 WARNING: The OpenShift Web Console heavily utilizes WebSockets for many of the rich interface features like tailing pod logs, watching a deployment, or getting a terminal of a pod. While most enterprise load balancers support Web Sockets, they often need to be explicitly enabled for a particular VIP/Profile/etc.
 
@@ -351,7 +351,7 @@ node02.myorg.com openshift_node_labels="{'region': 'primary', 'zone': 'west'}"
 
 ===== 3. Run the Advanced Installer
 
--Run the installer per the instructions in the link:{docs_url}install_config/install/advanced_install.html#running-the-advanced-installation[Advanced Installation Guide]
+-Run the installer per the instructions in the link:{docs_url}install/running_install.html[Running the Install Documentation]
 
 == Guides for Specific Load Balancer Implementations
 

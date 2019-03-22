@@ -114,7 +114,7 @@ function buildSite(cb, options, environment = "development") {
   });
 }
 
-function runTests() {
+function runTests(cb) {
   process.on('uncaughtException', function (err) {
       console.log(err);
   });
@@ -129,6 +129,7 @@ function runTests() {
 
   });
 
+  cb();
 }
 
 function testSetup(port, cb) {

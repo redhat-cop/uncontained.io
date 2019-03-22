@@ -3,6 +3,7 @@ FROM ruby:2.5.1-slim
 ENV NODE_VERSION v10.15.1
 ENV PATH /node/node-${NODE_VERSION}-linux-x64/bin:${PATH}
 ENV HOME /uncontained.io
+ENV USER_UID 1001
 
 WORKDIR /uncontained.io
 
@@ -17,6 +18,6 @@ RUN apt-get update &&\
   /usr/local/bin/user_setup && \
   bundle install
 
-USER 1001
+USER ${USER_UID}
 
 ENTRYPOINT ["entrypoint"]

@@ -65,8 +65,8 @@ openshift_cluster_content:
     params_from_vars:
       JENKINS_IMAGE_STREAM_TAG: jenkins2-s2i:latest
       NAMESPACE: "{{ ci_cd_namespace }}"
-      HYGIEIA_API_URL: "{{ hygieia_url }}"
-      HYGIEIEA_API_TOKEN: "{{ hygieia_token }}"
+      HYGIEIA_API_URL: "{{ hygieia_url | default('') }}"
+      HYGIEIEA_API_TOKEN: "{{ hygieia_token | default('') }}"
 - object: Build Pipeline
   content:
   - name: Build Pipeline

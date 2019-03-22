@@ -132,7 +132,7 @@ Another option is to add a filter to the query in which to further limit the use
 
 === OpenShift Ansible Configuration
 
-The Ansible based OpenShift installer contains functionality to automate the configuration of the `LDAPPasswordIdentityProvider`. Several link:{docs_url}install_config/install/advanced_install.html#configuring-cluster-variables[cluster variables] of the Ansible link:{docs_url}install_config/install/advanced_install.html#configuring-ansible[inventory] can be specified to tune the configuration of identity providers. For LDAP, these include:
+The Ansible based OpenShift installer contains functionality to automate the configuration of the `LDAPPasswordIdentityProvider`. Several link:{docs_url}install/configuring_inventory_file.html#configuring-cluster-variables[cluster variables] of the Ansible link:{docs_url}install/configuring_inventory_file.html#configuring-ansible[inventory] can be specified to tune the configuration of identity providers. For LDAP, these include:
 
 * `openshift_master_identity_providers` - An array of identity providers to configure within the OpenShift master configuration file
 * `openshift_master_ldap_ca` - Text value of the LDAP CA

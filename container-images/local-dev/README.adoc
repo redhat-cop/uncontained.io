@@ -9,5 +9,5 @@ If you are working on improvements to the image however, you can build it locall
 [source,bash]
 ----
 cd uncontained.io/
-docker build -f container-images/local-builder/Dockerfile -t uncontained-local-dev .
+docker build -f container-images/local-dev/Dockerfile -t uncontained-local-dev .
 ----
