@@ -16,33 +16,22 @@
   },
   "author": "",
   "license": "MIT",
-  "dependencies": {
+  "dependencies": {},
+  "resolutions": {
+    "natives": "1.1.3"
+  },
+  "devDependencies": {
     "bootstrap": "^4.1.0",
     "broken-link-checker": "^0.7.8",
     "browser-sync": "^2.26.3",
-    "css-loader": "^0.28.11",
-    "eslint-plugin-import": "^2.11.0",
-    "exports-loader": "^0.7.0",
-    "file-loader": "^1.1.11",
+    "chalk": "^2.4.2",
+    "depcheck": "0.7.2",
     "gulp": "^4.0.0",
     "gulp-flatten": "^0.4.0",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-util": "^3.0.8",
     "hugo-bin": "^0.37.0",
-    "imports-loader": "^0.8.0",
-    "jquery": "^1.9.1",
-    "minimatch": "^3.0.2",
-    "popper.js": "^1.14.3",
-    "postcss-cssnext": "^3.1.0",
-    "postcss-import": "^11.1.0",
-    "url-loader": "^1.0.1",
-    "whatwg-fetch": "^2.0.4"
-  },
-  "resolutions": {
-    "natives": "1.1.3"
-  },
-  "devDependencies": {
-    "eslint": "^4.19.1"
+    "humanize-duration": "^3.18.0"
   }
 }

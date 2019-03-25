@@ -6,6 +6,10 @@ metadata:
     template-type: build
 objects:
 - apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: ${APP_NAME}
+- apiVersion: v1
   kind: BuildConfig
   metadata:
     creationTimestamp: null
