@@ -82,7 +82,7 @@ gulp.task("build-preview", gulp.series(gulp.parallel("sass", "js", "fonts", "asc
 
 // Run Automated Tests
 gulp.task("test", gulp.series((cb) => runTests(cb)));
-gulp.task("smoke", gulp.series((cb) => runSmokeTest()));
+gulp.task("smoke", gulp.series((cb) => runSmokeTest(cb)));
 
 // Development server with browsersync
 function runServer() {
@@ -146,10 +146,10 @@ function testSetup(port, cb) {
 
 }
 
-function runSmokeTest() {
+function runSmokeTest(cb) {
   var siteUrl
   if (process.env.TEST_URL === undefined) {
-    siteUrl = 'http://localhost:8080/';
+    siteUrl = 'http://localhost:3000/';
   }
   else {
     siteUrl = process.env.TEST_URL
@@ -157,4 +157,5 @@ function runSmokeTest() {
 
   var checker = new linkChecker();
   checker.run(siteUrl, linkCheckerOptions)
+  cb();
 }
