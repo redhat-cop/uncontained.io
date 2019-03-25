@@ -7,6 +7,7 @@ var BrowserSync = require('browser-sync');
 var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var linkChecker = require('./test/link-checker');
+var depcheck = require('depcheck');
 
 const browserSync = BrowserSync.create();
 
@@ -115,6 +116,8 @@ function buildSite(cb, options, environment = "development") {
 }
 
 function runTests(cb) {
+  runDepcheck(process.cwd());
+
   process.on('uncaughtException', function (err) {
       console.log(err);
   });
@@ -158,4 +161,42 @@ function runSmokeTest(cb) {
   var checker = new linkChecker();
   checker.run(siteUrl, linkCheckerOptions)
   cb();
+}
+
+function runDepcheck(projectDir) {
+  var options = {
+    withoutDev: false, // [DEPRECATED] check against devDependencies
+    ignoreBinPackage: false, // ignore the packages with bin entry
+    skipMissing: false, // skip calculation of missing dependencies
+    ignoreDirs: [ // folder with these names will be ignored
+      'sandbox',
+      'dist',
+      'bower_components'
+    ],
+    ignoreMatches: [ // ignore dependencies that matches these globs
+      'grunt-*',
+      'bootstrap*'
+    ],
+    parsers: { // the target parsers
+      '*.js': depcheck.parser.es6,
+      '*.jsx': depcheck.parser.jsx
+    },
+    detectors: [ // the target detectors
+      depcheck.detector.requireCallExpression,
+      depcheck.detector.importDeclaration
+    ],
+    specials: [ // the target special parsers
+      depcheck.special.eslint,
+      depcheck.special.webpack
+    ],
+  };
+
+  depcheck(projectDir, options, (unused) => {
+    console.log(unused.dependencies); // an array containing the unused dependencies
+    console.log(unused.devDependencies); // an array containing the unused devDependencies
+    console.log(unused.missing); // a lookup containing the dependencies missing in `package.json` and where they are used
+    console.log(unused.using); // a lookup indicating each dependency is used by which files
+    console.log(unused.invalidFiles); // files that cannot access or parse
+    console.log(unused.invalidDirs); // directories that cannot access
+  });
 }
