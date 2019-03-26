@@ -145,8 +145,7 @@ pipeline {
                   tagImage(sourceImagePath: "${NAMESPACE}", sourceImageName: "${APP_NAME}", toImagePath: "${TEST_NAMESPACE}", toImageName: "${APP_NAME}", toImageTag: "latest")
                 }
               }
-              sh 'mkdir dist/'
-              sh 'touch dist/index.html'
+              sh 'mkdir -p dist/ && touch dist/index.html'
               hygieiaDeployPublishStep applicationName: "${APP_NAME}", artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: "${BUILD_NUMBER}-${TEST_NAMESPACE}", buildStatus: 'Success', environmentName: "${TEST_NAMESPACE}"
             }
           }
@@ -161,8 +160,7 @@ pipeline {
                   tagImage(sourceImagePath: "${NAMESPACE}", sourceImageName: "${APP_NAME}", toImagePath: "${STAGE_NAMESPACE}", toImageName: "${APP_NAME}", toImageTag: "latest")
                 }
               }
-              sh 'mkdir dist/'
-              sh 'touch dist/index.html'
+              sh 'mkdir -p dist/ && touch dist/index.html'
               hygieiaDeployPublishStep applicationName: "${APP_NAME}", artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: "${BUILD_NUMBER}-${STAGE_NAMESPACE}", buildStatus: 'Success', environmentName: "${STAGE_NAMESPACE}"
             }
           }
@@ -190,7 +188,7 @@ pipeline {
                     --dest-creds openshift:${token}  --dest-tls-verify=false \
                     docker://${imageRegistry} docker://${registry}/${PROD_NAMESPACE}/${APP_NAME}
                   """
-                  sh 'mkdir dist/ && touch dist/index.html'
+                  sh 'mkdir -p dist/ && touch dist/index.html'
                   hygieiaDeployPublishStep applicationName: "${APP_NAME}", artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: "${BUILD_NUMBER}-${PROD_NAMESPACE}", buildStatus: 'Success', environmentName: "${PROD_NAMESPACE}"
                 }
               }
