@@ -1,5 +1,6 @@
 = Contributing to Uncontained.io
 :toc:
+:toc-title:
 :toc-placement!:
 
 Thanks for checking out the uncontained.io guides! We’re excited to hear
