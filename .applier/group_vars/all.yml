@@ -6,7 +6,7 @@ dev_namespace: "{{ namespace }}-dev"
 test_namespace: "{{ namespace }}-test"
 stage_namespace: "{{ namespace }}-stage"
 prod_namespace: field-guides-prod
-source_repo: https://github.com/redhat-cop/uncontained.io
+source_repo: https://github.com/redhat-cop/uncontained.io.git
 source_ref: master
 
 site_build:
