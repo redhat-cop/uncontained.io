@@ -52,20 +52,24 @@ pipeline {
       }
     }
 
-    stage ('Run Automated Tests') {
-      steps {
-        container('builder') {
-          sh 'npm test'
+    stage ('Build and Test in Parallel') {
+      parallel {
+        stage ('Run Automated Tests') {
+          steps {
+            container('builder') {
+              sh 'npm test'
+            }
+          }
         }
-      }
-    }
 
-    stage ('Build Container Image') {
-      steps {
-        script {
-          openshift.withCluster() {
-            openshift.withProject() {
-              openshift.selector("bc", "${APP_NAME}").startBuild("--from-dir=dist").logs("-f")
+        stage ('Build Container Image') {
+          steps {
+            script {
+              openshift.withCluster() {
+                openshift.withProject() {
+                  openshift.selector("bc", "${APP_NAME}").startBuild("--from-dir=dist").logs("-f")
+                }
+              }
             }
           }
         }
