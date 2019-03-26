@@ -1,9 +1,7 @@
 = Contributing to Uncontained.io
 
-:toc: macro
-:toc-title: Contents
-
-toc::[]
+:toc:
+:toc-placement!:
 
 Thanks for checking out the uncontained.io guides! We’re excited to hear
 and learn from you. Your experiences will benefit others who read and
@@ -11,6 +9,8 @@ use these guides.
 
 We’ve put together the following guidelines to help you figure out where
 you can best be helpful.
+
+toc::[]
 
 == Types of contributions we’re looking for
 
