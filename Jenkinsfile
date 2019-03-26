@@ -182,6 +182,13 @@ pipeline {
     }
 
     stage('Promote to Prod') {
+      when {
+        beforeAgent: true
+        allOf{
+          environment name: 'APPLICATION_SOURCE_REF', value: 'master';
+          environment name: 'APPLICATION_SOURCE_REPO', value: 'https://github.com/redhat-cop/uncontained.io.git'
+        }
+      }
       agent {
         kubernetes {
           label 'promotion-slave'
