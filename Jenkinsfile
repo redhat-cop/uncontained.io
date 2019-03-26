@@ -135,69 +135,69 @@ pipeline {
           }
         }
       }
-      stage('Promote to Test') {
-        steps {
-          script {
-            openshift.withCluster() {
-              openshift.withProject() {
-                echo "Promoting via tag from ${NAMESPACE} to ${TEST_NAMESPACE}/${APP_NAME}"
-                tagImage(sourceImagePath: "${NAMESPACE}", sourceImageName: "${APP_NAME}", toImagePath: "${TEST_NAMESPACE}", toImageName: "${APP_NAME}", toImageTag: "latest")
+      stages {
+        stage('Promote to Test') {
+          steps {
+            script {
+              openshift.withCluster() {
+                openshift.withProject() {
+                  echo "Promoting via tag from ${NAMESPACE} to ${TEST_NAMESPACE}/${APP_NAME}"
+                  tagImage(sourceImagePath: "${NAMESPACE}", sourceImageName: "${APP_NAME}", toImagePath: "${TEST_NAMESPACE}", toImageName: "${APP_NAME}", toImageTag: "latest")
+                }
+              }
+              sh 'mkdir dist/'
+              sh 'touch dist/index.html'
+              hygieiaDeployPublishStep applicationName: "${APP_NAME}", artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: "${BUILD_NUMBER}-${TEST_NAMESPACE}", buildStatus: 'Success', environmentName: "${TEST_NAMESPACE}"
+            }
+          }
+        }
+
+        stage('Promote to Stage') {
+          steps {
+            script {
+              openshift.withCluster() {
+                openshift.withProject() {
+                  echo "Promoting via tag from ${NAMESPACE} to ${STAGE_NAMESPACE}/${APP_NAME}"
+                  tagImage(sourceImagePath: "${NAMESPACE}", sourceImageName: "${APP_NAME}", toImagePath: "${STAGE_NAMESPACE}", toImageName: "${APP_NAME}", toImageTag: "latest")
+                }
+              }
+              sh 'mkdir dist/'
+              sh 'touch dist/index.html'
+              hygieiaDeployPublishStep applicationName: "${APP_NAME}", artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: "${BUILD_NUMBER}-${STAGE_NAMESPACE}", buildStatus: 'Success', environmentName: "${STAGE_NAMESPACE}"
+            }
+          }
+        }
+
+        stage('Promote to Prod') {
+          when {
+            beforeAgent true
+            allOf{
+              environment name: 'APPLICATION_SOURCE_REF', value: 'master';
+              environment name: 'APPLICATION_SOURCE_REPO', value: 'https://github.com/redhat-cop/uncontained.io.git'
+            }
+          }
+          steps {
+            script {
+              openshift.withCluster() {
+
+                openshift.withProject() {
+                  def imageRegistry = openshift.selector( 'is', "${APP_NAME}").object().status.dockerImageRepository
+                  echo "Promoting ${imageRegistry} -> ${registry}/${PROD_NAMESPACE}/${APP_NAME}"
+                  sh """
+                  set +x
+                  skopeo copy --remove-signatures \
+                    --src-creds openshift:${localToken} --src-cert-dir=/run/secrets/kubernetes.io/serviceaccount/ \
+                    --dest-creds openshift:${token}  --dest-tls-verify=false \
+                    docker://${imageRegistry} docker://${registry}/${PROD_NAMESPACE}/${APP_NAME}
+                  """
+                  sh 'mkdir dist/ && touch dist/index.html'
+                  hygieiaDeployPublishStep applicationName: "${APP_NAME}", artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: "${BUILD_NUMBER}-${PROD_NAMESPACE}", buildStatus: 'Success', environmentName: "${PROD_NAMESPACE}"
+                }
               }
             }
-            sh 'mkdir dist/'
-            sh 'touch dist/index.html'
-            hygieiaDeployPublishStep applicationName: "${APP_NAME}", artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: "${BUILD_NUMBER}-${TEST_NAMESPACE}", buildStatus: 'Success', environmentName: "${TEST_NAMESPACE}"
           }
         }
       }
-
-      stage('Promote to Stage') {
-        steps {
-          script {
-            openshift.withCluster() {
-              openshift.withProject() {
-                echo "Promoting via tag from ${NAMESPACE} to ${STAGE_NAMESPACE}/${APP_NAME}"
-                tagImage(sourceImagePath: "${NAMESPACE}", sourceImageName: "${APP_NAME}", toImagePath: "${STAGE_NAMESPACE}", toImageName: "${APP_NAME}", toImageTag: "latest")
-              }
-            }
-            sh 'mkdir dist/'
-            sh 'touch dist/index.html'
-            hygieiaDeployPublishStep applicationName: "${APP_NAME}", artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: "${BUILD_NUMBER}-${STAGE_NAMESPACE}", buildStatus: 'Success', environmentName: "${STAGE_NAMESPACE}"
-          }
-        }
-      }
-
-      stage('Promote to Prod') {
-        when {
-          beforeAgent true
-          allOf{
-            environment name: 'APPLICATION_SOURCE_REF', value: 'master';
-            environment name: 'APPLICATION_SOURCE_REPO', value: 'https://github.com/redhat-cop/uncontained.io.git'
-          }
-        }
-        steps {
-          script {
-            openshift.withCluster() {
-
-              openshift.withProject() {
-                def imageRegistry = openshift.selector( 'is', "${APP_NAME}").object().status.dockerImageRepository
-                echo "Promoting ${imageRegistry} -> ${registry}/${PROD_NAMESPACE}/${APP_NAME}"
-                sh """
-                set +x
-                skopeo copy --remove-signatures \
-                  --src-creds openshift:${localToken} --src-cert-dir=/run/secrets/kubernetes.io/serviceaccount/ \
-                  --dest-creds openshift:${token}  --dest-tls-verify=false \
-                  docker://${imageRegistry} docker://${registry}/${PROD_NAMESPACE}/${APP_NAME}
-                """
-                sh 'mkdir dist/ && touch dist/index.html'
-                hygieiaDeployPublishStep applicationName: "${APP_NAME}", artifactDirectory: 'dist/', artifactGroup: 'uncontained.io', artifactName: 'index.html', artifactVersion: "${BUILD_NUMBER}-${PROD_NAMESPACE}", buildStatus: 'Success', environmentName: "${PROD_NAMESPACE}"
-              }
-
-            }
-          }
-
-        }
-    }
     }
   }
   /*
