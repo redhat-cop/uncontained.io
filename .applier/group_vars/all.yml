@@ -14,8 +14,8 @@ site_build:
   OUTPUT_IMAGE: "{{ app_name }}:latest"
   OUTPUT_IMAGE_TYPE: ImageStreamTag
   PUSH_SECRET: "name: builder-token-4k28b"
-  APPLICATION_SOURCE_REPO: "{{ source_repo}}"
-  APPLICATION_SOURCE_REF: "{{source_ref}}"
+  APPLICATION_SOURCE_REPO: "{{ source_repo }}"
+  APPLICATION_SOURCE_REF: "{{source_ref }}"
   CI_CD_NAMESPACE: "{{ ci_cd_namespace }}"
   DEV_NAMESPACE: "{{ dev_namespace }}"
   TEST_NAMESPACE: "{{ test_namespace }}"
