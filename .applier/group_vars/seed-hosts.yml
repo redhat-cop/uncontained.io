@@ -40,6 +40,9 @@ openshift_cluster_content:
   - name: Static Files
     file: "{{ inventory_dir }}/../.openshift/files/"
     namespace: "{{ ci_cd_namespace }}"
+    tags:
+      - pre-req
+      - staging
   - name: Apply Image Build
     template: https://raw.githubusercontent.com/redhat-cop/containers-quickstarts/v1.3/jenkins-slaves/templates/jenkins-slave-image-mgmt-template.yml
     namespace: "{{ ci_cd_namespace }}"
