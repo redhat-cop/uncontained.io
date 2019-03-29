@@ -194,7 +194,7 @@ Now, deploy your pipeline and dev environment to your _development_ cluster:
 
 ----
 oc login <dev cluster>
-ansible-playbook -i .applier/ galaxy/openshift-applier/playbooks/openshift-cluster-seed.yml
+ansible-playbook -i .applier/ galaxy/openshift-applier/playbooks/openshift-cluster-seed.yml -e filter_tags=staging,prod
 ----
 
 == Contributing Content

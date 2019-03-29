@@ -2,6 +2,7 @@
 
 openshift.withCluster() {
   env.localToken = readFile('/var/run/secrets/kubernetes.io/serviceaccount/token').trim()
+  env.NAMESPACE = openshift.project()
 }
 
 //n.notifyBuild('STARTED', rocketchat_url)
@@ -172,8 +173,6 @@ pipeline {
           steps {
             script {
               openshift.withCluster() {
-                env.NAMESPACE = openshift.project()
-
                 def secretData = openshift.selector('secret/other-cluster-credentials').object().data
                 def encodedRegistry = secretData.registry
                 def encodedToken = secretData.token

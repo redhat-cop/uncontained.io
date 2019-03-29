@@ -1,5 +1,6 @@
 namespace: uncontained
 app_name: site-v2
+filter_tags: staging
 
 ci_cd_namespace: "{{ namespace }}"
 dev_namespace: "{{ namespace }}-dev"
@@ -34,6 +35,3 @@ test:
 stage:
   NAMESPACE: "{{ stage_namespace }}"
   DISPLAY_NAME: "Uncontained.io - Stage"
-#prod:
-#  NAMESPACE: "{{ prod_namespace }}"
-#  DISPLAY_NAME: "Uncontained.io - Prod"
