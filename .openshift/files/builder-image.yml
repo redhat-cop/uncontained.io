@@ -31,7 +31,7 @@ items:
 
         USER root
 
-        RUN yum install -y rubygems && yum clean all && gem install asciidoctor
+        RUN yum install -y rubygems && yum clean all && gem install asciidoctor -v 1.5.7
 
         USER 1001
     strategy:

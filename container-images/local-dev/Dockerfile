@@ -1,4 +1,4 @@
-FROM ruby:2.5.1-slim
+FROM ruby:2.5.3-slim
 
 ENV NODE_VERSION v10.15.1
 ENV PATH /node/node-${NODE_VERSION}-linux-x64/bin:${PATH}
