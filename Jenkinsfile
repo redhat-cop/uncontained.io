@@ -1,17 +1,7 @@
 @Library('cop-library') _
 
 openshift.withCluster() {
-  env.NAMESPACE = openshift.project()
-
   env.localToken = readFile('/var/run/secrets/kubernetes.io/serviceaccount/token').trim()
-
-  def secretData = openshift.selector('secret/other-cluster-credentials').object().data
-  def encodedRegistry = secretData.registry
-  def encodedToken = secretData.token
-  def encodedAPI = secretData.api
-  env.registry = sh(script:"set +x; echo ${encodedRegistry} | base64 --decode", returnStdout: true)
-  env.token = sh(script:"set +x; echo ${encodedToken} | base64 --decode", returnStdout: true)
-  env.api = sh(script:"set +x; echo ${encodedAPI} | base64 --decode", returnStdout: true)
 }
 
 //n.notifyBuild('STARTED', rocketchat_url)
@@ -181,6 +171,15 @@ pipeline {
           steps {
             script {
               openshift.withCluster() {
+                env.NAMESPACE = openshift.project()
+
+                def secretData = openshift.selector('secret/other-cluster-credentials').object().data
+                def encodedRegistry = secretData.registry
+                def encodedToken = secretData.token
+                def encodedAPI = secretData.api
+                env.registry = sh(script:"set +x; echo ${encodedRegistry} | base64 --decode", returnStdout: true)
+                env.token = sh(script:"set +x; echo ${encodedToken} | base64 --decode", returnStdout: true)
+                env.api = sh(script:"set +x; echo ${encodedAPI} | base64 --decode", returnStdout: true)
 
                 openshift.withProject() {
                   def imageRegistry = openshift.selector( 'is', "${APP_NAME}").object().status.dockerImageRepository
