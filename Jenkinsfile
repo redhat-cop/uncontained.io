@@ -26,7 +26,7 @@ pipeline {
     stage ('Build Site from Source') {
       steps {
         container('builder') {
-          sh 'bundle install'
+          sh 'source scl_source enable rh-ruby25 && bundle install'
           sh 'npm install'
           sh 'npm run build'
         }
