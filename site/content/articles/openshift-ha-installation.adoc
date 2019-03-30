@@ -405,7 +405,7 @@ For our HA OpenShift Cluster (`c1-ocp.myorg.com`), we will provision the followi
 
 * 1 Ansible control host (`control-host.myorg.com`)
   ** RHEL 7.4 minimal installation
-  ** 8 GB Memory
+  ** 16 GB Memory
   ** 2 Cores
   ** 40 GB - `/` (root)
 * 3 _Masters_ (openshift-master-[1-3].c1-ocp.myorg.com)
