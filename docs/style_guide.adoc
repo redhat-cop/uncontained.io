@@ -8,7 +8,7 @@ toc::[]
 >
 > In other words, the way we write is just as important as the way we design. Consider these things when writing copy.
 
-_Reference: link:https://github.com/github/opensource.guide/blob/master/docs/styleguide.md[opensource.guide style guide]_
+_Reference: link:https://github.com/github/opensource.guide/blob/master/docs/styleguide.adoc[opensource.guide style guide]_
 
 This document provides content writer's with some guidance around how to structure new content contributions. We hope it is a valuable resource for you.
 
@@ -126,7 +126,7 @@ All written content should follow these principles:
 
 Content should maintain a light-hearted, but wise (think classy, not overly excited) tone. Open source is fun! Readers should feel inspired, not discouraged, by the tone of your writing, and they should trust you to help them along their journey.
 
-Reference: link:https://github.com/github/opensource.guide/blob/master/docs/styleguide.md#content-principles[opensource.guide style guide]
+Reference: link:https://github.com/github/opensource.guide/blob/master/docs/styleguide.adoc#content-principles[opensource.guide style guide]
 
 == Mentions
 
@@ -140,7 +140,7 @@ When referring to a project on GitHub, link to the repository so others can dive
 - :smile: @JaredBurck took a similar approach to link:https://github.com/datproject/dat[Dat]...
 - :cry: @JaredBurck took a similar approach to Dat...
 
-Reference: link:https://github.com/github/opensource.guide/blob/master/docs/styleguide.md#mentions[opensource.guide style guide]
+Reference: link:https://github.com/github/opensource.guide/blob/master/docs/styleguide.adoc#mentions[opensource.guide style guide]
 
 == Capitalization
 
@@ -157,4 +157,4 @@ The word "guides" is not capitalized when referring to the "uncontained.io guide
 - :smile: The guide is meant to..
 - :cry: The goal of this Guide is to...
 
-Reference: link:https://github.com/github/opensource.guide/blob/master/docs/styleguide.md#capitalization[opensource.guide style guide]
+Reference: link:https://github.com/github/opensource.guide/blob/master/docs/styleguide.adoc#capitalization[opensource.guide style guide]

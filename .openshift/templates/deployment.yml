@@ -9,10 +9,6 @@ objects:
   kind: ImageStream
   metadata:
     name: ${APP_NAME}
-  spec:
-    dockerImageRepository: ${UPSTREAM_IMAGE_REPO}
-    importPolicy:
-      scheduled: true
 - apiVersion: v1
   kind: Route
   metadata:
@@ -138,6 +134,8 @@ objects:
   metadata:
     name: ${APP_NAME}-config
   data:
+    extras.conf: |-
+      port_in_redirect off;
     tls-server.conf: |-
       # HTTPS server
 
@@ -172,4 +170,3 @@ parameters:
     value: site
   - name: HOSTNAME
   - name: TERMINATION
-  - name: UPSTREAM_IMAGE_REPO

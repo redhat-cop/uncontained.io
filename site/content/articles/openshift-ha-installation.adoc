@@ -1,5 +1,5 @@
 ---
-date: "2016-08-18T01:07:30-05:00"
+date: "2019-04-02T01:07:30-05:00"
 title: "Installing a Highly Available OpenShift Cluster"
 authors: ["redhat-cop"]
 categories:
@@ -14,8 +14,8 @@ featured: true
 ---
 = Installing a Highly-Available OpenShift Cluster
 Red Hat Containers & PaaS CoP
-v2.0, 2016-08-18
-:scripts_repo: https://github.com/rhtconsulting/rhc-ose
+v2.1, 2019-03-30
+:scripts_repo: https://github.com/redhat-cop/uncontained.io
 :toc: macro
 :toc-title:
 
@@ -71,7 +71,7 @@ We'll add to this file as we go.
 
 === Selecting the Version of OpenShift to Install
 
-Red Hat does major releases of OpenShift about once a quarter. As of this writing, the current major version is 3.7. Additionally, "dot releases" of OpenShift tend to be released every 4 to 6 weeks. The latest 3.7, for example, is 3.7.14-5. It's generally a good practice to decide on the major version of OpenShift to target and allow the install playbook to take the latest minor release of that major version. This will make sure you get all of the latest bug fixes and patches for that version.
+Red Hat does major releases of OpenShift about once a quarter. As of this writing, the current major version is 3.11. Additionally, "dot releases" of OpenShift tend to be released every 4 to 6 weeks. The latest 3.11, for example, is 3.11.16-1. It's generally a good practice to decide on the major version of OpenShift to target and allow the install playbook to take the latest minor release of that major version. This will make sure you get all of the latest bug fixes and patches for that version.
 
 You can set the version of OpenShift in your Ansible inventory file under the OSEv3:vars section.
 
@@ -81,7 +81,7 @@ You can set the version of OpenShift in your Ansible inventory file under the OS
 ansible_user=root <1>
 
 openshift_deployment_type=openshift-enterprise <2>
-openshift_release=v3.7 <3>
+openshift_release=3.11 <3>
 ...
 ----
 <1> Define user Ansible can login to all nodes through SSH.
@@ -110,11 +110,11 @@ Both the openshift_portal_net and the osm_cluster_network_cidr will default to t
 
 ==== Master Service Ports
 
-*Ansible Host File Variable:* `openshift_master_api_port=8443`
+*Ansible Host File Variable:* `openshift_master_api_port=443`
 
 This is the port that the Master api will be listening on. The default value is 8443. Since we are using dedicated hosts for the masters we can set this to 443 and omit the port # from urls when connecting.
 
-*Ansible Host File Variable:* `openshift_master_console_port=8443`
+*Ansible Host File Variable:* `openshift_master_console_port=443`
 This is the port that the Master console will be listening on. The default value is 8443. Like the api port, we can set this to 443 and omit the port # from urls when connecting.
 
 ==== Ansible Inventory Update
@@ -128,7 +128,7 @@ Once networking decisions have been made, we should be able to add the following
 ansible_user=root
 
 openshift_deployment_type=openshift-enterprise
-openshift_release=v3.7
+openshift_release=v3.11
 
 openshift_master_api_port=443 <1>
 openshift_master_console_port=443 <2>
@@ -179,7 +179,7 @@ Having added all of the above to your inventory file we should have something li
 ansible_user=root
 
 deployment_type=openshift-enterprise
-openshift_release=v3.7
+openshift_release=v3.11
 
 openshift_master_api_port=443
 openshift_master_console_port=443
@@ -213,7 +213,7 @@ To integrate with an external load balancer, at minimum, you'll need to create:
 * A passthrough VIP and back-end pool for the Master hosts
 * A passthrough VIP and back-end pool for the Infrastructure hosts
 
-See our link:/guides/openshift-load-balancing[Integrating External Loadbalancers] guide for more details on this.
+See our link:/articles/openshift-load-balancing[Integrating External Loadbalancers] guide for more details on this.
 
 ==== Option 2: Use the Integrated HAProxy Balancer
 
@@ -227,7 +227,7 @@ The OpenShift installer has the ability to configure a Linux host as a load bala
 ansible_user=root
 
 openshift_deployment_type=openshift-enterprise
-openshift_release=v3.7
+openshift_release=v3.11
 
 openshift_master_api_port=443
 openshift_master_console_port=443
@@ -264,7 +264,7 @@ Now we can feed those values into our hosts file.
 ansible_user=root
 
 openshift_deployment_type=openshift-enterprise
-openshift_release=v3.7
+openshift_release=v3.11
 
 openshift_master_api_port=443
 openshift_master_console_port=443
@@ -277,7 +277,7 @@ openshift_master_cluster_public_hostname=console.c1-ocp.myorg.com
 
 openshift_master_default_subdomain=apps.c1-ocp.myorg.com
 
-openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}] <1>
+openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider'}] <1>
 openshift_master_htpasswd_users={'admin': '$apr1$6CZ4noKr$IksMFMgsW5e5FL0ioBhkk/', 'developer': '$apr1$AvisAPTG$xrVnJ/J0a83hAYlZcxHVf1'} <2>
 ...
 ----
@@ -295,6 +295,8 @@ At a high level, we can break down OpenShift's persistent storage support into t
 - Block Storage: Volumes or disks that can be mounted to only one container at a time (known as `ReadWrtieOnce` mode). Examples of Block Storage are link:{docs_url}install_config/persistent_storage/persistent_storage_cinder.html[OpenStack Cinder], link:{docs_url}install_config/persistent_storage/persistent_storage_ceph_rbd.html[Ceph RBD], link:{docs_url}install_config/persistent_storage/persistent_storage_aws.html[Amazon Elastic Block Storage], link:{docs_url}install_config/persistent_storage/persistent_storage_iscsi.html[iSCSI], link:{docs_url}install_config/persistent_storage/persistent_storage_fibre_channel.html[Fibre Channel]. Most database technologies perfer block storage.
 - Shared File Systems: Volumes that can be mounted for reading an writing by many containers at once (known as `ReadWriteMany` mode)/ At this writing the only two available Shared File Systems supported are link:{docs_url}install_config/persistent_storage/persistent_storage_nfs.html[NFS] and link:{docs_url}install_config/persistent_storage/persistent_storage_glusterfs.html[GlusterFS]. Many legacy application runtimes prefer this type of storage for sharing data on disk.
 
+By default nfs will require an override within your ansible hosts file if you choose to use it for the registry:  `openshift_enable_unsupported_configurations=true`
+
 Most multi-tenant OpenShift deployments will need to provide at least one Persistent Storage provider in each category in order to cover application use cases. In addition to application use cases, several of the core services that ship with OpenShift also require persistent volumes. We will discuss those use cases in more detail as they pertain to the cluster install.
 
 ==== Integrated Registry
@@ -308,6 +310,7 @@ For the purpose of this guide, we'll configure the registry to use an NFS Volume
 
 ----
 # configure a pv that mounts "nfs.myorg.com:/exports/registry"
+openshift_enable_unsupported_configurations=true
 openshift_hosted_registry_storage_kind=nfs
 openshift_hosted_registry_storage_access_modes=['ReadWriteMany']
 openshift_hosted_registry_storage_host=nfs.myorg.com
@@ -365,7 +368,7 @@ nodes
 ansible_user=root
 
 openshift_deployment_type=openshift-enterprise
-openshift_release=v3.7
+openshift_release=v3.11
 
 openshift_master_api_port=443
 openshift_master_console_port=443
@@ -378,9 +381,10 @@ openshift_master_cluster_public_hostname=console.c1-ocp.myorg.com
 
 openshift_master_default_subdomain=apps.c1-ocp.myorg.com
 
-openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
+openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider'}]
 openshift_master_htpasswd_users={'admin': '$apr1$6CZ4noKr$IksMFMgsW5e5FL0ioBhkk/', 'developer': '$apr1$AvisAPTG$xrVnJ/J0a83hAYlZcxHVf1'}
 
+openshift_enable_unsupported_configurations=true
 openshift_hosted_registry_storage_kind=nfs
 openshift_hosted_registry_storage_access_modes=['ReadWriteMany']
 openshift_hosted_registry_storage_host=nfs.myorg.com
@@ -401,35 +405,55 @@ For our HA OpenShift Cluster (`c1-ocp.myorg.com`), we will provision the followi
 
 * 1 Ansible control host (`control-host.myorg.com`)
   ** RHEL 7.4 minimal installation
-  ** 8 GB Memory
+  ** 16 GB Memory
   ** 2 Cores
-  ** 40 GB root drive
+  ** 40 GB - `/` (root)
 * 3 _Masters_ (openshift-master-[1-3].c1-ocp.myorg.com)
   ** RHEL 7.4 minimal installation
-  ** 20 GB Memory
+  ** 24 GB Memory
   ** 4 Cores
-  ** 60 GB for the root (`/`) partition
-  ** An additional 50 GB block volume for local Docker storage. (in this guide, available as `/dev/vdb`)
-  ** An additional 10 GB disk or logical volume mounted at `/var/lib/etcd` (in this guide, available as `/dev/vdc`)
+  ** 10 GB - `/` (root)
+  ** 10 GB - `/home` (user home folders) 
+  ** 10 GB - `/usr` (system binaries)
+  ** 10 GB - `/var` (system drivers and other bits)
+  ** 10 GB - `/var/lib/etcd` (etcd write path. Should be back by a fast disk, SSD or logical volume. In this guide, available as `/dev/vdb`.)
+  ** 50 GB+ - `/var/lib/docker` (If using Docker as the container runtime, this is the container image cache formatted, configured, and managed by `docker-storage-setup`.  In this guide, available as `/dev/vdc`. It is recommended that `STORAGE_DRIVER=overlay2` be set in `/etc/sysconfig/docker-storage-setup`.)
+  ** 50 GB+ - `/var/lib/containers` (If using CRI-O as the container runtime, this is the container image cache formatted, configured, and managed by `container-storage-setup`.  In this guide, available as `/dev/vdc`. It is recommended that `storage_driver=overlay` be set in `/etc/crio/crio.conf`.)
+  ** 50 GB+ - `/var/lib/origin` (Ephemeral/temp storage for running containers. Should be backed by a logical volume.)
+  ** 20 GB+ - `/var/log` (system logging write path)
+  ** `[SWAP]` (should be disabled and not partitioned for)
 * 3 _Infrastructure Nodes_ (openshift-infra[1-3].c1-ocp.myorg.com)
   ** RHEL 7.4 minimal installation
   ** 24 GB Memory
   ** 6 Cores
-  ** 40 GB for the root (`/`) partition
-  ** An additional 100 GB block volume for local Docker storage. (in this guide, available as `/dev/vdb`)
-  ** An additional 20 GB disk or logical volume mounted at `/var/lib/origin` (in this guide, available as `/dev/vdc`)
+  ** 10 GB - `/` (root)
+  ** 10 GB - `/home` (user home folders) 
+  ** 10 GB - `/usr` (system binaries)
+  ** 10 GB - `/var` (system drivers and other bits)
+  ** 50 GB+ - `/var/lib/docker` (If using Docker as the container runtime, this is the container image cache formatted, configured, and managed by `docker-storage-setup`.  In this guide, available as `/dev/vdc`. It is recommended that `STORAGE_DRIVER=overlay2` be set in `/etc/sysconfig/docker-storage-setup`.)
+  ** 50 GB+ - `/var/lib/containers` (If using CRI-O as the container runtime, this is the container image cache formatted, configured, and managed by `container-storage-setup`.  In this guide, available as `/dev/vdc`. It is recommended that `storage_driver=overlay` be set in `/etc/crio/crio.conf`.)
+  ** 50 GB+ - `/var/lib/origin` (Ephemeral/temp storage for running containers.  Should be backed by a logical volume.)
+  ** 20 GB+ - `/var/log` (system logging write path)
+  ** `[SWAP]` (should be disabled and not partitioned for)
 * 3 _Application Nodes_ (openshift-node-[1-3].c1-ocp.myorg.com)
+  ** RHEL 7.6 minimal installation
   ** 48 GB Memory
   ** 4 Cores
-  ** 30 GB for the root (`/`) partition
-  ** An additional 100 GB block volume for local Docker storage. (in this guide, available as `/dev/vdb`)
-  ** An additional 20 GB logical volume mounted at `/var/lib/origin` (in this guide, available as `/dev/vdc`)
+  ** 10 GB - `/` (root)
+  ** 10 GB - `/home` (user home folders) 
+  ** 10 GB - `/usr` (system binaries)
+  ** 10 GB - `/var` (system drivers and other bits)
+  ** 100 GB+ - `/var/lib/docker` (If using Docker as the container runtime, this is the container image cache formatted, configured, and managed by `docker-storage-setup`.  In this guide, available as `/dev/vdc`. It is recommended that `STORAGE_DRIVER=overlay2` be set in `/etc/sysconfig/docker-storage-setup`.)
+  ** 100 GB+ - `/var/lib/containers` (If using CRI-O as the container runtime, this is the container image cache formatted, configured, and managed by `container-storage-setup`.  In this guide, available as `/dev/vdc`. It is recommended that `storage_driver=overlay` be set in `/etc/crio/crio.conf`.)
+  ** 50 GB+ - `/var/lib/origin` (Ephemeral/temp storage for running containers. Should be backed by a logical volume.)
+  ** 20 GB+ - `/var/log` (system logging write path)
+  ** `[SWAP]` (should be disabled and not partitioned for)
 * (Optional) A Load Balancer host, if you plan to use Option 2 for Load Balancing, per the above section (lb.c1-ocp.myorg.com)
   ** 2 cores
   ** 4 GB Memory
   ** 10 GB root drive
 
-Each of these servers should be provisioned with an SSH public key which can be used to access all hosts from the Ansible Control Host. Further setup of keys and the
+Each of these servers should be provisioned with an SSH public key which can be used to access all hosts from the Ansible Control Host. Further setup of keys and their propagation is covered below.
 
 === Ansible Control Host
 
@@ -440,7 +464,7 @@ Register your Ansible Control Host and install the appropriate repos
 ----
 subscription-manager register --username bob@myorg.com --password='mypassword'
 subscription-manager attach --pool=8a85f...
-subscription-manager repos --disable="*" --enable="rhel-7-server-rpms" --enable="rhel-7-server-extras-rpms" --enable="rhel-7-server-ose-3.7-rpms" --enable="rhel-7-fast-datapath-rpms"
+subscription-manager repos --disable="*" --enable="rhel-7-server-rpms" --enable="rhel-7-server-extras-rpms" --enable="rhel-7-server-ose-3.11-rpms" --enable="rhel-7-fast-datapath-rpms"  --enable="rhel-7-server-ansible-2.6-rpms"
 ----
 
 Install the atomic-openshift-utils package
@@ -465,13 +489,14 @@ ssh will require you to accept the new ssh key for the first time into the `~/.s
 
 ==== Configuring Node Host Labels
 
-Labels are simple key/value pairs that are used to organize, group, or select API objects. You can assign labels to node hosts during the Ansible install by configuring the /etc/ansible/hosts file. Labels are useful for determining the placement of pods onto nodes using the scheduler. Other than `region=infra` (discussed in link:#_configuring_labels_for_dedicated_infrastructure_nodes[Configuring Labels For Dedicated Infrastructure Nodes]]), the actual label names and values are arbitrary and can be assigned however you see fit per your cluster’s requirements.
+Labels are simple key/value pairs that are used to organize, group, or select API objects. You can assign labels to node hosts during the Ansible install by configuring the /etc/ansible/hosts file. Labels are useful for determining the placement of pods onto nodes using the scheduler. Other than `openshift_node_group_name="node-config-compute` (discussed in link:#_configuring_labels_for_dedicated_infrastructure_nodes[Configuring Labels For Dedicated Infrastructure Nodes]]), the actual label names and values are arbitrary and can be assigned however you see fit per your cluster’s requirements.
 
-To assign labels to a node host during the advanced installation, use the `openshift_node_labels` variable with the desired labels added to the desired node host entry in the `[nodes]` section. For example:
+To assign labels to a node host during the advanced installation, use the `openshift_node_group_name` variable with the desired labels added to the desired node host entry in the `[nodes]` section. For example:
 
 ----
 [nodes]
-node1.example.com openshift_node_labels="{'region': 'primary', 'zone': 'east'}"
+openshift-appnode-1.c1-ocp.myorg.com openshift_node_group_name="node-config-compute"
+openshift-appnode-2.c1-ocp.myorg.com openshift_node_group_name="node-config-compute"
 ----
 
 ===== Configuring Labels For Application Nodes
@@ -481,19 +506,19 @@ The `osm_default_node_selector` Ansible setting determines the label that projec
 ----
 ...
 # default project node selector
-#osm_default_node_selector='region=primary'
+# osm_default_node_selector='node-role.kubernetes.io/compute=true'
 ...
 ----
 
 ===== Configuring Labels For Dedicated Infrastructure Nodes
 
-The `openshift_router_selector` and `openshift_registry_selector` Ansible settings determine the label selectors used when placing registry and router pods. They are set to `region=infra` by default:
+The `openshift_hosted_router_selector` and `openshift_hosted_registry_selector` Ansible settings determine the label selectors used when placing registry and router pods. They are set to `region=infra` by default:
 
 ----
 ...
 # default selectors for router and registry services
-# openshift_router_selector='region=infra'
-# openshift_registry_selector='region=infra'
+# openshift_hosted_router_selector='node-role.kubernetes.io/infra=true'
+# openshift_hosted_registry_selector='node-role.kubernetes.io/infra=true'
 ...
 ----
 
@@ -512,10 +537,10 @@ openshift-master-[1:3].c1-ocp.myorg.com
 openshift-master-[1:3].c1-ocp.myorg.com
 
 [nodes]
-openshift-master-[1:3].c1-ocp.myorg.com openshift_node_labels="{'region': 'master'}"
-openshift-infranode-[1:3].c1-ocp.myorg.com openshift_node_labels="{'region': 'infra'}"
-openshift-appnode-1.c1-ocp.myorg.com openshift_node_labels="{'region': 'primary'}"
-openshift-appnode-2.c1-ocp.myorg.com openshift_node_labels="{'region': 'primary'}"
+openshift-master-[1:3].c1-ocp.myorg.com openshift_node_group_name="node-config-master"
+openshift-infranode-[1:3].c1-ocp.myorg.com openshift_node_group_name="node-config-infra"
+openshift-appnode-1.c1-ocp.myorg.com openshift_node_group_name="node-config-compute"
+openshift-appnode-2.c1-ocp.myorg.com openshift_node_group_name="node-config-compute"
 ----
 
 Test ansible in an adhoc way to ensure it can get to all the nodes
@@ -527,7 +552,7 @@ ansible -i c1-ocp.myorg.com/hosts OSEv3 -m ping
 
 === Create Standalone Registry
 
-During the install, OpenShift will need pull images from Red Hat in order to spin up services like the Integrated Registry and Router as well as some base images for Pods, S2I builders, etc. In most cases, access to the link:https://registry.access.redhat.com[Red Hat Public Registry] is blocked or restricted by web proxies. The link:{docs_url}install_config/install/disconnected_install.html#disconnected-syncing-images[Official Documentation] on how to work with this suggests pulling images to some internet accessible machine, and creating a `.tar` file to manually distribute them to all hosts in the cluster. While this works just fine, a more long term solution is to establish a standalone registry and seed it with the images that OpenShift will require. We can then point OpenShift to that standalone registry instead of Red Hat's and allow it to pull those images as it normally would. This allows us to establish a much simpler and more automatable process for updating those images when need be.
+During the install, OpenShift will need pull images from Red Hat in order to spin up services like the Integrated Registry and Router as well as some base images for Pods, S2I builders, etc. In most cases, access to the link:https://registry.access.redhat.com[Red Hat Public Registry] is blocked or restricted by web proxies. The link:{docs_url}install/disconnected_install.html#disconnected-syncing-images[Official Documentation] on how to work with this suggests pulling images to some internet accessible machine, and creating a `.tar` file to manually distribute them to all hosts in the cluster. While this works just fine, a more long term solution is to establish a standalone registry and seed it with the images that OpenShift will require. We can then point OpenShift to that standalone registry instead of Red Hat's and allow it to pull those images as it normally would. This allows us to establish a much simpler and more automatable process for updating those images when need be.
 
 We outline two options here for standing up a bootstrap registry. The first is to stand up a very simple docker registry which will have wide-open permissions (no authentication). The second, using OpenShift's Atomic Enterprise Registry, will allow us to require authentication and also provide a simple web console to help manage the images in the registry.
 
@@ -584,7 +609,7 @@ Now we're ready to sync images. To do this, we're going to run link:https://gith
 curl -O https://raw.githubusercontent.com/redhat-cop/openshift-toolkit/master/disconnected_registry/docker-registry-sync.py
 curl -O https://raw.githubusercontent.com/redhat-cop/openshift-toolkit/master/disconnected_registry/docker_tags.json
 chmod +x docker-registry-sync.py
-./docker-registry-sync.py --from=registry.access.redhat.com --to=registry.c1-ocp.myorg.com:5000 --file=./docker_tags.json --openshift-version=3.7
+./docker-registry-sync.py --from=registry.access.redhat.com --to=registry.c1-ocp.myorg.com:5000 --file=./docker_tags.json --openshift-version=3.11
 ----
 
 Finally, we can update our Ansible Inventory file to point OpenShift to our private registry, and disable the default external registries
@@ -595,7 +620,7 @@ Finally, we can update our Ansible Inventory file to point OpenShift to our priv
 ansible_user=root
 
 openshift_deployment_type=openshift-enterprise
-openshift_release=v3.7
+openshift_release=v3.11
 
 openshift_master_api_port=443
 openshift_master_console_port=443
@@ -608,7 +633,7 @@ openshift_master_cluster_public_hostname=console.c1-ocp.myorg.com
 
 openshift_master_default_subdomain=apps.c1-ocp.myorg.com
 
-openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
+openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider'}]
 openshift_master_htpasswd_users={'admin': '$apr1$6CZ4noKr$IksMFMgsW5e5FL0ioBhkk/', 'developer': '$apr1$AvisAPTG$xrVnJ/J0a83hAYlZcxHVf1'}
 
 openshift_docker_additional_registries=registry.c1-ocp.myorg.com:5000 <1>
@@ -665,13 +690,15 @@ For a successful install and avoid potential challenges with internet connectivi
 ----
 hammer repository-set enable --organization "c1-ocp.myorg.com" --product "Red Hat Enterprise Linux Server" --name "Red Hat Enterprise Linux 7 Server (RPMs)" --releasever "7Server" --basearch "x86_64"
 hammer repository-set enable --organization "c1-ocp.myorg.com" --product "Red Hat Enterprise Linux Server" --name "Red Hat Enterprise Linux 7 Server - Extras (RPMs)" --releasever "" --basearch "x86_64"
-hammer repository-set enable --organization "c1-ocp.myorg.com" --product "Red Hat Enterprise Linux Server" --name "Red Hat OpenShift Container Platform 3.7 (RPMs)" --releasever "" --basearch "x86_64"
+hammer repository-set enable --organization "c1-ocp.myorg.com" --product "Red Hat Enterprise Linux Server" --name "Red Hat OpenShift Container Platform 3.11(RPMs)" --releasever "" --basearch "x86_64"
 hammer repository-set enable --organization "c1-ocp.myorg.com" --product "Red Hat Enterprise Linux Server" --name "Red Hat Enterprise Linux Fast Datapath (RHEL 7 Server) (RPMs)" --releasever "7Server" --basearch "x86_64"
+hammer repository-set enable --organization "c1-ocp.myorg.com" --product "Red Hat Enterprise Linux Server" --name "Red Hat Ansible Engine 2.6 RPMs for Red Hat Enterprise Linux 7 Server" --releasever "7Server" --basearch "x86_64"
 
 hammer repository synchronize --name "Red Hat Enterprise Linux 7 Server RPMs x86_64 7Server" --organization "c1-ocp.myorg.com"
 hammer repository synchronize --name "Red Hat Enterprise Linux 7 Server - Extras RPMs x86_64" --organization "c1-ocp.myorg.com"
-hammer repository synchronize --name "Red Hat OpenShift Container Platform 3.7 RPMs x86_64" --organization "c1-ocp.myorg.com"
+hammer repository synchronize --name "Red Hat OpenShift Container Platform 3.11 RPMs x86_64" --organization "c1-ocp.myorg.com"
 hammer repository synchronize --name "Red Hat Enterprise Linux Fast Datapath RHEL 7 Server RPMs x86_64 7Server" --organization "c1-ocp.myorg.com"
+hammer repository synchronize --name "Red Hat Ansible Engine 2.6 RPMs for Red Hat Enterprise Linux 7 Server" --organization "c1-ocp.myorg.com"
 ----
 
 
@@ -681,11 +708,11 @@ TODO
 
 ==== Custom Yum Repos
 
-The procedure for creating custom yum repos is documented in the link:{docs_url}install_config/install/disconnected_install.html#disconnected-syncing-repos[Official Documentation]
+The procedure for creating custom yum repos is documented in the link:{docs_url}install/disconnected_install.html#disconnected-syncing-repos[Official Documentation]
 
 ==== Subscribing Directly to Red Hat
 
-The process for subscribing directly to Red Hat is covered in the link:{docs_url}install_config/install/host_preparation.html#host-registration[Official Documentation].
+The process for subscribing directly to Red Hat is covered in the link:{docs_url}install/host_preparation.html#host-registration[Official Documentation].
 
 === Configure Load Balancer
 
@@ -721,7 +748,7 @@ create ltm virtual infra.c1-ocp.myorg.com-https pool infra.c1-ocp.myorg.com-http
 ===== Master LB
 
 ----
-add lb monitor ocp-master HTTPS -httpRequest “GET /healthz”
+add lb monitor MON_ocp-master HTTP-ECV -send "GET /healthz" -recv ok -LRTM DISABLED -secure YES
 add serviceGroup ose-console_443_sslbridge SSL_BRIDGE -maxClient 0 -maxReq 0 -cip DISABLED -usip NO -useproxyport YES -cltTimeout 180 -svrTimeout 360 -CKA YES -TCPB YES -CMP NO
 add lb vserver ose-console_443_sslbridge SSL_BRIDGE 192.168.10.101 443 -persistenceType SSLSESSION -timeout 60 -cltTimeout 180
 bind lb vserver ose-console_443_sslbridge ose-console_443_sslbridge
@@ -733,7 +760,7 @@ bind serviceGroup ose-console_443_sslbridge openshift-master-3.c1-ocp.myorg.com 
 ===== Infra Node / Router LB
 
 ----
-add lb monitor ocp-router HTTP -destPort 1936 -httpRequest “GET /healthz”
+add lb monitor MON_ocp-router HTTP -respCode 200 -httpRequest "GET /healthz" -LRTM DISABLED -destPort 1936 -netProfile Monitor_SNIP
 add serviceGroup ose-wildcard_443_sslbridge SSL_BRIDGE -maxClient 0 -maxReq 0 -cip DISABLED -usip NO -useproxyport YES -cltTimeout 180 -svrTimeout 360 -CKA YES -TCPB YES -CMP NO
 add lb vserver ose-wildcard_443_sslbridge SSL_BRIDGE 192.168.10.102 443 -persistenceType SSLSESSION -timeout 60 -cltTimeout 180
 bind lb vserver ose-wildcard_443_sslbridge ose-wildcard_443_sslbridge
@@ -778,7 +805,7 @@ nodes
 ansible_user=root
 
 openshift_deployment_type=openshift-enterprise
-openshift_release=v3.7
+openshift_release=v3.11
 
 openshift_master_api_port=443
 openshift_master_console_port=443
@@ -791,7 +818,7 @@ openshift_master_cluster_public_hostname=console.myorg.com
 
 openshift_master_default_subdomain=apps.c1-ocp.myorg.com
 
-openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
+openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider'}]
 openshift_master_htpasswd_users={'admin': '$apr1$6CZ4noKr$IksMFMgsW5e5FL0ioBhkk/', 'developer': '$apr1$AvisAPTG$xrVnJ/J0a83hAYlZcxHVf1'}
 
 openshift_docker_additional_registries=registry.myorg.com
@@ -807,10 +834,10 @@ openshift-master-[1:3].c1-ocp.myorg.com
 openshift-master-[1:3].c1-ocp.myorg.com
 
 [nodes]
-openshift-master-[1:3].c1-ocp.myorg.com openshift_node_labels="{'region': 'master'}"
-openshift-infranode-[1:3].c1-ocp.myorg.com openshift_node_labels="{'region': 'infra'}"
-openshift-appnode-1.c1-ocp.myorg.com openshift_node_labels="{'region': 'primary'}"
-openshift-appnode-2.c1-ocp.myorg.com openshift_node_labels="{'region': 'primary'}"
+openshift-master-[1:3].c1-ocp.myorg.com openshift_node_group_name="node-config-master"
+openshift-infranode-[1:3].c1-ocp.myorg.com openshift_node_group_name="node-config-infra"
+openshift-appnode-1.c1-ocp.myorg.com openshift_node_group_name="node-config-compute"
+openshift-appnode-2.c1-ocp.myorg.com openshift_node_group_name="node-config-compute"
 ----
 
 At this point it would be a good idea to version your `myorg-openshift` project to version control, and begin the process of iterating over your _infrastructure as code_. This is outside of the scope of this document.
@@ -847,7 +874,7 @@ cat /etc/yum.repos.d/ ...
 ----
 ansible -i c1-ocp.myorg.com/hosts OSEv3 -a 'subscription-manager register --username bob@acme.com --password=mypassword'
 ansible -i c1-ocp.myorg.com/hosts OSEv3 -a 'subscription-manager attach --pool=8a85f98144844aff014488d058bf15be'
-ansible -i c1-ocp.myorg.com/hosts OSEv3 -a 'subscription-manager repos --disable="*" --enable="rhel-7-server-rpms" --enable="rhel-7-server-extras-rpms" --enable="rhel-7-server-ose-3.7-rpms" --enable="rhel-7-fast-datapath-rpms'
+ansible -i c1-ocp.myorg.com/hosts OSEv3 -a 'subscription-manager repos --disable="*" --enable="rhel-7-server-rpms" --enable="rhel-7-server-extras-rpms" --enable="rhel-7-server-ose-3.11-rpms" --enable="rhel-7-fast-datapath-rpms --enable="rhel-7-server-ansible-2.6-rpms"'
 ----
 
 NOTE: The `rhel-7-fast-datapath-rpms` channel is only required for OpenShift Container Platform version 3.5 and later. For versions 3.4 and earlier, this channel should be omitted.
@@ -856,7 +883,7 @@ NOTE: The `rhel-7-fast-datapath-rpms` channel is only required for OpenShift Con
 
 During the link:#_provision_servers[Provision Servers] step of this guide, we provisioned all of our nodes (including the masters) with docker volumes attached as `/dev/vdb`. We'll now install and configure docker to use that volume for all local docker storage.
 
-NOTE: There are other options for configuring docker storage. They are outlined in the link:{docs_url}install_config/install/host_preparation.html#configuring-docker-storage[Official Docs].
+NOTE: There are other options for configuring docker storage. They are outlined in the link:{docs_url}install/host_preparation.html#configuring-docker-storage[Official Docs].
 
 We can do this simply with a single ansible command across all of our nodes.
 
@@ -898,32 +925,21 @@ OpenShift has tunable parameters to futher enhance and protect the cluster/nodes
 NOTE: OpenShift will use all the resources supplied to it from the node for the pods unless otherwise defined.
 
 ----
-openshift_node_kubelet_args="{'kube-reserved': ['cpu=250m,memory=500M'], <1>
-  'system-reserved': ['cpu=250m,memory=500M'], <2>
-  'eviction-hard': ['memory.available<100Mi'], <3>
-  'minimum-container-ttl-duration': ['10s'], <4>
-  'maximum-dead-containers-per-container': ['2'], <5>
-  'maximum-dead-containers': ['50'], <6>
-  'pods-per-core': ['10'], <7>
-  'max-pods': ['250'], <8>
-  'image-gc-high-threshold': ['80'], <9>
-  'image-gc-low-threshold': ['60'] <10>
-}"
+openshift_node_groups=[{'name': 'node-config-master',  'labels': ['node-role.kubernetes.io/master=true' ],'edits': [{ 'key': 'kubeletArguments.kube-reserved','value': ['cpu=100m,memory=128M']}, { 'key': 'kubeletArguments.system-reserved','value': ['cpu=100m,memory=256M']},{ 'key': 'kubeletArguments.pods-per-core','value': ['10']},{ 'key': 'kubeletArguments.max-pods','value': ['250']},{ 'key': 'kubeletArguments.maximum-dead-containers','value': ['5']},{ 'key': 'kubeletArguments.maximum-dead-containers-per-container','value': ['1']},{ 'key': 'kubeletArguments.image-gc-high-threshold','value': ['80']},{ 'key': 'kubeletArguments.image-gc-low-threshold','value': ['60']}]},{'name': 'node-config-infra',   'labels': ['node-role.kubernetes.io/infra=true'  ],'edits':[{ 'key': 'kubeletArguments.kube-reserved','value': ['cpu=100m,memory=128M']},{ 'key': 'kubeletArguments.system-reserved','value': ['cpu=100m,memory=256M']},{ 'key': 'kubeletArguments.pods-per-core','value': ['10']},{ 'key': 'kubeletArguments.max-pods','value': ['250']},{ 'key': 'kubeletArguments.maximum-dead-containers','value': ['5']},{ 'key': 'kubeletArguments.maximum-dead-containers-per-container','value': ['1']},{ 'key': 'kubeletArguments.image-gc-high-threshold','value': ['80']},{ 'key': 'kubeletArguments.image-gc-low-threshold','value': ['60']}]},{'name': 'node-config-compute', 'labels': ['node-role.kubernetes.io/compute=true'],'edits':[{ 'key': 'kubeletArguments.kube-reserved','value': ['cpu=100m,memory=128M']},{ 'key': 'kubeletArguments.system-reserved','value': ['cpu=100m,memory=256M']},{ 'key': 'kubeletArguments.pods-per-core','value': ['10']},{ 'key': 'kubeletArguments.max-pods','value': ['250']},{ 'key': 'kubeletArguments.maximum-dead-containers','value': ['5']},{ 'key': 'kubeletArguments.maximum-dead-containers-per-container','value': ['1']},{ 'key': 'kubeletArguments.image-gc-high-threshold','value': ['80']},{ 'key': 'kubeletArguments.image-gc-low-threshold','value': ['60']}]},{'name': 'node-config-master-infra',  'labels': ['node-role.kubernetes.io/infra=true' ,'node-role.kubernetes.io/master=true' ]},{'name': 'node-config-all-in-one',  'labels': ['node-role.kubernetes.io/infra=true', 'node-role.kubernetes.io/master=true' ,'node-role.kubernetes.io/compute=true' ]}]
 ----
-<1>  kube-reserved = Resources reserved for node components
-<2>  system-reserved = Resources reserved for the remaining system components
-<3>  eviction-hard = value the node attempts to evict pods whenever memory availability on the node drops below the absolute value
-<4>  minimum-container-ttl-duration = The minimum age that a container is eligible for garbage collection
-<5>  maximum-dead-containers-per-container = The number of instances to retain per pod container
-<6>  maximum-dead-containers = node removes the dead containers, all files inside those containers are removed as well
-<7>  pods-per-core = How many pods will be allowed to run per core
-<8>  max-pods = Max number of pods on a node
-<9>  image-gc-high-threshold = The percent of disk usage which triggers image garbage collection
-<10> image-gc-low-threshold = The percent of disk usage to which image garbage collection attempts to free
+
+*  kubeletArguments.kube-reserved = Resources reserved for node components
+*  kubeletArguments.system-reserved = Resources reserved for the remaining system components
+*  kubeletArguments.maximum-dead-containers-per-container = The number of instances to retain per pod container
+*  kubeletArguments.maximum-dead-containers = node removes the dead containers, all files inside those containers are removed as well
+*  kubeletArguments.pods-per-core = How many pods will be allowed to run per core
+*  kubeletArguments.max-pods = Max number of pods on a node
+*  kubeletArguments.image-gc-high-threshold = The percent of disk usage which triggers image garbage collection
+*  kubeletArguments.image-gc-low-threshold = The percent of disk usage to which image garbage collection attempts to free
 
 === Validating Pre-requisites
 
-Once we have everything prepped, it's a good idea to run through our link:/guides/openshift-pre-install[OpenShift Pre-Install Validation Checklist].
+Once we have everything prepped, it's a good idea to run through our link:/articles/openshift-pre-install[OpenShift Pre-Install Validation Checklist].
 
 Or alternatively, you could just run this link:https://github.com/redhat-cop/openshift-toolkit/tree/master/validation/[pre-install validation script].
 
@@ -941,10 +957,10 @@ The install will run for 15-20 minutes. Good time for a coffee break.
 
 == Validating the Cluster
 
-link:/guides/openshift-validate[Validating an OpenShift Install]
+link:/articles/openshift-validate[Validating an OpenShift Install]
 
 == What's Next?
 
-* link:/guides/openshift-admin-overview[Overview of OpenShift for Administrators]
+* link:/articles/openshift-admin-overview[Overview of OpenShift for Administrators]
 * link:/articles/openshift-custom-certificates[Configuring OpenShift to use Custom Certificates]
 * link:/articles/openshift-ldap-integration[Adding LDAP for Authentication]

@@ -1,0 +1,13 @@
+image:https://quay.io/repository/redhat-cop/uncontained-local-dev/status["Docker Repository on Quay", link="https://quay.io/repository/redhat-cop/uncontained-local-dev"]
+
+= Local Developer Image for Uncontained.io
+
+The local developer docker image provides a container image with all of the tooling needed for a contributor to build and run Uncontained.io locally. Generally, a contributor should not need to build this image themselves, as it is automatically built and pushed to link:https://quay.io/repository/redhat-cop/uncontained-local-dev[quay.io]. Information on the usage of the image for local dev can be found in our link:/CONTRIBUTING.adoc[contribution guide].
+
+If you are working on improvements to the image however, you can build it locally with:
+
+[source,bash]
+----
+cd uncontained.io/
+docker build -f container-images/local-dev/Dockerfile -t uncontained-local-dev .
+----

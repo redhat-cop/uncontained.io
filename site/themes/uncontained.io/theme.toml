@@ -1,6 +1,6 @@
 name = "uncontained.io Theme"
 license = "MIT"
-licenselink = "https://github.com/redhat-cop/uncontained.io/blob/master/themes/uncontained.io/LICENSE.md"
+licenselink = "https://github.com/redhat-cop/uncontained.io/blob/master/themes/uncontained.io/LICENSE.adoc"
 description = "Hugo Theme for uncontained.io. Based on Blank theme by Vimux."
 homepage = "http://uncontained.io/"
 features = ["blog"]

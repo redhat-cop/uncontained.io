@@ -6,6 +6,10 @@ metadata:
     template-type: build
 objects:
 - apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: ${APP_NAME}
+- apiVersion: v1
   kind: BuildConfig
   metadata:
     creationTimestamp: null
@@ -44,119 +48,30 @@ objects:
   metadata:
     name: ${APP_NAME}-pipeline
   spec:
+    source:
+      git:
+        uri: ${APPLICATION_SOURCE_REPO}
+        ref: ${APPLICATION_SOURCE_REF}
     strategy:
       jenkinsPipelineStrategy:
-        jenkinsfile: |-
-          library identifier: "pipeline-library@master", retriever: modernSCM(
-          [$class: "GitSCMSource",
-          remote: "https://github.com/redhat-cop/pipeline-library.git"])
-
-          production_namespace="field-guides-prod"
-
-          openshift.withCluster() {
-            env.NAMESPACE = openshift.project()
-            env.APP_NAME = "${env.JOB_NAME}".replaceAll(/-?pipeline-?/, '').replaceAll(/-?${env.NAMESPACE}-?\/?/, '')
-
-            env.localToken = readFile('/var/run/secrets/kubernetes.io/serviceaccount/token').trim()
-
-            def secretData = openshift.selector('secret/other-cluster-credentials').object().data
-            def encodedRegistry = secretData.registry
-            def encodedToken = secretData.token
-            def encodedAPI = secretData.api
-            env.registry = sh(script:"set +x; echo ${encodedRegistry} | base64 --decode", returnStdout: true)
-            env.token = sh(script:"set +x; echo ${encodedToken} | base64 --decode", returnStdout: true)
-            env.api = sh(script:"set +x; echo ${encodedAPI} | base64 --decode", returnStdout: true)
-          }
-
-          pipeline {
-            agent {
-              label 'hugo-builder'
-            }
-
-            stages {
-              stage ('Fetch Source Code') {
-                steps {
-                  git url: "https://github.com/redhat-cop/uncontained.io"
-                }
-              }
-
-              stage ('Build Site from Source') {
-                steps {
-                  container('builder') {
-                    sh 'npm install'
-                    sh 'npm run build'
-                  }
-                }
-              }
-
-              stage ('Build Container Image') {
-                steps {
-                  script {
-                    openshift.withCluster() {
-                      openshift.withProject() {
-                        openshift.selector("bc", "${APP_NAME}").startBuild("--from-dir=dist").logs("-f")
-                      }
-                    }
-                  }
-                }
-              }
-
-              stage ('Verify Deployment to Dev') {
-                steps {
-                  script {
-                    openshift.withCluster() {
-                      def dcObj = openshift.selector('dc', APP_NAME).object()
-                      def podSelector = openshift.selector('pod', [deployment: "${APP_NAME}-${dcObj.status.latestVersion}"])
-                      podSelector.untilEach {
-                          echo "pod: ${it.name()}"
-                          return it.object().status.containerStatuses[0].ready
-                      }
-                    }
-                  }
-                }
-              }
-
-              stage('Promote to Prod') {
-                agent {
-                  kubernetes {
-                    label 'promotion-slave'
-                    cloud 'openshift'
-                    serviceAccount 'jenkins'
-                    containerTemplate {
-                      name 'jnlp'
-                      image "docker-registry.default.svc:5000/${NAMESPACE}/jenkins-slave-image-mgmt"
-                      alwaysPullImage true
-                      workingDir '/tmp'
-                      args '${computer.jnlpmac} ${computer.name}'
-                      ttyEnabled false
-                    }
-                  }
-                }
-                steps {
-                  script {
-                    openshift.withCluster() {
-
-                      openshift.withProject() {
-                        def imageRegistry = openshift.selector( 'is', "${APP_NAME}").object().status.dockerImageRepository
-                        echo "Promoting ${imageRegistry} -> ${registry}/${production_namespace}/${APP_NAME}"
-                        sh """
-                        set +x
-                        skopeo copy --remove-signatures \
-                          --src-creds openshift:${localToken} --src-cert-dir=/run/secrets/kubernetes.io/serviceaccount/ \
-                          --dest-creds openshift:${token}  --dest-tls-verify=false \
-                          docker://${imageRegistry} docker://${registry}/${production_namespace}/${APP_NAME}
-                        """
-                      }
-
-                    }
-                  }
-
-                }
-              }
-
-            }
-          }
-
+        jenkinsfilePath: Jenkinsfile
+        env:
+          - name: APP_NAME
+            value: ${APP_NAME}
+          - name: APPLICATION_SOURCE_REPO
+            value: ${APPLICATION_SOURCE_REPO}
+          - name: APPLICATION_SOURCE_REF
+            value: ${APPLICATION_SOURCE_REF}
+          - name: CI_CD_NAMESPACE
+            value: ${CI_CD_NAMESPACE}
+          - name: DEV_NAMESPACE
+            value: ${DEV_NAMESPACE}
+          - name: TEST_NAMESPACE
+            value: ${TEST_NAMESPACE}
+          - name: STAGE_NAMESPACE
+            value: ${STAGE_NAMESPACE}
+          - name: PROD_NAMESPACE
+            value: ${PROD_NAMESPACE}
     triggers:
       - type: ConfigChange
       - type: GitHub
@@ -167,3 +82,12 @@ parameters:
 - name: OUTPUT_IMAGE
 - name: OUTPUT_IMAGE_TYPE
 - name: PUSH_SECRET
+- name: APPLICATION_SOURCE_REPO
+  value: https://github.com/redhat-cop/uncontained.io
+- name: APPLICATION_SOURCE_REF
+  value: master
+- name: CI_CD_NAMESPACE
+- name: DEV_NAMESPACE
+- name: TEST_NAMESPACE
+- name: STAGE_NAMESPACE
+- name: PROD_NAMESPACE
