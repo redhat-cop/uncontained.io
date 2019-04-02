@@ -1,5 +1,5 @@
 ---
-title: "Openshift and the Organization"
+title: "OpenShift and the Organization"
 date: 2018-10-17T21:17:17-04:00
 authors: [trevorquinn, dstockdreher, etsauer]
 categories:
