@@ -159,7 +159,7 @@ This will be the hostname that external users and/or tools will use to login to 
 
 *Ansible Inventory Variable:* `openshift_master_cluster_hostname=console-int.c1-ocp.myorg.com`
 
-This will be the hostname that users and/or tools interacting with the platform will use to login to the OpenShift API and Web Console.
+This will be the hostname that internal components within the cluster will use to talk back to the master.
 
 ==== Wildcard DNS entry for Infrastructure(Router) nodes
 
