@@ -501,7 +501,7 @@ openshift-appnode-2.c1-ocp.myorg.com openshift_node_group_name="node-config-comp
 
 ===== Configuring Labels For Application Nodes
 
-The `osm_default_node_selector` Ansible setting determines the label that projects will use by default when placing pods on Application nodes. It is set to `region=primary` by default:
+The `osm_default_node_selector` Ansible setting determines the label that projects will use by default when placing pods on Application nodes. It is set to `node-role.kubernetes.io/compute=true` by default:
 
 ----
 ...
@@ -512,7 +512,7 @@ The `osm_default_node_selector` Ansible setting determines the label that projec
 
 ===== Configuring Labels For Dedicated Infrastructure Nodes
 
-The `openshift_hosted_router_selector` and `openshift_hosted_registry_selector` Ansible settings determine the label selectors used when placing registry and router pods. They are set to `region=infra` by default:
+The `openshift_hosted_router_selector` and `openshift_hosted_registry_selector` Ansible settings determine the label selectors used when placing registry and router pods. They are set to `node-role.kubernetes.io/infra=true` by default:
 
 ----
 ...
