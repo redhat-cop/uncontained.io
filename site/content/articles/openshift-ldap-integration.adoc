@@ -1,6 +1,6 @@
 ---
 date: "2018-02-24T01:28:04-05:00"
-title: "Openshift LDAP Integration"
+title: "OpenShift LDAP Integration"
 authors: ["sabre1041", "jaredburck"]
 categories:
   - 'Add On'
