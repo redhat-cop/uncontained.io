@@ -1,0 +1,53 @@
+---
+title: "DevOps Reading List"
+date: 2019-04-30T15:47:00-05:00
+authors: [etsauer, trevorquinn]
+categories:
+  - 'Implementation Guide'
+tags:
+  - openshift
+  - devops
+  - culture
+draft: false
+featured: true
+---
+= The DevOps Reading List
+:toc: macro
+:toc-title:
+
+include::site/layouts/variables.adoc[]
+toc::[]
+
+PaaS and container technologies are often very closely tied with DevOps. In fact, we often confuse the adoption of "next-gen" technology stacks like OpenShift with "DevOps adoption". While it's true that certain automation and cloud technologies fit very nicely into a DevOps frame of mind, it's important to understand that employing DevOps means much more than just having the right technology, or writing automation scripts. DevOps is at its core a philosophy and a mindset that revolves around taking _lean manufacturing_ principles and applying them to an IT organization. DevOps is first and foremost about providing value to your Business through technology, but technology alone can't get you there.
+
+To that end, we have compiled a reading list to get you familiar with this philosophy and the principles of DevOps. Check back often for more resources or additional articles we will write in the future.
+
+== For the Novice
+
+We recommend starting here. The following references help to answer the question, "What is DevOps?" and provide a base of knowledge on which to build.
+
+* link:https://medium.com/@brunodelb/the-cams-model-to-better-understand-the-devops-movement-ffe6713c3fd7[The CAMS Model of DevOps] (Definition)
+* link:http://itrevolution.com/book/the-phoenix-project/[The Phoenix Project] (Book)
+* link:http://itrevolution.com/devops-handbook[The DevOps Handbook] (Book)
+* link:http://itrevolution.com/the-convergence-of-devops/[The Convergence of DevOps] (Article)
+* link:http://itrevolution.com/the-three-ways-principles-underpinning-devops/[The Three Ways: The Principles Underpinning DevOps] (Article)
+
+== Intermediate Level
+
+OK, so now you have some base understand about what DevOps is. This section is intended to expand upon that knowledge and really start to answer the question, "How can I start adopting DevOps in my Organization?"
+
+* link:https://itrevolution.com/book/accelerate/[Accelerate: The Science of Lean Software and DevOps: Building and Scaling High Performing Technology Organizations] (Book)
+* link:https://itrevolution.com/book/project-to-product/[Project to Product: How to Survive and Thrive in the Age of Digital Disruption with the Flow Framework] (Book)
+* link:http://blog.crisp.se/2016/01/25/henrikkniberg/making-sense-of-mvp[Making Sense of MVP] (Article)
+* link:http://itrevolution.com/learn-more-about-concepts-in-phoenix-project/[Phoenix Project Reference Guide part 1] and link:http://itrevolution.com/resource-guide-for-the-phoenix-project-kanbans-part-2/[Part 2] (Articles)
+* link:http://theleanstartup.com/book[The Lean Startup] (Book)
+* link:http://personalkanban.com/pk/book/[Personal Kanban] (Book)
+* link:https://web.archive.org/web/20080312054037/http://www.sae.org/manufacturing/lean/column/leanjun01.htm[Lean Manufacturing and the Toyota Production System] (Article)
+
+== Deep Dives & Further Learning
+
+These books expand on some of the knowledge above and go deeper into particular aspects of DevOps.
+
+* link:https://www.amazon.com/dp/1449368425/ref=cm_sw_su_dp[Lean Enterprise] (Book)
+* link:http://www.amazon.com/Continuous-Delivery-Deployment-Automation-Addison-Wesley/dp/0321601912[Continuous Delivery] (Book)
+* link:http://www.amazon.com/The-Principles-Product-Development-Flow/dp/1935401009[Principles of Product Development Flow] (Book)

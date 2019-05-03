@@ -92,6 +92,13 @@ docker run -u $(id -u) \
   --net=host quay.io/redhat-cop/uncontained-local-dev
 ----
 
+Docker Desktop for Mac:
+----
+docker run -u $(id -u) \
+  -v ${PWD}:/uncontained.io:Z -it \
+  -p 3000:3000 quay.io/redhat-cop/uncontained-local-dev
+----
+
 The container also accepts extra arguments which it feeds to `npm`. For example, if you’d like to also include _draft_ content like
 `hugo server --buildDrafts --buildFuture`, we've created a script entry in our package.json for that:
 
@@ -99,6 +106,14 @@ The container also accepts extra arguments which it feeds to `npm`. For example,
 docker run -u $(id -u) \
   -v ${PWD}:/uncontained.io:Z -it \
   --net=host quay.io/redhat-cop/uncontained-local-dev \
+  run start-preview
+----
+
+Docker Desktop for Mac:
+----
+docker run -u $(id -u) \
+  -v ${PWD}:/uncontained.io:Z -it \
+  -p 3000:3000 quay.io/redhat-cop/uncontained-local-dev \
   run start-preview
 ----
 
@@ -118,6 +133,14 @@ docker run -u $(id -u) \
   run build
 ----
 
+Docker Desktop for Mac:
+----
+docker run -u $(id -u) \
+  -v ${PWD}:/uncontained.io:Z -it \
+  -p 3000:3000 quay.io/redhat-cop/uncontained-local-dev \
+  run build
+----
+
 === Running the Automated Tests
 
 In order to validate that changes you've made haven't led to any unforeseen issues, you can use
@@ -127,6 +150,14 @@ the container image to run our automated tests.
 docker run -u $(id -u) \
   -v ${PWD}:/uncontained.io:Z -it \
   --net=host quay.io/redhat-cop/uncontained-local-dev \
+  test
+----
+
+Docker Desktop for Mac:
+----
+docker run -u $(id -u) \
+  -v ${PWD}:/uncontained.io:Z -it \
+  -p 3000:3000 quay.io/redhat-cop/uncontained-local-dev \
   test
 ----
 
@@ -218,7 +249,7 @@ See our guide on link:./docs/new_articles.adoc[contributing new content].
 === Migrating Content from OpenShift-Playbooks
 
 This site is the evolution of the
-https://github.com/redhat-cop/openshift-playbooks[Openshift Playbooks]
+https://github.com/redhat-cop/openshift-playbooks[OpenShift Playbooks]
 site.
 
 Migrating content from there to here is fairly straightforward, but

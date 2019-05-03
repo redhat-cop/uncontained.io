@@ -51,7 +51,7 @@ The majority of the capabilities provided by the integration between OpenShift a
 * link:https://plugins.jenkins.io/openshift-pipeline[OpenShift Pipeline] - The ability to trigger actions in OpenShift, such as starting a build or deployment.
 * link:https://plugins.jenkins.io/openshift-sync[OpenShift Sync] - Synchronizing the state of Jenkins jobs and OpenShift objects (BuildConfigs) in order to facilitate integrated pipelines.
 
-IMPORTANT: As of version `0.9.2`, the Openshift Sync plugin *requires* version `1.6.1` of both the link:https://updates.jenkins-ci.org/download/plugins/blueocean-commons/[Blueocean-commons] and link:https://updates.jenkins-ci.org/download/plugins/blueocean-rest/[Blueocean-rest] plugins. Users may have to downgrade the versions of these plugins that come preinstalled with Jenkins. How to do so is beyond the scope of this article.
+IMPORTANT: As of version `0.9.2`, the OpenShift Sync plugin *requires* version `1.6.1` of both the link:https://updates.jenkins-ci.org/download/plugins/blueocean-commons/[Blueocean-commons] and link:https://updates.jenkins-ci.org/download/plugins/blueocean-rest/[Blueocean-rest] plugins. Users may have to downgrade the versions of these plugins that come preinstalled with Jenkins. How to do so is beyond the scope of this article.
 
 * link:https://plugins.jenkins.io/kubernetes[Kubernetes Plugin] - The ability to trigger actions in OpenShift, such as starting a build or deployment.
 * link:https://plugins.jenkins.io/openshift-client[OpenShift Client Plugin] - Jenkins Pipeline DSL for interacting with OpenShift.

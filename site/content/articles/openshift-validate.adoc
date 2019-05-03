@@ -146,4 +146,4 @@ If something during validation failed, check out out link:https://access.redhat.
 
 == Other Resources
 
-* link:https://access.redhat.com/solutions/2068843[How to verify my Openshift Environment is deployed successfully.]
+* link:https://access.redhat.com/solutions/2068843[How to verify my OpenShift Environment is deployed successfully.]

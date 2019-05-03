@@ -1,6 +1,6 @@
 ---
 date: "2017-08-29T00:48:13-04:00"
-title: "Openshift Monitoring Guide"
+title: "OpenShift Monitoring Guide"
 authors: [redhat-cop]
 categories:
   - 'Field Guide'

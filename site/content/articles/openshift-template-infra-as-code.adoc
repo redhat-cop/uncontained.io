@@ -846,7 +846,7 @@ The link:https://github.com/redhat-cop/cluster-lifecycle[cluster-lifecycle^] rep
 
 === Automation using templates & the OpenShift Applier framework
 
-In order to level up the idea that essentially anything you can do with `oc` can be done using a combination of `oc process | oc apply`, we developed the link:https://github.com/redhat-cop/openshift-applier[Openshift Applier^] framework.
+In order to level up the idea that essentially anything you can do with `oc` can be done using a combination of `oc process | oc apply`, we developed the link:https://github.com/redhat-cop/openshift-applier[OpenShift Applier^] framework.
 
 At its core, OpenShift Applier is an link:https://ansible.com[ansible role^] that creates an ansible inventory syntax for automating the rollout of a set of templates and parameter files. This greatly reduces the level of effort to build and maintain quality automation of OpenShift resources.
 
@@ -895,7 +895,7 @@ openshift_cluster_content:
 
 NOTE: The `inventory_dir` var is a global ansible variable that proves the absolute path (e.g. `/home/eric/src/repository_root/.openshift/inventory`) to the directory passed as inventory. We use this variable a lot to make inventories and related files more portable.
 
-Once this is all set up, we can run through the automation repeatably by running the applier role. The link:https://github.com/redhat-cop/openshift-applier[Openshift Applier^] repo provies a simple (4 line) playbook to do this.
+Once this is all set up, we can run through the automation repeatably by running the applier role. The link:https://github.com/redhat-cop/openshift-applier[OpenShift Applier^] repo provies a simple (4 line) playbook to do this.
 
 [source,bash]
 ----
@@ -910,4 +910,4 @@ We hope this guide providsed a good base for organizations to go use templates m
 
 - link:https://docs.openshift.com/container-platform/3.7/dev_guide/templates.html[OpenShift Templates Official Documentation^]
 - link:https://github.com/redhat-cop/container-pipelines/tree/master/basic-spring-boot#openshift-templates[Container Pipelines Quickstarts on GitHub^]
-- link:https://github.com/redhat-cop/openshift-applier[Openshift Applier GitHub^]
+- link:https://github.com/redhat-cop/openshift-applier[OpenShift Applier GitHub^]
