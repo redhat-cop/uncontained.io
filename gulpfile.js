@@ -106,11 +106,11 @@ gulp.task("search", (cb) => {
 });
 
 gulp.task("build", gulp.series(gulp.parallel("sass", "js", "fonts", "asciidoctor-check"), "hugo", "search"));
-gulp.task("build-preview", gulp.series(gulp.parallel("sass", "js", "fonts", "asciidoctor-check"), (cb) => buildSite(cb, hugoArgsPreview, "production")));
+gulp.task("build-preview", gulp.series(gulp.parallel("sass", "js", "fonts", "asciidoctor-check"), "hugo", "search"));
 
 // Run server tasks
 gulp.task("server", gulp.series(gulp.parallel("hugo", "sass", "js", "fonts", "asciidoctor-check"), "search", (cb) => runServer(cb)));
-gulp.task("server-preview", gulp.series(gulp.parallel("hugo-preview", "sass", "js", "fonts", "asciidoctor-check", "search"), (cb) => runServer(cb)));
+gulp.task("server-preview", gulp.series(gulp.parallel("hugo-preview", "sass", "js", "fonts", "asciidoctor-check"), "search", (cb) => runServer(cb)));
 
 // Run Automated Tests
 gulp.task("test", gulp.series((cb) => runTests(cb)));
