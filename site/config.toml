@@ -55,3 +55,7 @@ hrefTargetBlank = true
 lang = "en"
 languageName = "English"
 weight = 1
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+  page = ["HTML"]

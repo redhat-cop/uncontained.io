@@ -8,7 +8,11 @@ var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var linkChecker = require('./test/link-checker');
 var depcheck = require('depcheck');
+var toml = require("toml");
+var fs = require('fs');
+var lunr = require("lunr");
 
+var CONTENT_PATH_PREFIX = "site/content";
 const browserSync = BrowserSync.create();
 
 // Hugo arguments
@@ -73,13 +77,40 @@ gulp.task("asciidoctor-check", (cb) => {
   });
 });
 
-// Run server tasks
-gulp.task("server", gulp.series(gulp.parallel("hugo", "sass", "js", "fonts", "asciidoctor-check"), (cb) => runServer(cb)));
-gulp.task("server-preview", gulp.series(gulp.parallel("hugo-preview", "sass", "js", "fonts", "asciidoctor-check"), (cb) => runServer(cb)));
+gulp.task("search", (cb) => {
+  const documents = JSON.parse(fs.readFileSync("dist/index.json"));
 
-// Build/production tasks
-gulp.task("build", gulp.series(gulp.parallel("sass", "js", "fonts", "asciidoctor-check"), (cb) => buildSite(cb, [], "production")));
+  var store = {};
+
+  let lunrIndex = lunr(function() {
+    this.field("title", {
+      boost: 10
+    });
+    this.field("content");
+    this.ref("uri");
+
+    documents.forEach(function(doc) {
+      // console.log(doc);
+      this.add(doc);
+
+      //add info to store
+      store[doc.uri] = { title: doc.title, summary: doc.summary };
+    }, this);
+  });
+
+  fs.writeFileSync(
+    "dist/lunr-index.json",
+    JSON.stringify({ index: lunrIndex, store: store })
+  );
+  cb();
+});
+
+gulp.task("build", gulp.series(gulp.parallel("sass", "js", "fonts", "asciidoctor-check"), "hugo", "search"));
 gulp.task("build-preview", gulp.series(gulp.parallel("sass", "js", "fonts", "asciidoctor-check"), (cb) => buildSite(cb, hugoArgsPreview, "production")));
+
+// Run server tasks
+gulp.task("server", gulp.series(gulp.parallel("hugo", "sass", "js", "fonts", "asciidoctor-check"), "search", (cb) => runServer(cb)));
+gulp.task("server-preview", gulp.series(gulp.parallel("hugo-preview", "sass", "js", "fonts", "asciidoctor-check", "search"), (cb) => runServer(cb)));
 
 // Run Automated Tests
 gulp.task("test", gulp.series((cb) => runTests(cb)));

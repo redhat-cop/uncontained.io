@@ -11,6 +11,10 @@
 	{{ with .Site.Params.author }}<meta name="author" content="{{ . }}">{{ end }}
 	<link rel="stylesheet" href="{{ .Site.BaseURL }}dist/css/style.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github-gist.min.css">
+	<script
+	  src="https://code.jquery.com/jquery-3.4.1.min.js"
+	  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+	  crossorigin="anonymous"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 	{{ if .RSSLink -}}<link href="{{ .RSSLink }}" rel="feed" type="application/rss+xml" title="{{ .Site.Title }}">{{- end }}
 	{{ .Hugo.Generator }}
@@ -28,6 +32,8 @@
 		ga('send', 'pageview');
 	</script>
 	{{end}}
+	<script src="https://unpkg.com/lunr/lunr.js"></script>
+	<script src="{{ "/js/search.js" }}"></script>
 </head>
 <body>
 	<header class="header-main">
@@ -43,12 +49,10 @@
 						<li class="navbar-item"><a class="nav-link" href="{{ .URL | relURL }}">{{ .Name }}</a></li>
 						{{ end }}
 					</ul>
-					<!-- hide until we have implemented https://github.com/redhat-cop/uncontained.io/issues/25
-					<form action="/action_page.php" class="form-inline my-2 my-lg-0 search-container">
-						<input class="form-control" type="search" name="search">
+					<form action="#" class="form-inline my-2 my-lg-0 search-container">
+						<input class="form-control" type="search" name="search" id="search">
 						<button type="submit"><i class="icon icon-search"></i></button>
 					</form>
-					-->
 				</div>
 			</nav>
 		</div>
