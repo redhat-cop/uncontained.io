@@ -292,7 +292,7 @@ For a full deep dive into this topic, see the Official link:{docs_url}architectu
 
 At a high level, we can break down OpenShift's persistent storage support into two categories:
 
-- Block Storage: Volumes or disks that can be mounted to only one container at a time (known as `ReadWrtieOnce` mode). Examples of Block Storage are link:{docs_url}install_config/persistent_storage/persistent_storage_cinder.html[OpenStack Cinder], link:{docs_url}install_config/persistent_storage/persistent_storage_ceph_rbd.html[Ceph RBD], link:{docs_url}install_config/persistent_storage/persistent_storage_aws.html[Amazon Elastic Block Storage], link:{docs_url}install_config/persistent_storage/persistent_storage_iscsi.html[iSCSI], link:{docs_url}install_config/persistent_storage/persistent_storage_fibre_channel.html[Fibre Channel]. Most database technologies perfer block storage.
+- Block Storage: Volumes or disks that can be mounted to only one container at a time (known as `ReadWriteOnce` mode). Examples of Block Storage are link:{docs_url}install_config/persistent_storage/persistent_storage_cinder.html[OpenStack Cinder], link:{docs_url}install_config/persistent_storage/persistent_storage_ceph_rbd.html[Ceph RBD], link:{docs_url}install_config/persistent_storage/persistent_storage_aws.html[Amazon Elastic Block Storage], link:{docs_url}install_config/persistent_storage/persistent_storage_iscsi.html[iSCSI], link:{docs_url}install_config/persistent_storage/persistent_storage_fibre_channel.html[Fibre Channel]. Most database technologies perfer block storage.
 - Shared File Systems: Volumes that can be mounted for reading an writing by many containers at once (known as `ReadWriteMany` mode)/ At this writing the only two available Shared File Systems supported are link:{docs_url}install_config/persistent_storage/persistent_storage_nfs.html[NFS] and link:{docs_url}install_config/persistent_storage/persistent_storage_glusterfs.html[GlusterFS]. Many legacy application runtimes prefer this type of storage for sharing data on disk.
 
 By default nfs will require an override within your ansible hosts file if you choose to use it for the registry:  `openshift_enable_unsupported_configurations=true`
@@ -325,7 +325,7 @@ This is all we need for persistent storage for now. We'll revisit this topic whe
 
 === Design for Disconnected Environments
 
-Much of the out of the box configuration for OpenShift assumes that your clusters will have full uninhibited access to the internet. Many organizations either do not allow connectivity out of their own private network, or allow access out only through a web proxy. Removing external dependencies has additional benefits beyond connectibity issues such as better management of content releases and more control over environment availability. Because of all of this, we propose a design that does not require internet connectivity, which we recommend even for an org that may have it.
+Much of the out of the box configuration for OpenShift assumes that your clusters will have full uninhibited access to the internet. Many organizations either do not allow connectivity out of their own private network, or allow access out only through a web proxy. Removing external dependencies has additional benefits beyond connectibility issues such as better management of content releases and more control over environment availability. Because of all of this, we propose a design that does not require internet connectivity, which we recommend even for an org that may have it.
 
 The following sub sections outline the various types of content to consider when preparing for a disconnected install, and discuss how we plan to address that type of content.
 
@@ -485,7 +485,7 @@ ssh will require you to accept the new ssh key for the first time into the `~/.s
 ==== Cloud-Specific Provisioning Guides
 
 * Provisioning infrastructure on OpenStack using the openstack CLI (Coming Soon)
-* Provigioning infrastructure on Amazon EC2 using the awscli (Coming Soon)
+* Provisioning infrastructure on Amazon EC2 using the awscli (Coming Soon)
 
 ==== Configuring Node Host Labels
 
@@ -920,7 +920,7 @@ ansible -i c1-ocp.myorg.com/hosts nodes:!etcd  -m shell -a 'mount -a'
 ----
 
 === System Resource Reservations
-OpenShift has tunable parameters to futher enhance and protect the cluster/nodes.  These parameters should be added to your ansible hosts file.
+OpenShift has tunable parameters to further enhance and protect the cluster/nodes.  These parameters should be added to your ansible hosts file.
 
 NOTE: OpenShift will use all the resources supplied to it from the node for the pods unless otherwise defined.
 
