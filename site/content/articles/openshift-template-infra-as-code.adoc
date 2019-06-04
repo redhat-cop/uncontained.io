@@ -12,6 +12,7 @@ featured: true
 = OpenShift Templates Development Guide
 :toc: macro
 :toc-title:
+include::site/layouts/variables.adoc[]
 
 The DevOps movement has shown us the potential organizational impact of adopting practices like _Everything as Code_, treating infrastructure and application configurations as source code that gets continuously applied to environments via automation. This article discusses a way to adopt this model using OpenShift Templates.
 
@@ -20,7 +21,7 @@ toc::[]
 
 == Overview
 
-link:https://docs.openshift.com/container-platform/3.7/dev_guide/templates.html[OpenShift Templates^] are best known as the way in which the OpenShift Web Console is populated with quickstart applications and other content. However, they are also a very powerful tool that, used thoughtfully, can be the building block of an _Everything as Code_ solution for managing many aspects of cluster and application state.
+link:{docs_url}dev_guide/templates.html[OpenShift Templates^] are best known as the way in which the OpenShift Web Console is populated with quickstart applications and other content. However, they are also a very powerful tool that, used thoughtfully, can be the building block of an _Everything as Code_ solution for managing many aspects of cluster and application state.
 
 In this guide, we dive deep into the usage and makeup of OpenShift templates, covering first how they can be used, then how to write them, and finally, how to put all of this knowledge together to create powerful automation workflows for managing workloads in OpenShift.
 
@@ -30,7 +31,7 @@ We're going to start by doing an interactive exploration into OpenShift template
 
 === Kickin' it off with some oc new-app
 
-In order to get kicked off in template exploration, let's start by spinning up a sample Java application. We'll do this using OpenShift's link:https://docs.openshift.com/container-platform/latest/cli_reference/index.html[Command Line Tool^]. Specifically, the `oc new-app` command provides a simple interface for creating new applications using some combination of source code, templates, and container images.
+In order to get kicked off in template exploration, let's start by spinning up a sample Java application. We'll do this using OpenShift's link:{docs_url}cli_reference/index.html[Command Line Tool^]. Specifically, the `oc new-app` command provides a simple interface for creating new applications using some combination of source code, templates, and container images.
 
 [source,bash]
 ----
@@ -908,6 +909,6 @@ We hope this guide providsed a good base for organizations to go use templates m
 
 == Resources
 
-- link:https://docs.openshift.com/container-platform/3.7/dev_guide/templates.html[OpenShift Templates Official Documentation^]
+- link:{docs_url}dev_guide/templates.html[OpenShift Templates Official Documentation^]
 - link:https://github.com/redhat-cop/container-pipelines/tree/master/basic-spring-boot#openshift-templates[Container Pipelines Quickstarts on GitHub^]
 - link:https://github.com/redhat-cop/openshift-applier[OpenShift Applier GitHub^]
