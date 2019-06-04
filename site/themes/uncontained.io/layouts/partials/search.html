@@ -1,0 +1,23 @@
+{{ $search := false }}
+{{ if eq $.LinkTitle "Search" }}
+  {{ $search = true }}
+{{ end }}
+<div class="search-container">
+  {{ if $search }}
+    <img  alt="Search" src="/images/icons/blue/rgb_Search_Blue.png" width="75" class="mx-auto d-block"/>
+  {{ end }}
+  <div class="form-inline my-2 my-lg-0">
+    <form autocomplete="off" action="/search">
+      <input class="form-control" type="search" name="search" id="search">
+      <button type="submit"><i class="icon icon-search"></i></button>
+    </form>
+  </div>
+  <div class="results {{ if $search }}full{{ end }}" id="results">
+    {{ if not $search }}
+      <div class="label">Quick Results</div>
+      <div class="details">hit Enter for details</div>
+    {{ end }}
+    <ul>
+    </ul>
+  </div>
+</div>

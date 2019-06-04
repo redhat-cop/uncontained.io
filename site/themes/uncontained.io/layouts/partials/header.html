@@ -49,10 +49,10 @@
 						<li class="navbar-item"><a class="nav-link" href="{{ .URL | relURL }}">{{ .Name }}</a></li>
 						{{ end }}
 					</ul>
-					<form action="#" class="form-inline my-2 my-lg-0 search-container">
-						<input class="form-control" type="search" name="search" id="search">
-						<button type="submit"><i class="icon icon-search"></i></button>
-					</form>
+					{{ if ne .LinkTitle "Search" -}}
+						{{ partial "search.html" . }}
+					{{- end }}
+
 				</div>
 			</nav>
 		</div>

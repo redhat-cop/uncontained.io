@@ -1,5 +1,26 @@
+
 .header-main {
   background-color: theme-color("dark-blue");
+  .search-container {
+    input[type=search] {
+      background: theme-color("medium-blue");
+      color: $white;
+    }
+    button {
+      background: theme-color("medium-blue");
+    }
+  }
+  #results {
+    position: absolute;
+    width: 20em;
+    visibility: hidden;
+    background-color: white;
+    box-shadow: 2px 2px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 .logotype {
@@ -16,39 +37,6 @@
 @include media-breakpoint-up(sm) {
   .logotype {
     @include fontSize(25px);
-  }
-}
-
-.search-container {
-  margin: auto 0;
-  input[type=search] {
-    padding: 6px;
-    font-size: 17px;
-    border: none;
-    background: theme-color("medium-blue");
-    color: $white;
-  }
-  button {
-    float: right;
-    height: 37px;
-    width: 37px;
-    background: theme-color("medium-blue");
-    border: none;
-    cursor: pointer;
-    .icon-search {
-      width: 25px;
-      height: 25px;
-      &:before {
-        background-image: url('/images/icons/white/rgb_Search_White.png');
-        background-size: 38px auto;
-        background-repeat: no-repeat;
-        display: inline-block;
-        width: 37px;
-        height: 37px;
-        margin: -.1em 0 0 -.5em;
-        content:"";
-      }
-    }
   }
 }
 
