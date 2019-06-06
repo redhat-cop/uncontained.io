@@ -1,16 +1,26 @@
 {{ partial "header.html" . }}
 	<main class="container">
-		<div class="row block">
-			<article>
-				<h1>{{ .Title }}</h1>
-				<div class="meta">
-					{{ partial "date.html" . }}
-					{{ partial "author.html" . }}
-				</div>
-				<div>
-					{{ .Content }}
-				</div>
-			</article>
+		<div class="row">
+			<div class="col-8">
+				<article>
+					<h1>{{ .Title }}</h1>
+					<div class="meta">
+						{{ partial "date.html" . }}
+						{{ partial "author.html" . }}
+					</div>
+					<div>
+						{{ .Content }}
+					</div>
+				</article>
+			</div>
+			<div class="fixed-right col">
+				<aside id="toc_parent">
+					<h3>In This Article</h3>
+					{{ .TableOfContents }}
+				</aside>
+			</div>
+		</div>
+		<div class="row">
 			{{ partial "taxonomy.html" . }}
 			<div>
 				{{ template "_internal/disqus.html" . }}

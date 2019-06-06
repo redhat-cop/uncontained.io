@@ -1,8 +1,12 @@
+article, aside {
+  padding-top: .5em;
+}
+
 article {
   h1 {
     border-bottom: theme-color("medium-gray") 1px solid;
     margin: 0;
-    padding: .5em;
+    padding: 0 .5em .5em .5em;
   }
 
   &>div {
@@ -180,4 +184,11 @@ article {
       background: theme-color("lighter-gray");
     }
   }
+}
+
+.fixed-right {
+  align-self: flex-start;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
 }
