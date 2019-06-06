@@ -1,194 +1,205 @@
-article, aside {
-  padding-top: .5em;
-}
-
-article {
-  h1 {
-    border-bottom: theme-color("medium-gray") 1px solid;
-    margin: 0;
-    padding: 0 .5em .5em .5em;
+main {
+  article, aside {
+    padding-top: .5em;
   }
 
-  &>div {
-    padding: 0 1.5em;
-  }
-  .meta {
-    padding: 1.5em;
-    color: theme-color("coral");
-    a {
+  article {
+    h1 {
+      border-bottom: theme-color("medium-gray") 1px solid;
+      margin: 0;
+      padding: 0 .5em .5em .5em;
+    }
+
+    &>div {
+      padding: 0 1.5em;
+    }
+    .meta {
+      padding: 1.5em;
       color: theme-color("coral");
-    }
-    time.calendar, .byline a {
-      margin: 0 3em 0 0;
-      &:before {
-        background-color: theme-color("coral");
-        background-image: url('/images/icons/white/rgb_Calendar_White.png');
-        background-size: 1.7em auto;
-        background-repeat: no-repeat;
-        background-position: center;
-        border-radius: 50%;
-        display: inline-block;
-        width: 1.8em;
-        height: 1.8em;
-        margin: 0 .5em -.5em 0;
-        content:"";
-      }
-    }
-
-    .byline {
       a {
-        font-size: 18px;
-        margin: 0 1em 0 0;
+        color: theme-color("coral");
+      }
+      time.calendar, .byline a {
+        margin: 0 3em 0 0;
         &:before {
-          background-image: url('/images/icons/white/rgb_Author_White.png');
+          background-color: theme-color("coral");
+          background-image: url('/images/icons/white/rgb_Calendar_White.png');
+          background-size: 1.7em auto;
+          background-repeat: no-repeat;
+          background-position: center;
+          border-radius: 50%;
+          display: inline-block;
+          width: 1.8em;
+          height: 1.8em;
+          margin: 0 .5em -.5em 0;
+          content:"";
         }
       }
-      a.group {
-        &:before {
-          background-image: url('/images/icons/white/rgb_Groupauthorship_White.png');
-          margin: 0em .5em -.3em .5em;
-        }
-      }
-    }
-  }
 
-  /* Styling for admonitions */
-  .admonitionblock {
-    background-color: theme-color("dark-blue");
-    box-shadow: 1px 1px 10px;
-    padding: 1em 0;
-    margin: .3em 0 2em -1.8em;
-    a {
-      color: theme-color("light-blue");
+      .byline {
+        a {
+          font-size: 18px;
+          margin: 0 1em 0 0;
+          &:before {
+            background-image: url('/images/icons/white/rgb_Author_White.png');
+          }
+        }
+        a.group {
+          &:before {
+            background-image: url('/images/icons/white/rgb_Groupauthorship_White.png');
+            margin: 0em .5em -.3em .5em;
+          }
+        }
+      }
     }
-    table {
-      border-collapse: separate;
-      border: 0;
-      background: none;
-      color: #fff;
-      font-size: 1.1em;
-      table-layout: fixed;
-      width: 100%;
-      td {
-        color: theme-color("white");
-        &.icon {
-          font-size: 2em;
-          text-align: center;
-          width: 2.5em;
-          .title {
-            line-height: 0;
-            text-indent: -9999px;
-            visibility: hidden;
-          }
-          .title:before {
-            background-size: 1.5em auto;
-            background-repeat: no-repeat;
-            content: "";
-            display: block;
-            height: 1.5em;
-            margin: 0 .5em 0 .5em;
-            width: 1.5em;
-            visibility: visible;
-          }
-        }
-        &.content {
-          padding: 0 1.5em 0 0;
-        }
-        code {
+
+    /* Styling for admonitions */
+    .admonitionblock {
+      background-color: theme-color("dark-blue");
+      box-shadow: 1px 1px 10px;
+      padding: 1em 0;
+      margin: .3em 0 2em -1.8em;
+      a {
+        color: theme-color("light-blue");
+      }
+      table {
+        border-collapse: separate;
+        border: 0;
+        background: none;
+        color: #fff;
+        font-size: 1.1em;
+        table-layout: fixed;
+        width: 100%;
+        td {
           color: theme-color("white");
+          &.icon {
+            font-size: 2em;
+            text-align: center;
+            width: 2.5em;
+            .title {
+              line-height: 0;
+              text-indent: -9999px;
+              visibility: hidden;
+            }
+            .title:before {
+              background-size: 1.5em auto;
+              background-repeat: no-repeat;
+              content: "";
+              display: block;
+              height: 1.5em;
+              margin: 0 .5em 0 .5em;
+              width: 1.5em;
+              visibility: visible;
+            }
+          }
+          &.content {
+            padding: 0 1.5em 0 0;
+          }
+          code {
+            color: theme-color("white");
+          }
         }
       }
     }
-  }
 
-  blockquote {
-    background: #f9f9f9;
-    border-left: 10px solid #ccc;
-    margin: 1.5em 10px;
-    padding: 0.5em 10px;
-    quotes: "\201C""\201D""\2018""\2019";
-    &:before {
-      color: #ccc;
-      content: open-quote;
-      font-size: 4em;
-      line-height: 0.1em;
-      margin-right: 0.25em;
-      vertical-align: -0.4em;
-    }
-    p {
-      display: inline;
-    }
-  }
-
-  .note table td.icon .title:before {
-      background-image: url('/images/icons/white/rgb_Note_White.png');
-  }
-
-  .tip table td.icon .title:before {
-      background-image: url('/images/icons/white/rgb_ProTip_White.png');
-  }
-
-  .warning table td.icon .title:before {
-      background-image: url('/images/icons/white/rgb_WatchOut_White.png');
-  }
-
-  .important table td.icon .title:before {
-      background-image: url('/images/icons/white/rgb_Info_White.png');
-  }
-
-  /* Styling for code blocks*/
-  // inline code only
-  p>code, .admonitionblock code {
-    display: inline-block;
-    padding: .25em .5em;
-  }
-
-  // code blocks only
-  pre {
-    border-left: theme-color("coral") 3px solid;
-    display: block;
-    margin: 1em 1em 2em 1em;
-    padding: .75em 1.5em;
-  }
-
-  table {
-    th, td {
-      padding: .5em;
+    blockquote {
+      background: #f9f9f9;
+      border-left: 10px solid #ccc;
+      margin: 1.5em 10px;
+      padding: 0.5em 10px;
+      quotes: "\201C""\201D""\2018""\2019";
+      &:before {
+        color: #ccc;
+        content: open-quote;
+        font-size: 4em;
+        line-height: 0.1em;
+        margin-right: 0.25em;
+        vertical-align: -0.4em;
+      }
       p {
-        margin: 0;
+        display: inline;
       }
     }
-    th {
-      color: theme-color("black");
-      font-weight: bold;
-    }
-    td {
-      color: theme-color("dark-gray");
-    }
-    .valign-top {
-      vertical-align: top;
-    }
-    caption {
-      caption-side: top;
-      font-weight: bold;
-      padding-bottom: .25rem;
-      padding-top: .5rem;
-      font-style: italic;
-    }
-  }
-  table.frame-all {
-    th, td {
-      border: theme-color("light-gray") 1px solid;
-    }
-    tr:nth-child(even), th {
-      background: theme-color("lighter-gray");
-    }
-  }
-}
 
-.fixed-right {
-  align-self: flex-start;
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
+    .note table td.icon .title:before {
+        background-image: url('/images/icons/white/rgb_Note_White.png');
+    }
+
+    .tip table td.icon .title:before {
+        background-image: url('/images/icons/white/rgb_ProTip_White.png');
+    }
+
+    .warning table td.icon .title:before {
+        background-image: url('/images/icons/white/rgb_WatchOut_White.png');
+    }
+
+    .important table td.icon .title:before {
+        background-image: url('/images/icons/white/rgb_Info_White.png');
+    }
+
+    /* Styling for code blocks*/
+    // inline code only
+    p>code, .admonitionblock code {
+      display: inline-block;
+      padding: .25em .5em;
+    }
+
+    // code blocks only
+    pre {
+      border-left: theme-color("coral") 3px solid;
+      display: block;
+      margin: 1em 1em 2em 1em;
+      padding: .75em 1.5em;
+    }
+
+    table {
+      th, td {
+        padding: .5em;
+        p {
+          margin: 0;
+        }
+      }
+      th {
+        color: theme-color("black");
+        font-weight: bold;
+      }
+      td {
+        color: theme-color("dark-gray");
+      }
+      .valign-top {
+        vertical-align: top;
+      }
+      caption {
+        caption-side: top;
+        font-weight: bold;
+        padding-bottom: .25rem;
+        padding-top: .5rem;
+        font-style: italic;
+      }
+    }
+    table.frame-all {
+      th, td {
+        border: theme-color("light-gray") 1px solid;
+      }
+      tr:nth-child(even), th {
+        background: theme-color("lighter-gray");
+      }
+    }
+  }
+
+  .fixed-right {
+    align-self: flex-start;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+  }
+
+  aside .nav, aside .nav ul {
+    padding-inline-start: 40px;
+    list-style: outside;
+    a.active {
+      font-weight: bold;
+      color: theme-color("medium-blue");
+    }
+  }
 }

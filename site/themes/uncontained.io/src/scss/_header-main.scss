@@ -37,11 +37,64 @@
 @include media-breakpoint-up(sm) {
   .logotype {
     @include fontSize(25px);
+    font-weight: 700;
+    color: $white;
+    &:hover, &:focus {
+      color: $black;
+      @include fontSize(25px);
+      text-decoration: none;
+    }
   }
-}
 
+<<<<<<< HEAD
 .nav-link, .nav-link:hover, .nav-link:active {
   color: theme-color("white");
   font-size: 1.2em;
   padding-left: 1em;
+=======
+  @include media-breakpoint-up(sm) {
+    .logotype {
+      @include fontSize(25px);
+    }
+  }
+
+  .search-container {
+    margin: auto 0;
+    input[type=search] {
+      padding: 6px;
+      font-size: 17px;
+      border: none;
+      background: theme-color("medium-blue");
+      color: $white;
+    }
+    button {
+      float: right;
+      height: 37px;
+      width: 37px;
+      background: theme-color("medium-blue");
+      border: none;
+      cursor: pointer;
+      .icon-search {
+        width: 25px;
+        height: 25px;
+        &:before {
+          background-image: url('/images/icons/white/rgb_Search_White.png');
+          background-size: 38px auto;
+          background-repeat: no-repeat;
+          display: inline-block;
+          width: 37px;
+          height: 37px;
+          margin: -.1em 0 0 -.5em;
+          content:"";
+        }
+      }
+    }
+  }
+
+  .nav-link, .nav-link:hover, .nav-link:active {
+    color: theme-color("white");
+    font-size: 1.2em;
+    padding-left: 1em;
+  }
+>>>>>>> Added scrollspy
 }
