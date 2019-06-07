@@ -2,5 +2,5 @@ services:
   - docker
 
 script:
-  - docker run -u $(id -u) -v ${PWD}:/uncontained.io:Z -it --net=host quay.io/redhat-cop/uncontained-local-dev run build
-  - docker run -u $(id -u) -v ${PWD}:/uncontained.io:Z -it --net=host quay.io/redhat-cop/uncontained-local-dev test
+  - docker run -u $(id -u) -v ${PWD}:/uncontained.io:Z -it quay.io/redhat-cop/uncontained-local-dev run build
+  - docker run -u $(id -u) -v ${PWD}:/uncontained.io:Z -it quay.io/redhat-cop/uncontained-local-dev test
