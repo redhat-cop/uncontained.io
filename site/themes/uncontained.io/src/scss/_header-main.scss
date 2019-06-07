@@ -1,6 +1,23 @@
 
 .header-main {
   background-color: theme-color("dark-blue");
+  .logotype {
+    @include fontSize(25px);
+    font-weight: 700;
+    color: $white;
+    &:hover, &:focus {
+      color: $black;
+      @include fontSize(25px);
+      text-decoration: none;
+    }
+  }
+
+  @include media-breakpoint-up(sm) {
+    .logotype {
+      @include fontSize(25px);
+    }
+  }
+
   .search-container {
     input[type=search] {
       background: theme-color("medium-blue");
@@ -10,38 +27,23 @@
       background: theme-color("medium-blue");
     }
   }
+
   #results {
     position: absolute;
     width: 20em;
     visibility: hidden;
     background-color: white;
-    box-shadow: 2px 2px;
+    box-shadow: 2px 2px 5px theme-color("gray");
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: center;
+    z-index: 10;
   }
-}
 
-.logotype {
-  @include fontSize(25px);
-  font-weight: 700;
-  color: $white;
-  &:hover, &:focus {
-    color: $black;
-    @include fontSize(25px);
-    text-decoration: none;
+  .nav-link, .nav-link:hover, .nav-link:active {
+    color: theme-color("white");
+    font-size: 1.2em;
+    padding-left: 1em;
   }
-}
-
-@include media-breakpoint-up(sm) {
-  .logotype {
-    @include fontSize(25px);
-  }
-}
-
-.nav-link, .nav-link:hover, .nav-link:active {
-  color: theme-color("white");
-  font-size: 1.2em;
-  padding-left: 1em;
 }
