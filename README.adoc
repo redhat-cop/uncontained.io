@@ -3,6 +3,7 @@
 image:https://img.shields.io/website/http/uncontained.io.svg?down_color=red&down_message=offline&up_color=up&up_message=up[Website Status, link="http://uncontained.io"]
 image:https://travis-ci.org/redhat-cop/uncontained.io.svg?branch=master[Build Status, link="https://travis-ci.org/redhat-cop/uncontained.io"]
 image:https://quay.io/repository/redhat-cop/uncontained-local-dev/status["Docker Repository on Quay", link="https://quay.io/repository/redhat-cop/uncontained-local-dev"]
+image:https://img.shields.io/github/license/redhat-cop/uncontained.io.svg["License", link="https://github.com/redhat-cop/uncontained.io/blob/master/LICENSE"]
 
 This is the source code repository for
 http://uncontained.io/[Uncontained.io], a site that focuses on
