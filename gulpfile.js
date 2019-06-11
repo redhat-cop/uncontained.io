@@ -202,12 +202,9 @@ function runDepcheck(cb) {
     ignoreBinPackage: false, // ignore the packages with bin entry
     skipMissing: false, // skip calculation of missing dependencies
     ignoreDirs: [ // folder with these names will be ignored
-      'sandbox',
       'dist'
     ],
     ignoreMatches: [ // ignore dependencies that matches these globs
-      //'grunt-*',
-      //'bootstrap*'
     ],
     parsers: { // the target parsers
       '*.js': depcheck.parser.es6,
