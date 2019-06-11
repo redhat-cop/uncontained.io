@@ -11,6 +11,7 @@ var linkChecker = require('./test/link-checker');
 var depcheck = require('depcheck');
 var toml = require("toml");
 var lunr = require("lunr");
+var fs = require("fs");
 
 var CONTENT_PATH_PREFIX = "site/content";
 var PWD = process.cwd();
@@ -117,7 +118,7 @@ gulp.task("server-preview", gulp.series(gulp.parallel("hugo-preview", "sass", "j
 gulp.task("smoke", gulp.series((cb) => runSmokeTest(cb)));
 gulp.task("linkcheck", gulp.series((cb) => runTests(cb)));
 gulp.task("depcheck", gulp.series((cb) => runDepcheck(cb)));
-gulp.task("test", gulp.parallel("smoke", "linkcheck", "depcheck"));
+gulp.task("test", gulp.series("build", gulp.parallel("smoke", "linkcheck", "depcheck")));
 
 // Development server with browsersync
 function runServer() {
