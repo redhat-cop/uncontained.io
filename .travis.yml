@@ -5,6 +5,9 @@ rvm:
 services:
   - docker
 
+before_install:
+  - docker build -f container-images/local-dev/Dockerfile -t uncontained-local-dev .
+
 script:
-  - docker run -u $(id -u) -v ${PWD}:/uncontained.io:Z -it quay.io/redhat-cop/uncontained-local-dev run build
-  - docker run -u $(id -u) -v ${PWD}:/uncontained.io:Z -it quay.io/redhat-cop/uncontained-local-dev test
+  - docker run -u $(id -u) -v ${PWD}:/uncontained.io:Z -it uncontained-local-dev run build
+  - docker run -u $(id -u) -v ${PWD}:/uncontained.io:Z -it uncontained-local-dev test

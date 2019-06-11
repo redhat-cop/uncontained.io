@@ -12,11 +12,13 @@
     "start-preview": "gulp server-preview",
     "test": "gulp test",
     "smoke": "gulp smoke",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "depcheck": "gulp depcheck"
   },
   "author": "",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+  },
   "resolutions": {
     "natives": "1.1.3"
   },

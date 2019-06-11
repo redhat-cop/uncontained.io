@@ -1,3 +1,4 @@
+var assert = require('assert');
 var gulp = require('gulp');
 var {spawn} = require('child_process');
 var hugoBin = require('hugo-bin');
@@ -9,10 +10,10 @@ var sourcemaps = require('gulp-sourcemaps');
 var linkChecker = require('./test/link-checker');
 var depcheck = require('depcheck');
 var toml = require("toml");
-var fs = require('fs');
 var lunr = require("lunr");
 
 var CONTENT_PATH_PREFIX = "site/content";
+var PWD = process.cwd();
 const browserSync = BrowserSync.create();
 
 // Hugo arguments
@@ -113,8 +114,10 @@ gulp.task("server", gulp.series(gulp.parallel("hugo", "sass", "js", "fonts", "as
 gulp.task("server-preview", gulp.series(gulp.parallel("hugo-preview", "sass", "js", "fonts", "asciidoctor-check"), "search", (cb) => runServer(cb)));
 
 // Run Automated Tests
-gulp.task("test", gulp.series((cb) => runTests(cb)));
 gulp.task("smoke", gulp.series((cb) => runSmokeTest(cb)));
+gulp.task("linkcheck", gulp.series((cb) => runTests(cb)));
+gulp.task("depcheck", gulp.series((cb) => runDepcheck(cb)));
+gulp.task("test", gulp.parallel("smoke", "linkcheck", "depcheck"));
 
 // Development server with browsersync
 function runServer() {
@@ -147,8 +150,6 @@ function buildSite(cb, options, environment = "development") {
 }
 
 function runTests(cb) {
-  runDepcheck(process.cwd());
-
   process.on('uncaughtException', function (err) {
       console.log(err);
   });
@@ -194,19 +195,18 @@ function runSmokeTest(cb) {
   cb();
 }
 
-function runDepcheck(projectDir) {
+function runDepcheck(cb) {
   var options = {
     withoutDev: false, // [DEPRECATED] check against devDependencies
     ignoreBinPackage: false, // ignore the packages with bin entry
     skipMissing: false, // skip calculation of missing dependencies
     ignoreDirs: [ // folder with these names will be ignored
       'sandbox',
-      'dist',
-      'bower_components'
+      'dist'
     ],
     ignoreMatches: [ // ignore dependencies that matches these globs
-      'grunt-*',
-      'bootstrap*'
+      //'grunt-*',
+      //'bootstrap*'
     ],
     parsers: { // the target parsers
       '*.js': depcheck.parser.es6,
@@ -222,12 +222,33 @@ function runDepcheck(projectDir) {
     ],
   };
 
-  depcheck(projectDir, options, (unused) => {
-    console.log(unused.dependencies); // an array containing the unused dependencies
-    console.log(unused.devDependencies); // an array containing the unused devDependencies
-    console.log(unused.missing); // a lookup containing the dependencies missing in `package.json` and where they are used
-    console.log(unused.using); // a lookup indicating each dependency is used by which files
-    console.log(unused.invalidFiles); // files that cannot access or parse
-    console.log(unused.invalidDirs); // directories that cannot access
-  });
+  depcheck(PWD, options, (unused) => {
+    console.log("Dependency Analysis: \n" + JSON.stringify(unused, null, 2)); // a lookup indicating each dependency is used by which files
+
+    // an array containing the unused dependencies
+    assert(isEmpty(unused.dependencies),
+      "There are unused dependencies. Please clean them up: " + unused.dependencies)
+    // an array containing the unused devDependencies
+    assert(isEmpty(unused.dependnecies),
+      "There are unused devDependencies. Please clean them up: " + unused.devDependencies)
+    // a lookup containing the dependencies missing in `package.json` and where they are used
+    assert(isEmpty(unused.missing),
+      "You are missing some dependencies: " + unused.missing)
+    // files or directories that cannot access or parse
+    assert(isEmpty(unused.invalidFiles) && isEmpty(unused.invalidDirs),
+      "There are some files that cannot be accessed or parsed: " + unused.invalidFiles + unused.invalidDirs)
+  })
+    .catch(error => {
+      console.log(error)
+      process.exit(1);
+    });
+  cb();
+}
+
+function isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
 }
