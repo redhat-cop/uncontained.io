@@ -5,6 +5,14 @@ if ! whoami &>/dev/null; then
 fi
 
 npm install
+success=$?
+
+if [ $success -eq 0 ]; then
+  echo "Install Complete"
+else
+  echo "Install Failed"
+  exit 1
+fi
 
 if [ $# -eq 0 ]; then
   npm start
