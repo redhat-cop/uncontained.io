@@ -118,7 +118,7 @@ gulp.task("server-preview", gulp.series(gulp.parallel("hugo-preview", "sass", "j
 gulp.task("smoke", gulp.series((cb) => runSmokeTest(cb)));
 gulp.task("linkcheck", gulp.series((cb) => runTests(cb)));
 gulp.task("depcheck", gulp.series((cb) => runDepcheck(cb)));
-gulp.task("test", gulp.series("build", gulp.parallel("smoke", "linkcheck", "depcheck")));
+gulp.task("test", gulp.series("build", gulp.parallel("linkcheck", "depcheck")));
 
 // Development server with browsersync
 function runServer() {
