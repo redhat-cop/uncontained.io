@@ -9,9 +9,9 @@ var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var linkChecker = require('./test/link-checker');
 var depcheck = require('depcheck');
-var toml = require("toml");
-var lunr = require("lunr");
-var fs = require("fs");
+var toml = require('toml');
+var lunr = require('lunr');
+var fs = require('file-system');
 
 var CONTENT_PATH_PREFIX = "site/content";
 var PWD = process.cwd();
@@ -205,6 +205,7 @@ function runDepcheck(cb) {
       'dist'
     ],
     ignoreMatches: [ // ignore dependencies that matches these globs
+      'bootstrap'
     ],
     parsers: { // the target parsers
       '*.js': depcheck.parser.es6,
@@ -227,7 +228,7 @@ function runDepcheck(cb) {
     assert(isEmpty(unused.dependencies),
       "There are unused dependencies. Please clean them up: " + unused.dependencies)
     // an array containing the unused devDependencies
-    assert(isEmpty(unused.dependnecies),
+    assert(isEmpty(unused.devDependencies),
       "There are unused devDependencies. Please clean them up: " + unused.devDependencies)
     // a lookup containing the dependencies missing in `package.json` and where they are used
     assert(isEmpty(unused.missing),
@@ -244,9 +245,13 @@ function runDepcheck(cb) {
 }
 
 function isEmpty(obj) {
-    for(var key in obj) {
-        if(obj.hasOwnProperty(key))
-            return false;
-    }
-    return true;
+  if (Array.isArray(obj)) {
+    return obj.length == 0
+  }
+
+  for(var key in obj) {
+      if(obj.hasOwnProperty(key))
+          return false;
+  }
+  return true;
 }

@@ -27,8 +27,7 @@
     "browser-sync": "^2.26.3",
     "chalk": "^2.4.2",
     "depcheck": "0.7.2",
-    "fs": "0.0.1-security",
-    "grunt": "^1.0.4",
+    "file-system": "^2.2.2",
     "gulp": "^4.0.0",
     "gulp-flatten": "^0.4.0",
     "gulp-sass": "^4.0.2",
@@ -37,7 +36,6 @@
     "hugo-bin": "^0.37.0",
     "humanize-duration": "^3.18.0",
     "lunr": "^2.3.6",
-    "string": "^3.3.3",
     "toml": "^3.0.0"
   }
 }
