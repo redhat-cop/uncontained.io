@@ -19,9 +19,9 @@ Red Hat Consulting
 include::site/layouts/variables.adoc[]
 toc::[]
 
-== Organizational Maturity Models when Adopting a PaaS platform
+== Organizational Maturity Models when Adopting a PaaS Platform
 
-While Platform-as-a-Service technologies alone are not capable of changing the way individuals and teams interact within an organization, they often serves as a catalyst for organizational change to support IT agility. Changes in organizational roles, responsibilities, and relationships are often required, in fact, to achieve the highest return on investment from PaaS platform investments. PaaS products such as OpenShift Container Platform have enough flexibility, however, to allow every organization to choose how much people-and-process change it wishes to pursue and how quickly it wishes to pursue it.
+While Platform-as-a-Service technologies alone are not capable of changing the way individuals and teams interact within an organization, they often serve as a catalyst for organizational change to support IT agility. Changes in organizational roles, responsibilities, and relationships are often required, in fact, to achieve the highest return on investment from PaaS platform investments. PaaS products such as OpenShift Container Platform have enough flexibility, however, to allow every organization to choose how much people-and-process change it wishes to pursue and how quickly it wishes to pursue it.
 
 In _the first phase of container adoption_ in the enterprise, the main priority is adoption of the container platform as a new application deployment target. In this phase, organizations are mapping familiar activities into familiar roles to respond to familiar application team requests for things like storage, deployment environments, etc. Later phases of adoption automate or provide self-service capabilities to application teams in order to lessen the burden on system administrators and enable a higher degree of velocity and autonomy for application teams. This begins a process toward DevOps maturity within the organization. In the final phase, organizations have transitioned into a more pure DevOps model, where many previous responsibilities and actions are owned by cross-functional teams organized around delivering application or application service functionality rather than technologies or platforms.
 
