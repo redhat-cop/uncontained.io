@@ -33,7 +33,7 @@
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-util": "^3.0.8",
-    "hugo-bin": "^0.37.0",
+    "hugo-bin": "^0.58.0",
     "humanize-duration": "^3.18.0",
     "lunr": "^2.3.6",
     "toml": "^3.0.0"
