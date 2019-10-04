@@ -1,0 +1,51 @@
+---
+date: "2018-02-24T01:02:44-05:00"
+title: "What should be in a Namespace?"
+authors: ["jimdillon", "etsauer"]
+categories:
+  - 'Add On'
+tags:
+  - openshift
+draft: true
+---
+
+== What the Hell is a Namespace and What Do I Put In It?
+Red Hat Containers & PaaS CoP
+v0.1, 2019-10-04
+
+One of the primary motives for moving to containers is the desire to bring higher quality software to market more quickly.  One mechanism for enabling this agility is by developing loosely coupled services that provide focused and specific business functionality.  Loose coupling enables development teams to move at a pace they determine, no longer being bound to deliver at the speed of the slowest dependent development team.  Namespaces are used to segment groups of services, deployables and/or tightly coupled entities that work together to provide a service to a loosely coupled consumer outside of the namespace.
+
+One of the most frequently heard questions when procuring a namespace for application development teams is, *“What belongs in a namespace?”*.  To answer this question, we need to understand the purpose of namespaces as defined in OpenShift documentation and by kubernetes developers.  Additionally, we suggest considering the following four elements when determining what to include in  a namespace; functionality provided, access needed, communication between entities and deployment strategy.  Failure to equally consider all of these four elements will typically result in one of two extremes.  The first is a monolithic namespace, the second is an unmanageable number of namespaces.  Neither of these outcomes are beneficial to development teams, nor the organizations depending on them.
+
+=== What is a namespace?
+link:https://docs.openshift.com/container-platform/3.11/architecture/core_concepts/projects_and_users.html[OpenShift documentation] states the purpose of a namespace as “to provide a mechanism to scope resources in a cluster.”   link:https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/#when-to-use-multiple-namespaces[Kubernetes documentation] states it is not necessary to use separate namespaces just to separate slightly different resources, such as different versions of the same software. Use labels to distinguish resources within the same namespace.
+
+In Multi-User Kubernetes environments, namespaces are used to:
+
+* Share resources among team members while protecting disparate teams from conflicting with each other
+* Group sets of related or interconnected resources
+* Provide a boundary at which we can apply network and resource isolation
+
+These principles sound simple. However, as organizations dive in to putting these ideas into practice, they often hit some very practical challenges with this guidance. How do I define a team when I have developers that float across many teams? What if I have resources that are interconnected, but managed by separate teams? If I have lots of services that connect to each other, do I still group them all in a single namespace?  The answer to these questions has to be, “It depends”.  More specifically, it depends on a thought exercise focused on the four elements, function, access, communication and deployment strategy.
+
+=== The Four Crucial Elements to Consider
+There are four elements to consider holistically when determining what to group together in a namespace: function, access, communication and deployment strategy.  Namespaces are a logical area separate from other namespaces, their scope should be narrowed and focused on the business function to be provided.  We want to consider what components are needed to provide the business functionality defined in the scope.  Access is another item for consideration, we may need to segment a component required for the business functionality due to the sensitive nature of an operation or data utilized.  Communication between components is often a major indicator of the level of coupling between components and should be taken into consideration when grouping components into a namespace.  We also want to consider how the items that contribute to this functionality are coupled deployment wise.  If a change and deployment to one component necessitates a change and deployment of one or more other components, we often choose to group these together.  When we consider these four items holistically, we get closer to grouping components into namespaces functional and sustainable fashion.
+
+=== Function
+We want to group entities that work together to provide a business function in a namespace.  Often there is an entry point to this group that uses ancillary or supporting entities to deliver the business functionality to external, to the namespace, consumers.  For example, an API may use a cache to enable quick retrieval of data.  If this cache is only used by the service providing the API, we’d want to group the service providing the API and the cache together in a namespace.  This is tight coupling based on functional dependency, the service is dependent upon the cache to meet SLAs.  Similarly, we may have an entity that performs a single often changing calculation.  We have it separated source code wise to promote agility and testing, but grouped in the same namespace as the functionality is not consumed directly by entities outside of the namespace.
+
+=== Access
+A namespace is a logical grouping through which we can control access to business functionality and / or data.  If a team is responsible for a set of services that others should not have the same level of access, we may use auth levels as a means for grouping.  Some business functions and data require tighter controls than others and this alone may be reason enough to put services providing these functions or transferring this data to be segmented from others. Conversely, we may have a group of teams that collaborate to provide specific business functions and desire to group the services needed for that function to provide access to multiple groups of development teams.
+
+=== Communication
+Some applications consist of services that provide different business functionality, but the communication of said services required to provide these functions to an application are limited to a small number of services not consumed outside of the namespace.  For example, an application has a service that provides data from a specific data source that is consumed by other services that provide separate business functionality not exposed outside the namespace.  If these “helper” services are not being used by a outside services and they are not intended to be part of an Enterprise API layer, it may make sense to group these services into a single namespace.
+
+=== Deployment
+We may have a group of services that are tightly coupled in their deployment, meaning every time service A is altered and deployed service B will also be altered and deployed.  While this is opposed to our desire to build loosely coupled services to enable agility and rapid time to market, this is often a waypoint on the journey from monolith to microservice architecture.
+
+=== Recommended Approach
+Determining what should be in a namespace is not a hard and fast rule we can plug into a logic engine. In lieu of rules, we can come to a few suggestions:
+
+Think holistically. A strong namespace strategy takes multiple criteria into account, including the four elements introduced in this article; functionality, access, communication and deployment strategy..
+Err on the side of too few namespaces, rather than too many. Splitting resources out to new namespaces is easier than trying to combine them and manage conflicts.
+Expect and welcome change. Your first attempt will not be correct, and that’s just fine!
