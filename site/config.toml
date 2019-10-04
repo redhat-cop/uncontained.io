@@ -11,6 +11,7 @@ Paginate = 10
 preserveTaxonomyNames = true
 
 enableRobotsTXT = true # generate robots.txt
+enableGitInfo = true   # enable usage of git info for lastmod
 
 # Syntax Highlighting ( https://gohugo.io/content-management/syntax-highlighting/ )
 pygmentsCodefencesGuessSyntax = true

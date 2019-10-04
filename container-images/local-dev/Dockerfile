@@ -11,7 +11,7 @@ COPY . .
 COPY container-images/local-dev/root /
 
 RUN apt-get update &&\
-  apt-get -y install curl tar xz-utils && \
+  apt-get -y install curl tar git xz-utils && \
   mkdir -p /node && \
   curl -o /node/node.tar.xz https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.xz && \
   tar -xf /node/node.tar.xz --directory=/node && \
