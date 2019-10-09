@@ -31,7 +31,11 @@ items:
 
         USER root
 
-        RUN yum install -y rubygems git && yum clean all && gem install asciidoctor -v 1.5.7
+        RUN yum-config-manager --enable rhel-server-rhscl-7-rpms
+
+        RUN yum install -y rubygems rh-git29 && yum clean all && gem install asciidoctor -v 1.5.7
+
+        RUN echo "source scl_source enable rh-git29" >> /opt/app-root/etc/scl_enable
 
         USER 1001
     strategy:
