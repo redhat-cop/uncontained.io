@@ -26,8 +26,11 @@ pipeline {
     stage ('Build Site from Source') {
       steps {
         container('builder') {
-          sh 'npm install'
-          sh 'npm run build'
+          sh '''
+          source /opt/rh/rh-git29/enable
+          npm install
+          npm run build
+          '''
         }
       }
       post {
