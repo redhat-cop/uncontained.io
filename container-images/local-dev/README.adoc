@@ -9,7 +9,7 @@ If you are working on improvements to the image however, you can build it locall
 [source,bash]
 ----
 cd uncontained.io/
-buildah build -f container-images/local-dev/Dockerfile -t uncontained-local-dev .
+buildah bud -f container-images/local-dev/Dockerfile -t uncontained-local-dev .
 ----
 
 
