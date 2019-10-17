@@ -59,7 +59,12 @@ created as others will do so if they appreciate it.
 Before you begin contributing, its important to get your local machine set up to run and test the site. For convenience, we provide a link:container-images/local-dev/[container image] that contains all of the development tools. The simplest way to run the image is as follows:
 
 ----
-docker run quay.io/redhat-cop/uncontained-local-dev
+podman run -p 3000:3000 -p 3001:3001 quay.io/redhat-cop/uncontained-local-dev
+----
+
+Or, if you use Docker:
+----
+docker run -p 3000:3000 -p 3001:3001 quay.io/redhat-cop/uncontained-local-dev
 ----
 
 This will run uncontained.io from an embedded copy of the source code baked into the image.
@@ -87,38 +92,42 @@ The live preview provides an embedded server in which you can test the
 site locally, and watch changes being made as you develop. You can start the server, running from your local copy of the code using the container image:
 
 ----
-docker run -u $(id -u) \
+podman run -u $(id -u) \
   -v ${PWD}:/uncontained.io:Z -it \
-  --net=host quay.io/redhat-cop/uncontained-local-dev
+  -p 3000:3000 -p 3001:3001 quay.io/redhat-cop/uncontained-local-dev
 ----
 
-Docker Desktop for Mac:
+Or, if you use Docker:
 ----
 docker run -u $(id -u) \
   -v ${PWD}:/uncontained.io:Z -it \
-  -p 3000:3000 quay.io/redhat-cop/uncontained-local-dev
+  -p 3000:3000 -p 3001:3001 quay.io/redhat-cop/uncontained-local-dev
 ----
 
 The container also accepts extra arguments which it feeds to `npm`. For example, if you’d like to also include _draft_ content like
 `hugo server --buildDrafts --buildFuture`, we've created a script entry in our package.json for that:
 
 ----
-docker run -u $(id -u) \
+podman run -u $(id -u) \
   -v ${PWD}:/uncontained.io:Z -it \
-  --net=host quay.io/redhat-cop/uncontained-local-dev \
+  -p 3000:3000 -p 3001:3001 quay.io/redhat-cop/uncontained-local-dev \
   run start-preview
 ----
 
-Docker Desktop for Mac:
+Or, if you use Docker:
 ----
 docker run -u $(id -u) \
   -v ${PWD}:/uncontained.io:Z -it \
-  -p 3000:3000 quay.io/redhat-cop/uncontained-local-dev \
+  -p 3000:3000 -p 3001:3001 quay.io/redhat-cop/uncontained-local-dev \
   run start-preview
 ----
 
 You should be able to view the site by browsing to
 http://localhost:3000/.
+
+To open Browsersync browse to
+http://localhost:3001/.
+
 
 === Building the Site
 
@@ -127,17 +136,17 @@ javascript, etc. This is the process we use to build and publish the
 site.
 
 ----
-docker run -u $(id -u) \
+podman run -u $(id -u) \
   -v ${PWD}:/uncontained.io:Z -it \
-  --net=host quay.io/redhat-cop/uncontained-local-dev \
+  quay.io/redhat-cop/uncontained-local-dev \
   run build
 ----
 
-Docker Desktop for Mac:
+Or, if you use Docker:
 ----
 docker run -u $(id -u) \
   -v ${PWD}:/uncontained.io:Z -it \
-  -p 3000:3000 quay.io/redhat-cop/uncontained-local-dev \
+  quay.io/redhat-cop/uncontained-local-dev \
   run build
 ----
 
@@ -147,19 +156,20 @@ In order to validate that changes you've made haven't led to any unforeseen issu
 the container image to run our automated tests.
 
 ----
-docker run -u $(id -u) \
+podman run -u $(id -u) \
   -v ${PWD}:/uncontained.io:Z -it \
-  --net=host quay.io/redhat-cop/uncontained-local-dev \
+  quay.io/redhat-cop/uncontained-local-dev \
   test
 ----
 
-Docker Desktop for Mac:
+Or, if you use Docker:
 ----
 docker run -u $(id -u) \
   -v ${PWD}:/uncontained.io:Z -it \
-  -p 3000:3000 quay.io/redhat-cop/uncontained-local-dev \
+  quay.io/redhat-cop/uncontained-local-dev \
   test
 ----
+
 
 === Deploying to OpenShift (testing only)
 
