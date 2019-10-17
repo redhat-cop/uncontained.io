@@ -1,4 +1,4 @@
-FROM ruby:2.5.3-slim
+FROM registry.access.redhat.com/ubi8-minimal
 
 ENV NODE_VERSION v10.15.1
 ENV PATH /node/node-${NODE_VERSION}-linux-x64/bin:${PATH}
@@ -10,8 +10,8 @@ WORKDIR /uncontained.io
 COPY . .
 COPY container-images/local-dev/root /
 
-RUN apt-get update &&\
-  apt-get -y install curl tar git xz-utils && \
+RUN microdnf update &&\
+  microdnf -y install tar git xz ruby rubygem-bundler && \
   mkdir -p /node && \
   curl -o /node/node.tar.xz https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.xz && \
   tar -xf /node/node.tar.xz --directory=/node && \
