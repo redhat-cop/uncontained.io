@@ -1,15 +1,15 @@
 ---
-date: {revdate}
-title: "Monitoring multiple openshift clusters using Prometheus"
+title: "Monitoring Multiple Openshift Clusters"
+date: 2019-11-08T08:05:32+01:00
 authors: ["redhat-cop"]
 categories:
-  - Add On
-tags:
   - openshift
   - operations
+tags:
+  - research
 draft: true
 ---
-= Validating an OpenShift Install
+= Monitoring Multiple Openshift Clusters
 Andrea Ferraresi <andrea.ferraresi@redhat.com>
 :toc: macro
 :toc-title:
