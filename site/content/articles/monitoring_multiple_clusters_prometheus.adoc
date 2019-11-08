@@ -1,0 +1,74 @@
+---
+date: {revdate}
+title: "Monitoring multiple openshift clusters using Prometheus"
+authors: ["redhat-cop"]
+categories:
+  - Add On
+tags:
+  - openshift
+  - operations
+draft: true
+---
+= Validating an OpenShift Install
+Andrea Ferraresi <andrea.ferraresi@redhat.com>
+:toc: macro
+:toc-title:
+
+include::site/layouts/variables.adoc[]
+
+How to deal with monitoring of multiple Openshift Cluster: the challenges and the different approaches on scaling 
+
+toc::[]
+
+== Introduction to prometheus
+We all know Prometheus to be a very simple, very easy to use, piece of software:
+
+It is just a scraping server, this means that reads its metrics from a clear text page exposed by a web server on a specific port, metrics are generated from "exporters" which fills those pages. Once metrics are scraped are stored on disc for visualization. 
+
+It is not in the scope of Prometheus even to proper visualize those metrics, the UI is very simple and you would use Grafana for the graphing. 
+
+To keep things dead simple, there isn't any replication mechanism either.
+
+== The problems with prometheus
+
+This simplicity though comes with a cost: 
+
+*A*. Grafana can only query one Prometheus at a time which means that your monitoring server is a single point of failure: Having a single Prometheus instance per cluster is a single point of failure. 
+
+***
+Any configuration error or hardware failure could potentially result in the loss of important insights. Even a simple rollout could be a small disruption in the metric collection because a restart can be significantly longer than the scraping interval.
+***
+
+*B*. Storing on disc, on simple text files is not effective: reliability, availability, storage 
+space and speed can be an issue when you want to store a lot of data 
+
+== How do we fix them
+Let's try to fix the issues one at a time: 
+
+In order to fix *A* we could use one cool feature of the sofware that we call "Federation", this basically means that you could use an extra prometheus to query other isntances, this means that each of your cluster could run one prometheus, data would be queried by another instance installed outside of the cluster, in that way each cluster could be monitor on its own, with the extra possibility to have some sort of a supervisor. 
+
+The problem with the approach above would be that it will accentuate the problem *B*: *_you would need more storage._*
+
+=== The Thanos approach 
+
+one of the software who caught my attention lately is link:https://thanos.io/[Thanos]
+
+They're approach is pretty smart and consist on putting a central query layer amongst multiple Prometheus instance: they do it using a sidecar container that stores the data and serves them over Thanos’s canonical gRPC-based Store API, which allows selecting time series data by labels and time range. On top of this there is a querier component that queries them in a coordinated way using the same language as prometheus (PromQL). 
+
+To mitigate the storage problem each sidecar container can upload data into an object storage (S3). 
+
+The problem with that is the amount of storage needed, to improve this situation, Thanos uses a compactor that is mainly needed for downsampling. 
+
+== The Telegraf and InfluxDB approach
+
+The above seems to be one way to solve *A* but a some time ago I got an interesting problem from a customer: They do not only have multiple openshift clusters, all their existing monitoring system was relying on telegraf, they have good people in house taking care of it and they use it also to monitor the underlying infrastructure. Would have really been a problem to migrate all this work to something else. 
+
+=== Integrating Prometheus with Telegraf
+
+Well this came easy,it seems that Telegram can easily pull data from Prometheus, but the *B* issue would stay: the free version of InfluxDB won't support clustering, you'll have to pay for that. 
+
+=== The Walmart approach 
+
+A talk from the guys at Walmart finally opened my mind: there is an amazing plugin for Telegraf that can help out with replicating data across multiple InfluxDB databases. This little piece of software called influxdb-relay, enables syncs and solves the issue again. 
+
+The customer is now happy and can keep using the free version of the TICK stack with a twist: they can now replicate data across multiple databases.
