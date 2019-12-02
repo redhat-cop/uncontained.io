@@ -14,7 +14,7 @@ featured: true
 ---
 = External Container Registry Integration with OpenShift
 Andrew Block <ablock@redhat.com>
-v1.0, 2016-08-19
+v1.0, 2019-12-01
 :scripts_repo: https://github.com/rhtconsulting/rhc-ose
 :toc: macro
 :toc-title:
@@ -34,15 +34,132 @@ Regardless of the source, the underlying container runtime engine is used to ret
 
 === Certificates
 
-Communication between the container engine and the remote registry is facilitated through secure transport. A trust must be established between both parties prior to transmitting content securely. SSL certificates associated with the remote registry must be configured on on each OpenShift node that will be used to transport images. These certificates can be configured at platform level truststore or for use by container runtime exclusively.
+Communication between the container engine and the remote registry is facilitated through secure transport. A trust must be established between both parties prior to transmitting content securely. SSL certificates associated with the remote registry must be configured on on each OpenShift node that will be used to transport images. These certificates can be configured at platform level truststore or for use by container runtime exclusively. The configuration of certificiates depends on the version of OpenShift being used.
 
-To configure the container runtime to trust the certificate of a remote repository that is not included in the platform trust store, create a folder within the `/etc/docker/certs.d` folder with the name and optional port value. If the remote registry had the address of `external-registry.example.com:5000` the folder path would be `/etc/docker/certs.d/external-registry.example.com:5000`.
+==== Custom Certificates in OpenShift V3
 
-Copy the certificate into this folder and rename the file *ca.crt*
+To configure the container runtime to trust the certificate of a remote repository that is not included in the platform trust store, the certificate(s) must be copied to a location on each node that for which the registry will be accessed. In most cases, this will be all masters and nodes within the cluster. The specific steps depends on the version of Docker that is being used. 
+
+===== Docker 1.13+
+
+. Copy the certificate to the `/etc/pki/ca-trust/source/anchors/`
+. Extract and add the certificate to the list of trusted certificate authorities
++
+[source]
+----
+sudo update-ca-trust extract
+----
++
+. Restart the docker service
+
+===== Docker <1.13
+
+. Create a folder within the `/etc/docker/certs.d` folder with the name and optional port value. If the remote registry had the address of `external-registry.example.com:5000` the folder path would be `/etc/docker/certs.d/external-registry.example.com:5000`.
+. Copy the certificate into this folder and rename the file *ca.crt*
+. Restart the docker service
+
+Additional information can be found in the the link:https://docs.openshift.com/container-platform/3.11/day_two_guide/docker_tasks.html#day-two-guide-managing-docker-certs[OpenShift Day 2 Operations Guide]
+
+==== Custom Certificates in OpenShift V4
+
+Additional CA certificates that should be trusted by all platform components can be configured via the Proxy API. These certificates can be provided at installation time or at runtime. 
+
+===== Providing Custom Certificates at Installation
+
+The `install-config.yaml` resource that can be specified at installation time can be used to define any CA certificates that should be trusted by platform certificates. 
+
+. If an existing `install-config.yaml` has yet to be generated execute the following command:
++
+[source]
+----
+openshift-installer create install-config
+----
++
+. Add CA certificates to the `additionalTrustBundle` property as shown below
++
+[source]
+----
+apiVersion: v1
+baseDomain: openshift.example.com
+proxy:
+  httpProxy: http://<username>:<pswd>@<ip>:<port> 
+  httpsProxy: http://<username>:<pswd>@<ip>:<port> 
+  noProxy: example.com 
+additionalTrustBundle: | 
+    -----BEGIN CERTIFICATE-----
+    <MY_TRUSTED_CA_CERT>
+    -----END CERTIFICATE-----
+----
++
+. Install the OpenShift cluster making use of the `install-config.yaml` file.
+
+NOTE: The installer will configure the CA certificates in a _ConfigMap_ called `user-ca-bundle` in the `openshift-config` property. The certificates will *ONLY* be injected by the Cluster Network Operator when a _proxy_ object is defined as shown above. Otherwise, portions of the steps outlined in the next section must be followed.
+
+===== Providing Custom Certificates at Runtime
+
+CA certificates that should be trusted by all platform components can be defined at runtime. These certificates should be added to a ConfigMap called `user-ca-bundle` in the `openshift-config` project. 
+
+. Add CA certificates to a file
+. Create a _ConfigMap_ called `user-ca-bundle` in the `openshift-config` project using the contents of the file created previously
++
+[source]
+----
+oc create configmap -n openshift-config user-ca-bundle -n --from-file=ca-bundle.crt=<file_location>
+----
++
+. Patch the cluster proxy object with the name of the _ConfigMap_
++
+[source]
+----
+oc patch proxies.config.openshift.io/cluster --type=merge -p '{"spec":{"trustedCA":{"name":"user-ca-bundle"}}}'
+----
+
+Additional information for providing CA certificates at installation and runtime can be found in the link:https://docs.openshift.com/container-platform/4.2/networking/configuring-a-custom-pki.html[Configuring a custom PKI] documentation
+
+
 
 === Insecure Registry
 
-Even though Docker and OpenShift emphasize secure communication, the Docker daemon can be configured to retrieve images from insecure registries. Insecure registries can refer to ones that are protected with self signed or untrusted SSL certificates or ones that do not communicate over secure channels (HTTP).
+Even though container runtimes and OpenShift emphasize secure communication, the runtime can be configured to retrieve images from insecure registries. Insecure registries can refer to ones that are protected with self signed or untrusted SSL certificates or ones that do not communicate over secure channels (HTTP).
+
+The method to specify insecurre registries depends on the version of OpenShift being utilized.
+
+==== Insecure Registry with OpenShift v4
+
+The `image.config.openshift.io/cluster` resource defines the image registry settings for which the Machine Config Operator (MCO) manages the configuration of each node. 
+
+To specify an insecure registry, perform the following steps:
+
+. Edit the `image.config.openshift.io/cluster` custom resource:
++
+[source]
+----
+oc edit image.config.openshift.io/cluster
+----
++
+. Specify the list of insecure registries
++
+[source]
+----
+apiVersion: config.openshift.io/v1
+kind: Image
+metadata:
+...
+  name: cluster
+...
+spec:
+...
+  registrySources:
+    insecureRegistries:
+    - external-registry.example.com
+...
+status:
+  internalRegistryHostname: image-registry.openshift-image-registry.svc:5000
+----
+
+More information can be found in the link:https://docs.openshift.com/container-platform/4.2/openshift_images/image-configuration.html#images-configuration-insecure_image-configuration[Image Configuration documentation]
+
+==== Insecure Registry With OpenShift v3
 
 To configure the docker daemon to trust content from an insecure registry, add the following to the *OPTIONS* property in the `/etc/sysconfig/docker` file. An example is shown below:
 
@@ -66,43 +183,27 @@ Secure external registries can be integrated into the OpenShift ecosystem. Throu
 
 === Storing Credentials in Secrets
 
-Docker stores the details for authenticating to remote repositories in one of two formats: a config.json file or a legacy .dockercfg file. OpenShift makes use of the .dockercfg file format for authenticating against remote registries and stores them as secrets. This file can be generated by older versions of docker using the `docker login` command or the parameters supplied to OpenShift who in turn will produce a new .dockercfg file in the secret.
+Docker stores the details for authenticating to remote repositories in one of two formats: a config.json (.dockerconfigjson) file or a legacy .dockercfg file. OpenShift makes use of the .dockercfg file format for authenticating against remote registries and stores them as secrets, but for the purpose of this guide, only the .dockerconfigjson file format will be illustrrated. This file can be generated by using the `docker login` command or the parameters supplied to OpenShift who in turn will produce a new .dockerconfigjson file in the secret.
 
-Existing .dockercfg files can be added as secrets by executing the following command:
-
-[source]
-----
-oc secrets new external-registry ~/.dockercfg
-----
-
-To create a new .dockercfg file by supplying the necessary parameters, execute the following command:
+Existing config.json files can be added as secrets by executing the following command:
 
 [source]
 ----
-oc secrets new-dockercfg external-registry \
+oc create secret external-registry --from-file=.dockerconfigjson=<path/to/.docker/config.json> --type=kubernetes.io/dockerconfigjson
+----
+
+Alternatively, a `.dockerconfigjson` formatted file can be created by supplying the necessary parameters using the following command:
+
+[source]
+----
+oc create secret docker-registry external-registry \
     --docker-username=mastermind \
     --docker-password=12345 \
-    --docker-email=mastermind@example.com \
     --docker-server=external-registry.example.com:5000
 ----
 
-NOTE: When logging into a remote OpenShift cluster, You must use your oc login token instead of your user's password. You can see more here. link:https://docs.openshift.com/container-platform/3.7/install_config/registry/accessing_registry.html#access[Accessing The Registry Directly]
+NOTE: When logging into a remote OpenShift cluster, You must use your oc login token instead of your user's password. You can see more here. link:https://docs.openshift.com/container-platform/4.2/registry/accessing-the-registry.html[Accessing The Registry Directly]
 
-Alternatively, if the docker client was used to login to a remote registry and generate a configuration file containing the authentication details, this file can be stored as a secret within OpenShift. Two docker authentication formats are available: `config.json` and the legacy `.dockercfg`. Both are compatible for storage within OpenShift.
-
-To store a file in the `config.json` format as a secret within OpenShift, execute the following command
-
-[source]
-----
-oc secrets new external-registry .dockerconfigjson=config.json
-----
-
-If the file is in the `.dockercfg` format, execute the following command to add the secret to OpenShift
-
-[source]
-----
-oc secrets new external-registry .dockercfg=.dockercfg
-----
 
 == External registry integration in Builds
 
@@ -111,7 +212,7 @@ An external registry can be integrated into the OpenShift build process as both 
 
 === Storing images as a result of a build
 
-NOTE: It is recommended that images produced as a result of a build within OpenShift be stored within the docker registry integrated into the platform.
+NOTE: It is recommended that images produced as a result of a build within OpenShift be stored within the image registry integrated into the platform.
 
 Images that are produced by an image build within OpenShift can be stored in a remote registry instead of the integrated docker registry provided by the platform. As with any OpenShift build, the details are contained in the *BuildConfig* API object.
 
@@ -191,8 +292,32 @@ If the registry is protected by authentication, add a *secret* containing the cr
 
 [source]
 ----
-oc secrets link builder external-registry
+oc secrets link builder external-registry --for=pull
 ----
+
+Confirm the _builder_ service account has the secret specified as an ImagePullSecret
+
+[source]
+----
+$ oc get sa builder -o json
+
+{
+    "apiVersion": "v1",
+    "kind": "ServiceAccount",
+    "metadata": {
+...
+        "name": "builder",
+...
+    },
+    "imagePullSecrets": [
+        {
+            "name": "external-registry" <1>
+        },
+...
+    ]
+}
+----
+<1> The secret configured to pull images from a protected source
 
 Finally, add the name of the pull secret to the BuildConfig as shown below:
 
@@ -230,7 +355,7 @@ The CLI will configure services based on exposed ports on the image and set up a
 
 === Deploying an image using an ImageStream
 
-An {docs_url}architecture/core_concepts/builds_and_image_streams.html#image-streams[ImageStream] represents a virtual repository of related docker images and can be used to abstract the location of image from applications. Images stored in an external repository can be referenced using an ImageStream to relieve the burden from the underlying application.
+An link:https://docs.openshift.com/container-platform/4.2/openshift_images/images-understand.html#images-imagestream-use_images-understand[ImageStream] represents a virtual repository of related docker images and can be used to abstract the location of image from applications. Images stored in an external repository can be referenced using an ImageStream to relieve the burden from the underlying application.
 
 To create a new ImageStream for the existing image, execute the following command:
 
