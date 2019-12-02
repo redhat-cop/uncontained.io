@@ -1,6 +1,6 @@
 ---
 date: "2019-12-01T19:15:24-06:00"
-title: "External Container Registry Integration with OpenShift"
+title: "Integrating External Container Registry Integration with OpenShift"
 authors: ["sabre1041"]
 categories:
   - 'Field Guide'
@@ -12,7 +12,7 @@ tags:
 draft: false
 featured: true
 ---
-= External Container Registry Integration with OpenShift
+= Integrating External Container Registry Integration with OpenShift
 Andrew Block <ablock@redhat.com>
 v1.0, 2019-12-01
 :scripts_repo: https://github.com/rhtconsulting/rhc-ose
@@ -26,7 +26,7 @@ toc::[]
 
 == Overview
 
-OpenShift is a platform for running containerized applications. Containers are instances of images and these images are stored in registries. OpenShift has the ability to leverage images stored in its own integrated registry, images stored on external public registries, such as quay.io, or images stored in an enterprise or third party registry. This document describes the steps necessary to run containers from images stored in an external coontainer registry and to use an external registry to store images produced within the platform.
+OpenShift is a platform for running containerized applications. Containers are instances of container images and these images are stored in registries. OpenShift has the ability to leverage images stored in its own integrated registry, images stored on external public registries, such as quay.io, or images stored in an enterprise or third party registry. This document describes the steps necessary to run containers from images stored in an external coontainer registry and to use an external registry to store images produced within the platform.
 
 == Container Runtime Configuration
 
@@ -36,7 +36,7 @@ Regardless of the source, the underlying container runtime engine is used to ret
 
 Communication between the container engine and the remote registry is facilitated through secure transport. A trust must be established between both parties prior to transmitting content securely. SSL certificates associated with the remote registry must be configured on on each OpenShift node that will be used to transport images. These certificates can be configured at platform level truststore or for use by container runtime exclusively. The configuration of certificiates depends on the version of OpenShift being used.
 
-==== Custom Certificates in OpenShift V3
+==== Custom Certificates in OpenShift 3
 
 To configure the container runtime to trust the certificate of a remote repository that is not included in the platform trust store, the certificate(s) must be copied to a location on each node that for which the registry will be accessed. In most cases, this will be all masters and nodes within the cluster. The specific steps depends on the version of Docker that is being used. 
 
@@ -60,7 +60,7 @@ sudo update-ca-trust extract
 
 Additional information can be found in the the link:https://docs.openshift.com/container-platform/3.11/day_two_guide/docker_tasks.html#day-two-guide-managing-docker-certs[OpenShift Day 2 Operations Guide]
 
-==== Custom Certificates in OpenShift V4
+==== Custom Certificates in OpenShift 4
 
 Additional CA certificates that should be trusted by all platform components can be configured via the Proxy API. These certificates can be provided at installation time or at runtime. 
 
@@ -212,9 +212,9 @@ An external registry can be integrated into the OpenShift build process as both 
 
 === Storing images as a result of a build
 
-NOTE: It is recommended that images produced as a result of a build within OpenShift be stored within the image registry integrated into the platform.
+NOTE: It is recommended that images produced as a result of a build within OpenShift be stored within the image registry integrated into the platform. This allows for initial testing and integration within the lower levels of the Software Development Lifecycle (SDLC). If an external registry is being utilized, the image can be promoted outside of the cluster to this external entity after the initial validation  phase as the image progresses through its lifecycle.
 
-Images that are produced by an image build within OpenShift can be stored in a remote registry instead of the integrated docker registry provided by the platform. As with any OpenShift build, the details are contained in the *BuildConfig* API object.
+Images that are produced by an image build within OpenShift can be stored in a remote registry instead of the integrated docker registry provided by the platform if desired. As with any OpenShift build, the details are contained in the *BuildConfig* API object.
 
 The *output* section of the Build specification defines the location of where the resulting docker image will be stored. Many of the examples found in OpenShift templates and quickstarts use the *ImageStreamTag* as the output kind. This will publish the image to the integrated docker registry. To publish the image to an external location, where it be to DockerHub or an enterprise registry, the *DockerImage* type must be used.
 
@@ -396,7 +396,49 @@ Images from external registries can be deployed in an application by directly sp
 ----
 <1> The image to deploy
 
-NOTE: It is recommended that an ImageStream be used instead of a direct reference
+Alternatively, an ImageStream can be used to reference the image that should be deployed as shown below
+
+[source]
+----
+    "template": {
+        "spec": {
+            "containers": [
+                {
+                    "name": "sample-app",
+                    "image": " ", <1>
+                    "ports": [
+                            {
+                                "containerPort": 8080,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "resources": {},
+                        "terminationMessagePath": "/dev/termination-log",
+                        "imagePullPolicy": "Always"
+                }
+            ]
+        }
+    },
+    "triggers": [
+        {
+            "imageChangeParams": {
+                "automatic": true,
+                "containerNames": [
+                    "httpd-example"
+                ],
+                "from": {
+                    "kind": "ImageStreamTag",
+                    "name": "sample-app:latest" <2>
+                }
+            },
+            "type": "ImageChange" <3>
+        }
+    ]
+},
+----
+<1> Image field to be left intentionally blank which will be filled in by the ImageStream trigger
+<2> Name and tag of the ImageStream
+<3> The type of trigger
 
 
 === Deploying Images from an Insecure Registry
