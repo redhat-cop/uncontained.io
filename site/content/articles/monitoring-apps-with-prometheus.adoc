@@ -1,5 +1,5 @@
 ---
-title: "Monitoring Apps With the Prometheus Operator"
+title: "Monitoring Applications With the Prometheus Operator"
 date: 2019-12-06T16:38:34-05:00
 authors: [ igou ]
 categories:
@@ -133,13 +133,27 @@ apiVersion: monitoring.coreos.com/v1
 kind: Prometheus
 metadata:
   name: prometheus
-  namespace: monitoring
+  namespace: application-monitoring
 spec:
+  alerting:
+    alertmanagers:
+    - namespace: default
+      name: alertmanager-example
+      port: web
+  replicas: 2
   serviceAccountName: prometheus
   serviceMonitorNamespaceSelector: {}
   serviceMonitorSelector:
     prometheus.io/scrape: 'true'
   enableAdminAPI: false
+  storage:
+    volumeClaimTemplate:
+      spec:
+        resources:
+          requests:
+            storage: 50Gi
+        storageClassName: example-storageclass
+
 ```
 
 === Creating Service Monitors
@@ -165,7 +179,7 @@ spec:
 apiVersion:
 kind: Alertmanager
 metadata:
-  name: example-alertmanager
+  name: alertmanager-example
 spec:
   replicas: 3
 ```
@@ -184,7 +198,7 @@ oc create secret generic alertmanager-alertmanager-main --from-file=alertmanager
 
 ==== Query Rules
 
-== Metrics libraries for apps
+== Official Metrics libraries for apps
 
 * https://github.com/prometheus/client_golang
 * https://github.com/prometheus/client_java
@@ -205,6 +219,10 @@ oc create secret generic alertmanager-alertmanager-main --from-file=alertmanager
 === Grafana 
 
 === More
+
+== Possible Architectures
+
+Scaling horizontally or vertically? One Prometheus per namespace? Per team? Per cluster? 
 
 == SRE
 == More reading
