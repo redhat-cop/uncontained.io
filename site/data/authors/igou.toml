@@ -1,0 +1,11 @@
+id = "igou"
+
+[email]
+username = "david.igou"
+host = "gmail.com"
+
+[name]
+display = "igou"
+
+[social]
+github = "david-igou"

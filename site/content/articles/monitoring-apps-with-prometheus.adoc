@@ -1,0 +1,215 @@
+---
+title: "Monitoring Apps With the Prometheus Operator"
+date: 2019-12-06T16:38:34-05:00
+authors: [ igou ]
+categories:
+  - 'Field Guide'
+tags:
+  - openshift
+  - prometheus
+  - monitoring
+draft: true
+featured: true
+---
+= Monitoring Applications with the Prometheus Operator
+David Igou <igou@redhat.com>
+v1.0 2019-12-06
+:toc: macro
+:toc-title:
+
+include::site/layouts/variables.adoc[]
+
+toc::[]
+
+== Overview
+
+By default, Openshift ships with the Cluster Monitoring Operator (CMO). This includes a managed Prometheus, Grafana, and several exporters for metrics at the cluster level. 
+
+Most modifications made to the openshift-monitoring namespace will lose support of the operator. To side-step this issue, users should deploy the CoreOS Prometheus operator to their clusters to handle monitoring additional work loads.
+
+
+== What is monitoring ?
+
+* Monitoring is how an organization utilizes their metrics
+** Metrics gathered are useless if nothing is done with them (Planning, alerting)
+
+* Black Box Monitoring:
+** Quantitative system metrics
+** CPU, Disk usage, Memory available
+** `node-exporter` gives pretty good insight into these metrics across all servers in your organization
+
+* White Box Monitoring
+**  Metrics from applications running on your server
+** "How many 404's/500's are being returned?"
+** "Request latency for this app?"
+** Monitoring MySQL queries running on a database server
+
+* Alerting
+** Sending alerts when certain events occure in your infrastructure
+
+== Deploying the Prometheus operator
+
+=== Openshift 3.10/3.11
+
+```shell
+git clone https://github.com/coreos/prometheus-operator.git
+cd prometheus-operator
+oc create -f bundle.yaml -n application-monitoring
+```
+
+=== Openshift 4
+
+The Prometheus Operator can be deployed via link:https://operatorhub.io/[OperatorHub.io]
+
+== Custom Resources
+
+Custom Resources created and managed by the operator:
+
+=== Prometheus
+
+Defines a desired Prometheus deployment. The operator ensures that at all times a deployment matching the resource definition is running
+
+=== ServiceMonitor
+
+Object that declaratively specifies how groups of services should be monitored. The Operator automatically generates Prometheus scrape configuration based on the definition.
+
+=== PodMonitor
+
+Declaratively specifies how groups of pods should be monitored. The Operator automatically generates Prometheus scrape configuration based on the definition.
+
+=== PrometheusRule
+
+Defines a desired Prometheus rule file, which can be loaded by a Prometheus instance containing Prometheus alerting and recording rules.
+
+=== Alertmanager
+
+defines a desired Alertmanager deployment. The Operator ensures at all times that a deployment matching the resource definition is running.
+
+== Configuration
+
+=== Allowing the OperatorHub.io deployment to scrape multiple namespaces
+
+By default, the build from operatorhub.io is namespace scoped. There are some requirements if you want to scrape services or recognize serviceMonitors in other namespaces:
+
+Give the `prometheus-k8s` service account permission to scrape services in other namespaces
+
+```
+oc adm policy add-role-to-user view system:serviceaccount:application-monitoring:prometheus-k8s -n nginx-website
+```
+
+If you want the operator to pick up servicemonitors from other namespaces:
+
+
+```
+oc edit operatorgroup application-monitoring-xxxx
+[...]
+  targetNamespaces:
+  - application-monitoring
+  - nginx-website
+```
+
+Followed by editing `spec.installModes` in the ClusterServiceVersion, setting MutiNamespaces from `false` to `true`
+
+`oc edit csv prometheusoperator.0.32.0`
+
+```shell
+  installModes:
+  - supported: true
+    type: OwnNamespace
+  - supported: true
+    type: SingleNamespace
+  - supported: true
+    type: MultiNamespace
+  - supported: false
+    type: AllNamespaces
+```
+
+=== Creating a Prometheus
+
+TODO: A lot of configuration can be done here so should probably go into that
+
+```
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: prometheus
+  namespace: monitoring
+spec:
+  serviceAccountName: prometheus
+  serviceMonitorNamespaceSelector: {}
+  serviceMonitorSelector:
+    prometheus.io/scrape: 'true'
+  enableAdminAPI: false
+```
+
+=== Creating Service Monitors
+
+```
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: nginx-metrics
+  labels:
+    prometheus.io/scrape: "true"
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  endpoints:
+  - port: metrics
+```
+
+=== Creating an Alertmanager
+
+```yaml
+apiVersion:
+kind: Alertmanager
+metadata:
+  name: example-alertmanager
+spec:
+  replicas: 3
+```
+
+==== Configuring Alertmanager
+
+Before alertmanager pods can be marked ready, a secret with the alertmanager configuration file will need to be created. A good starting point is the link:https://prometheus.io/docs/alerting/configuration/[Prometheus official documentation]
+
+``` shell
+oc create secret generic alertmanager-alertmanager-main --from-file=alertmanager.yaml
+```
+
+=== Creating PrometheusRules
+
+==== Alerting Rule
+
+==== Query Rules
+
+== Metrics libraries for apps
+
+* https://github.com/prometheus/client_golang
+* https://github.com/prometheus/client_java
+* https://github.com/prometheus/client_python
+* https://github.com/prometheus/client_ruby
+
+== relevant exporters
+
+=== blackbox-exporter
+=== Adding a sidecar exporter to an app?
+
+== Additional things that export metrics
+
+=== Heketi
+
+=== Routers
+
+=== Grafana 
+
+=== More
+
+== SRE
+== More reading
+
+* Google SRE book
+* The other Google SRE book
+
+
