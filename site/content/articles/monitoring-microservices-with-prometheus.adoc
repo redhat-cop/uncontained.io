@@ -1,5 +1,5 @@
 ---
-title: "Monitoring Applications With the Prometheus Operator"
+title: "Monitoring Microservices With the Prometheus Operator"
 date: 2019-12-06T16:38:34-05:00
 authors: [ igou ]
 categories:
@@ -11,7 +11,7 @@ tags:
 draft: true
 featured: true
 ---
-= Monitoring Applications with the Prometheus Operator
+= Monitoring Microservices with the Prometheus Operator
 David Igou <igou@redhat.com>
 v1.0 2019-12-06
 :toc: macro
@@ -46,6 +46,36 @@ Most modifications made to the openshift-monitoring namespace will lose support 
 
 * Alerting
 ** Sending alerts when certain events occure in your infrastructure
+
+== The Four Golden Signals
+
+The Four Golden Signals for Monitoring Distributed Systems:
+
+* Latency
+** The time it takes to service a request
+** Distinguishing the latency between successful and failed requests is important for troubleshooting
+*** A 500 error due to a critical backend component going down would be have a fast response
+*** A 500 error with a slower response implies more processing took place.
+
+* Traffic
+** A measure of the number of requests across the network
+** This can be user traffic, or something like a messaging queue
+
+* Errors
+** Errors across your systems can be caused by:
+*** Misconfigurations
+*** Bugs in your code
+*** Failed dependencies
+*** Hardware failures
+
+* Saturation
+** Network load	
+*** Network congestion 
+** System load
+*** Memory
+*** CPU
+*** Disk Ops
+*** Swap
 
 == Deploying the Prometheus operator
 
@@ -126,7 +156,6 @@ Followed by editing `spec.installModes` in the ClusterServiceVersion, setting Mu
 
 === Creating a Prometheus
 
-TODO: A lot of configuration can be done here so should probably go into that
 
 ```
 apiVersion: monitoring.coreos.com/v1
@@ -141,6 +170,9 @@ spec:
       name: alertmanager-example
       port: web
   replicas: 2
+  ruleSelector:
+    matchLabels:
+      rule: prometheus
   serviceAccountName: prometheus
   serviceMonitorNamespaceSelector: {}
   serviceMonitorSelector:
@@ -196,38 +228,76 @@ oc create secret generic alertmanager-alertmanager-main --from-file=alertmanager
 
 ==== Alerting Rule
 
+```
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    rule: prometheus
+  name: prometheus-k8s-rules
+  namespace: application-monitoring
+spec:
+  groups:
+  - name: kubernetes-system
+    rules:
+    - alert: KubeNodeNotReady
+      annotations:
+        message: '{{ $labels.node }} has been unready for more than an hour'
+        runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubenodenotready
+      expr: |
+        kube_node_status_condition{job="kube-state-metrics",condition="Ready",status="true"} == 0
+      for: 1h
+      labels:
+        severity: warning
+```
+
 ==== Query Rules
 
-== Official Metrics libraries for apps
+```
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    rule: prometheus
+  name: prometheus-k8s-rules
+  namespace: application-monitoring
+spec:
+  groups:
+  - name: k8s.rules
+    rules:
+    - expr: |
+        sum(rate(container_cpu_usage_seconds_total{job="kubelet", image!=""}[5m])) by (namespace)
+      record: namespace:container_cpu_usage_seconds_total:sum_rate
+    - expr: |
+        sum(container_memory_usage_bytes{job="kubelet", image!=""}) by (namespace)
+      record: namespace:container_memory_usage_bytes:sum
+    - expr: |
+        sum by (namespace, label_name) (
+           sum(rate(container_cpu_usage_seconds_total{job="kubelet", image!=""}[5m])) by (namespace, pod_name)
+         * on (namespace, pod_name) group_left(label_name)
+           label_replace(kube_pod_labels{job="kube-state-metrics"}, "pod_name", "$1", "pod", "(.*)")
+        )
+      record: namespace_name:container_cpu_usage_seconds_total:sum_rate
+```
+
+
+== Official Metrics libraries
 
 * https://github.com/prometheus/client_golang
 * https://github.com/prometheus/client_java
 * https://github.com/prometheus/client_python
 * https://github.com/prometheus/client_ruby
 
-== relevant exporters
+== Useful Exporters
 
-=== blackbox-exporter
-=== Adding a sidecar exporter to an app?
+* link:https://github.com/prometheus/blackbox_exporter[blackbox-exporter]
+* link:https://github.com/justwatchcom/elasticsearch_exporter[elasticsearch-exporter]
+* link:https://github.com/ofesseler/gluster_exporter[gluster-exporter]
+* link:https://github.com/prometheus/cloudwatch_exporter[AWS CloudWatch Exporter]
 
-== Additional things that export metrics
-
-=== Heketi
-
-=== Routers
-
-=== Grafana 
-
-=== More
-
-== Possible Architectures
-
-Scaling horizontally or vertically? One Prometheus per namespace? Per team? Per cluster? 
-
-== SRE
 == More reading
 
-* Google SRE book
-* The other Google SRE book
+* link:https://landing.google.com/sre/sre-book/chapters/monitoring-distributed-systems/[Site Reliability Engineering - How Google Runs Production Systems - Monitoring Distributed Systems]
+* link:https://landing.google.com/sre/workbook/chapters/monitoring/[The Site Reliability Workbook - Practical Ways to Implement SRE - Monitoring]
 
 
