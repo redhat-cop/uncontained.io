@@ -234,7 +234,7 @@ kind: PrometheusRule
 metadata:
   labels:
     rule: prometheus
-  name: prometheus-k8s-rules
+  name: prometheus-k8s-alert
   namespace: application-monitoring
 spec:
   groups:
