@@ -7,6 +7,7 @@ ENV USER_UID 1001
 
 WORKDIR /uncontained.io
 
+COPY . ${HOME}
 COPY container-images/local-dev/root /
 
 RUN microdnf update &&\
