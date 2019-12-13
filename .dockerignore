@@ -1,7 +1,7 @@
 .git
 .github
 .npm
-node_modules/
+node_modules
 .gem
 dist/
 galaxy/
