@@ -194,6 +194,8 @@ Some systems may experience errors during testing like the following:
     npm ERR! Test failed.  See above for more details.
 
 This means you need to increase the open files limit in the container. This can be done by passing `--ulimit nofiles=$(ulimit -n)` to the `podman run` command. The `ulimit` value in the container cannot be any higher than the user's open file limit (`ulimit -n`). A value of at least *10000* is recommended.
+
+See this article for more details on link:https://mtyurt.net/post/docker-how-to-increase-number-of-open-files-limit.html[increasing open file limits in containers].
 ====
 
 
