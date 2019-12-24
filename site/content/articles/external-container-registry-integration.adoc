@@ -104,7 +104,7 @@ CA certificates that should be trusted by all platform components can be defined
 +
 [source]
 ----
-oc create configmap -n openshift-config user-ca-bundle -n --from-file=ca-bundle.crt=<file_location>
+oc create configmap -n openshift-config user-ca-bundle --from-file=ca-bundle.crt=<file_location>
 ----
 +
 . Patch the cluster proxy object with the name of the _ConfigMap_
