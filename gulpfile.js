@@ -125,7 +125,8 @@ function runServer() {
   browserSync.init({
     server: {
       baseDir: "./dist"
-    }
+    },
+    open: false
   });
   gulp.watch("./site/themes/*/src/**/*.scss", gulp.parallel(["sass"]));
   gulp.watch(["./site/**/*", "!./site/themes/*/src/**"], gulp.parallel(["hugo"]));

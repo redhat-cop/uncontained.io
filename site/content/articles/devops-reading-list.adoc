@@ -42,12 +42,11 @@ OK, so now you have some base understand about what DevOps is. This section is i
 * link:http://itrevolution.com/learn-more-about-concepts-in-phoenix-project/[Phoenix Project Reference Guide part 1] and link:http://itrevolution.com/resource-guide-for-the-phoenix-project-kanbans-part-2/[Part 2] (Articles)
 * link:http://theleanstartup.com/book[The Lean Startup] (Book)
 * link:http://personalkanban.com/pk/book/[Personal Kanban] (Book)
-* link:https://web.archive.org/web/20080312054037/http://www.sae.org/manufacturing/lean/column/leanjun01.htm[Lean Manufacturing and the Toyota Production System] (Article)
 
 == Deep Dives & Further Learning
 
 These books expand on some of the knowledge above and go deeper into particular aspects of DevOps.
 
-* link:https://www.amazon.com/dp/1449368425/ref=cm_sw_su_dp[Lean Enterprise] (Book)
-* link:http://www.amazon.com/Continuous-Delivery-Deployment-Automation-Addison-Wesley/dp/0321601912[Continuous Delivery] (Book)
-* link:http://www.amazon.com/The-Principles-Product-Development-Flow/dp/1935401009[Principles of Product Development Flow] (Book)
+* link:https://www.goodreads.com/book/show/18167218-lean-enterprise[Lean Enterprise] (Book)
+* link:https://martinfowler.com/books/continuousDelivery.html[Continuous Delivery] (Book)
+* link:https://www.goodreads.com/book/show/6278270-the-principles-of-product-development-flow[Principles of Product Development Flow] (Book)
