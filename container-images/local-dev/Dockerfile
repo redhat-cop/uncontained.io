@@ -7,14 +7,16 @@ ENV USER_UID 1001
 
 WORKDIR /uncontained.io
 
-COPY container-images/local-dev/root /
-
 RUN microdnf update &&\
   microdnf -y install tar git xz ruby rubygem-bundler && \
   mkdir -p /node && \
   curl -o /node/node.tar.xz https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.xz && \
-  tar -xf /node/node.tar.xz --directory=/node && \
-  /usr/local/bin/user_setup && \
+  tar -xf /node/node.tar.xz --directory=/node
+
+COPY . ${HOME}
+COPY container-images/local-dev/root /
+
+RUN /usr/local/bin/user_setup && \
   bundle install
 
 USER ${USER_UID}
