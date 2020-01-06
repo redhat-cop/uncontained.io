@@ -126,6 +126,7 @@ function runServer() {
     server: {
       baseDir: "./dist"
     },
+    ui: false,
     open: false
   });
   gulp.watch("./site/themes/*/src/**/*.scss", gulp.parallel(["sass"]));
@@ -175,9 +176,7 @@ function testSetup(port, cb) {
       baseDir: "./dist"
     },
     port: port,
-    ui: {
-      port: port + 1
-    },
+    ui: false,
     open: false
   }, cb);
 

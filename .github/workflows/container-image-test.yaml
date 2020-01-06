@@ -1,0 +1,11 @@
+name: local-dev-test
+on: [pull_request, push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build image and test that it is functional
+      run: |
+        docker build -f container-images/local-dev/Dockerfile -t uncontained-local-dev . || exit 0
+        docker run -u $(id -u) -v ${PWD}:/uncontained.io:Z uncontained-local-dev test

@@ -17,7 +17,7 @@ To run the image you can use the following command:
 
 [source,bash]
 ----
-podman run --rm -p 3000:3000 -p 3001:3001 uncontained-local-dev
+podman run --rm -it -p 3000:3000 uncontained-local-dev
 ----
 
 This command will run uncontained.io usin embedded copy of the source code.
@@ -27,7 +27,7 @@ If you need to run it with actual code use this:
 
 [source,bash]
 ----
-podman run -u $(id -u) -v ${PWD}:/uncontained.io:Z -it --rm -p 3000:3000 -p 3001:3001 uncontained-local-dev
+podman run -u $(id -u) -v ${PWD}:/uncontained.io:Z -it --rm -it -p 3000:3000 uncontained-local-dev
 ----
 
 After this uncontained.io will be available locally via http://localhost:3000 or http://localhost:3001 for Browsersync.
