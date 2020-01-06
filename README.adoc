@@ -1,9 +1,9 @@
 = uncontained.io
 
 image:https://img.shields.io/website/http/uncontained.io.svg?down_color=red&down_message=offline&up_color=up&up_message=up[Website Status, link="http://uncontained.io"]
-image:https://github.com/redhat-cop/uncontained.io/workflows/.github/workflows/CI/badge.svg["Language Linter"]
-image:https://github.com/redhat-cop/uncontained.io/workflows/.github/workflows/local-dev-test/badge.svg["Tests"]
-image:https://github.com/redhat-cop/uncontained.io/workflows/.github/workflows/local-dev-publish/badge.svg["Docker Repository on Quay", link="https://quay.io/repository/redhat-cop/uncontained-local-dev"]
+image:https://github.com/redhat-cop/uncontained.io/workflows/CI/badge.svg["Language Linter"]
+image:https://github.com/redhat-cop/uncontained.io/workflows/local-dev-test/badge.svg["Tests"]
+image:https://github.com/redhat-cop/uncontained.io/workflows/local-dev-publish/badge.svg["Docker Repository on Quay", link="https://quay.io/repository/redhat-cop/uncontained-local-dev"]
 image:https://img.shields.io/github/license/redhat-cop/uncontained.io.svg["License", link="https://github.com/redhat-cop/uncontained.io/blob/master/LICENSE"]
 
 This is the source code repository for
