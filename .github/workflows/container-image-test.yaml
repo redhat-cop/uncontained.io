@@ -1,4 +1,4 @@
-name: Publish Docker
+name: local-dev-test
 on: [pull_request]
 jobs:
   build:

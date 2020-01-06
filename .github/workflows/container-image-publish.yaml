@@ -1,4 +1,4 @@
-name: Publish Docker
+name: local-dev-publish
 on: [push]
 jobs:
   build:
