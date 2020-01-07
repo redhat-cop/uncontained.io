@@ -1,0 +1,16 @@
+name: local-dev-publish
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@2.11
+      with:
+        name: redhat-cop/uncontained-local-dev
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        registry: quay.io
+        dockerfile: container-images/local-dev/Dockerfile
+        tag_names: true

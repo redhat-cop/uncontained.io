@@ -1,0 +1,521 @@
+---
+date: "2019-12-01T19:15:24-06:00"
+title: "Integrating External Container Registry Integration with OpenShift"
+authors: ["sabre1041"]
+categories:
+  - 'Field Guide'
+tags:
+  - openshift
+  - containers
+  - authenticatioon
+  - registry
+draft: false
+featured: true
+---
+= Integrating External Container Registry Integration with OpenShift
+Andrew Block <ablock@redhat.com>
+v1.0, 2019-12-01
+:scripts_repo: https://github.com/rhtconsulting/rhc-ose
+:toc: macro
+:toc-title:
+
+OpenShift can utilize an external container registry as a source for deploying images and to store images produced as a result of a build.
+
+include::site/layouts/variables.adoc[]
+toc::[]
+
+== Overview
+
+OpenShift is a platform for running containerized applications. Containers are instances of container images and these images are stored in registries. OpenShift has the ability to leverage images stored in its own integrated registry, images stored on external public registries, such as quay.io, or images stored in an enterprise or third party registry. This document describes the steps necessary to run containers from images stored in an external coontainer registry and to use an external registry to store images produced within the platform.
+
+== Container Runtime Configuration
+
+Regardless of the source, the underlying container runtime engine is used to retrieve images stored in remote repositories. There are certain considerations that must be made so that the container engine can successfully communicate with the remote registry.
+
+=== Certificates
+
+Communication between the container engine and the remote registry is facilitated through secure transport. A trust must be established between both parties prior to transmitting content securely. SSL certificates associated with the remote registry must be configured on on each OpenShift node that will be used to transport images. These certificates can be configured at platform level truststore or for use by container runtime exclusively. The configuration of certificiates depends on the version of OpenShift being used.
+
+==== Custom Certificates in OpenShift 3
+
+To configure the container runtime to trust the certificate of a remote repository that is not included in the platform trust store, the certificate(s) must be copied to a location on each node that for which the registry will be accessed. In most cases, this will be all masters and nodes within the cluster. The specific steps depends on the version of Docker that is being used. 
+
+===== Docker 1.13+
+
+. Copy the certificate to the `/etc/pki/ca-trust/source/anchors/`
+. Extract and add the certificate to the list of trusted certificate authorities
++
+[source]
+----
+sudo update-ca-trust extract
+----
++
+. Restart the docker service
+
+===== Docker <1.13
+
+. Create a folder within the `/etc/docker/certs.d` folder with the name and optional port value. If the remote registry had the address of `external-registry.example.com:5000` the folder path would be `/etc/docker/certs.d/external-registry.example.com:5000`.
+. Copy the certificate into this folder and rename the file *ca.crt*
+. Restart the docker service
+
+Additional information can be found in the the link:https://docs.openshift.com/container-platform/3.11/day_two_guide/docker_tasks.html#day-two-guide-managing-docker-certs[OpenShift Day 2 Operations Guide]
+
+==== Custom Certificates in OpenShift 4
+
+Additional CA certificates that should be trusted by all platform components can be configured via the Proxy API. These certificates can be provided at installation time or at runtime. 
+
+===== Providing Custom Certificates at Installation
+
+The `install-config.yaml` resource that can be specified at installation time can be used to define any CA certificates that should be trusted by platform certificates. 
+
+. If an existing `install-config.yaml` has yet to be generated execute the following command:
++
+[source]
+----
+openshift-installer create install-config
+----
++
+. Add CA certificates to the `additionalTrustBundle` property as shown below
++
+[source]
+----
+apiVersion: v1
+baseDomain: openshift.example.com
+proxy:
+  httpProxy: http://<username>:<pswd>@<ip>:<port> 
+  httpsProxy: http://<username>:<pswd>@<ip>:<port> 
+  noProxy: example.com 
+additionalTrustBundle: | 
+    -----BEGIN CERTIFICATE-----
+    <MY_TRUSTED_CA_CERT>
+    -----END CERTIFICATE-----
+----
++
+. Install the OpenShift cluster making use of the `install-config.yaml` file.
+
+NOTE: The installer will configure the CA certificates in a _ConfigMap_ called `user-ca-bundle` in the `openshift-config` property. The certificates will *ONLY* be injected by the Cluster Network Operator when a _proxy_ object is defined as shown above. Otherwise, portions of the steps outlined in the next section must be followed.
+
+===== Providing Custom Certificates at Runtime
+
+CA certificates that should be trusted by all platform components can be defined at runtime. These certificates should be added to a ConfigMap called `user-ca-bundle` in the `openshift-config` project. 
+
+. Add CA certificates to a file
+. Create a _ConfigMap_ called `user-ca-bundle` in the `openshift-config` project using the contents of the file created previously
++
+[source]
+----
+oc create configmap -n openshift-config user-ca-bundle --from-file=ca-bundle.crt=<file_location>
+----
++
+. Patch the cluster proxy object with the name of the _ConfigMap_
++
+[source]
+----
+oc patch proxies.config.openshift.io/cluster --type=merge -p '{"spec":{"trustedCA":{"name":"user-ca-bundle"}}}'
+----
+
+Additional information for providing CA certificates at installation and runtime can be found in the link:https://docs.openshift.com/container-platform/4.2/networking/configuring-a-custom-pki.html[Configuring a custom PKI] documentation
+
+
+
+=== Insecure Registry
+
+Even though container runtimes and OpenShift emphasize secure communication, the runtime can be configured to retrieve images from insecure registries. Insecure registries can refer to ones that are protected with self signed or untrusted SSL certificates or ones that do not communicate over secure channels (HTTP).
+
+The method to specify insecurre registries depends on the version of OpenShift being utilized.
+
+==== Insecure Registry with OpenShift v4
+
+The `image.config.openshift.io/cluster` resource defines the image registry settings for which the Machine Config Operator (MCO) manages the configuration of each node. 
+
+To specify an insecure registry, perform the following steps:
+
+. Edit the `image.config.openshift.io/cluster` custom resource:
++
+[source]
+----
+oc edit image.config.openshift.io/cluster
+----
++
+. Specify the list of insecure registries
++
+[source]
+----
+apiVersion: config.openshift.io/v1
+kind: Image
+metadata:
+...
+  name: cluster
+...
+spec:
+...
+  registrySources:
+    insecureRegistries:
+    - external-registry.example.com
+...
+status:
+  internalRegistryHostname: image-registry.openshift-image-registry.svc:5000
+----
+
+More information can be found in the link:https://docs.openshift.com/container-platform/4.2/openshift_images/image-configuration.html#images-configuration-insecure_image-configuration[Image Configuration documentation]
+
+==== Insecure Registry With OpenShift v3
+
+To configure the docker daemon to trust content from an insecure registry, add the following to the *OPTIONS* property in the `/etc/sysconfig/docker` file. An example is shown below:
+
+[source]
+----
+OPTIONS=' --selinux-enabled --insecure-registry=external-registry.example.com:5000
+----
+
+NOTE: The hostname or IP address and optional port value must match the remote registry value configured in OpenShift
+
+Restart the docker daemon for the new configurations to take effect
+
+[source]
+----
+systemctl restart docker
+----
+
+== Accessing Secure Registries
+
+Secure external registries can be integrated into the OpenShift ecosystem. Through the use of secrets, users can provide the platform with the necessary credentials to access secured resources.
+
+=== Storing Credentials in Secrets
+
+Docker stores the details for authenticating to remote repositories in one of two formats: a config.json (.dockerconfigjson) file or a legacy .dockercfg file. OpenShift makes use of the .dockercfg file format for authenticating against remote registries and stores them as secrets, but for the purpose of this guide, only the .dockerconfigjson file format will be illustrrated. This file can be generated by using the `docker login` command or the parameters supplied to OpenShift who in turn will produce a new .dockerconfigjson file in the secret.
+
+Existing config.json files can be added as secrets by executing the following command:
+
+[source]
+----
+oc create secret external-registry --from-file=.dockerconfigjson=<path/to/.docker/config.json> --type=kubernetes.io/dockerconfigjson
+----
+
+Alternatively, a `.dockerconfigjson` formatted file can be created by supplying the necessary parameters using the following command:
+
+[source]
+----
+oc create secret docker-registry external-registry \
+    --docker-username=mastermind \
+    --docker-password=12345 \
+    --docker-server=external-registry.example.com:5000
+----
+
+NOTE: When logging into a remote OpenShift cluster, You must use your oc login token instead of your user's password. You can see more here. link:https://docs.openshift.com/container-platform/4.2/registry/accessing-the-registry.html[Accessing The Registry Directly]
+
+
+== External registry integration in Builds
+
+An external registry can be integrated into the OpenShift build process as both a location to store images built in the platform and as an image source for builds.
+
+
+=== Storing images as a result of a build
+
+NOTE: It is recommended that images produced as a result of a build within OpenShift be stored within the image registry integrated into the platform. This allows for initial testing and integration within the lower levels of the Software Development Lifecycle (SDLC). If an external registry is being utilized, the image can be promoted outside of the cluster to this external entity after the initial validation  phase as the image progresses through its lifecycle.
+
+Images that are produced by an image build within OpenShift can be stored in a remote registry instead of the integrated docker registry provided by the platform if desired. As with any OpenShift build, the details are contained in the *BuildConfig* API object.
+
+The *output* section of the Build specification defines the location of where the resulting docker image will be stored. Many of the examples found in OpenShift templates and quickstarts use the *ImageStreamTag* as the output kind. This will publish the image to the integrated docker registry. To publish the image to an external location, where it be to DockerHub or an enterprise registry, the *DockerImage* type must be used.
+
+The following is a portion of a *BuildConfig* that pushes an image called *sample-app* to a remote registry located at *external-registry.example.com:5000* in a repository called *publicrepo* with tag *latest*
+
+[source]
+----
+"output": {
+    "to": {
+        "kind": "DockerImage",
+        "name": "external-registry.example.com:5000/publicrepo/sample-app:latest"
+    }
+},
+----
+
+If the registry is protected by authentication, a secret must be added to the *builder* service account which is included in each OpenShift project and is used to execute builds on the platform. Once the *secret* containing the credentials to the secure registry has been created as described in an earlier section, add the newly created secret to the *builder* service account as shown below:
+
+[source]
+----
+oc secrets link builder external-registry
+----
+
+Confirm the secret for the external registry has been added successfully to the *builder* service account:
+
+[source]
+----
+oc describe serviceaccount builder
+
+Name:		builder
+Labels:		<none>
+Annotations:	<none>
+
+Image pull secrets:	builder-dockercfg-sk6bc
+
+Mountable secrets: 	builder-token-3ppg8
+                   	builder-dockercfg-sk6bc
+                   	external-registry <1>
+
+Tokens:            	builder-token-3ppg8
+                   	builder-token-4pxkl
+----
+<1> Secret containing credentials for storing images in the protected external registry
+
+To push resulting images produced by the build process to an authenticated registry, a new section called *pushSecret* must be added to the BuildConfig containing the name of the secret:
+
+[source]
+----
+"output": {
+    "to": {
+        "kind": "DockerImage",
+        "name": "external-registry.example.com:5000/publicrepo/sample-app:latest"
+    },
+    "pushSecret": {
+        "name": "external-registry" <1>
+    },
+----
+<1>  The name of the secret configured within the project containing the credentials to access the secure registry
+
+=== Using images from a secured registry as part of a build
+
+Builder images stored in an external registry can also be used as input for builds. In the *strategy* section of the build type, declare the location of the image as shown below:
+
+[source]
+----
+ "type": "Source",
+ "sourceStrategy": {
+     "from": {
+         "kind": "DockerImage",
+         "name": "external-registry.example.com:5000/publicrepo/sample-base:1.0"
+     },
+----
+
+If the registry is protected by authentication, add a *secret* containing the credentials to the secure registry as described in an earlier section and add the secret to the *builder* service account as shown below:
+
+
+[source]
+----
+oc secrets link builder external-registry --for=pull
+----
+
+Confirm the _builder_ service account has the secret specified as an ImagePullSecret
+
+[source]
+----
+$ oc get sa builder -o json
+
+{
+    "apiVersion": "v1",
+    "kind": "ServiceAccount",
+    "metadata": {
+...
+        "name": "builder",
+...
+    },
+    "imagePullSecrets": [
+        {
+            "name": "external-registry" <1>
+        },
+...
+    ]
+}
+----
+<1> The secret configured to pull images from a protected source
+
+Finally, add the name of the pull secret to the BuildConfig as shown below:
+
+[source]
+----
+"type": "Source",
+"sourceStrategy": {
+    "from": {
+        "kind": "DockerImage",
+        "name": "external-registry.example.com:5000/privaterepo/sample-base:1.0"
+    },
+    "pullSecret": {
+        "name": "external-registry" <1>
+    },
+----
+<1> The name of the secret configured within the project containing the credentials to access the secure registry
+
+
+== Running images stored in an external registry
+
+Images residing in external registries can be run within OpenShift. This section describes the steps necessary to configure an OpenShift project to utilize images stored in external registries as well as the various methods for managing external images.
+
+=== Deploying an image using the oc new-app command
+
+The simplest method for deploying an image from an external registry is to use the *oc new-app* CLI command. This command will resolve the image and set up the necessary API objects based on metadata contained in the image.
+
+Execute the following command to *sample-app* built in an earlier section
+
+[source]
+----
+oc new-app --docker-image=external-registry.example.com:5000/publicrepo/sample-app:latest
+----
+
+The CLI will configure services based on exposed ports on the image and set up a DeploymentConfig to deploy the image to the project.
+
+=== Deploying an image using an ImageStream
+
+An link:https://docs.openshift.com/container-platform/4.2/openshift_images/images-understand.html#images-imagestream-use_images-understand[ImageStream] represents a virtual repository of related docker images and can be used to abstract the location of image from applications. Images stored in an external repository can be referenced using an ImageStream to relieve the burden from the underlying application.
+
+To create a new ImageStream for the existing image, execute the following command:
+
+[source]
+----
+oc import-image sample-app --from=external-registry.example.com:5000/publicrepo/sample-app --confirm
+----
+
+A new ImageStream called *sample-app* will be created and can be used to deploy a new application. Execute the following command to deploy create the application from the imported ImageStream:
+
+[source]
+----
+oc new-app --image-stream=sample-app
+----
+
+
+=== Deploy an Image using the location in the DeploymentConfig
+
+Images from external registries can be deployed in an application by directly specifying its' location in the DeploymentConfig API object in the containers' *image* property as shown below.
+
+[source]
+----
+"containers": [
+                    {
+                        "name": "sample-app",
+                        "image": "external-registry.example.com:5000/publicrepo/sample-app:latest",  <1>
+                        "ports": [
+                            {
+                                "containerPort": 8080,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "resources": {},
+                        "terminationMessagePath": "/dev/termination-log",
+                        "imagePullPolicy": "Always"
+                    }
+                ],
+----
+<1> The image to deploy
+
+Alternatively, an ImageStream can be used to reference the image that should be deployed as shown below
+
+[source]
+----
+    "template": {
+        "spec": {
+            "containers": [
+                {
+                    "name": "sample-app",
+                    "image": " ", <1>
+                    "ports": [
+                            {
+                                "containerPort": 8080,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "resources": {},
+                        "terminationMessagePath": "/dev/termination-log",
+                        "imagePullPolicy": "Always"
+                }
+            ]
+        }
+    },
+    "triggers": [
+        {
+            "imageChangeParams": {
+                "automatic": true,
+                "containerNames": [
+                    "httpd-example"
+                ],
+                "from": {
+                    "kind": "ImageStreamTag",
+                    "name": "sample-app:latest" <2>
+                }
+            },
+            "type": "ImageChange" <3>
+        }
+    ]
+},
+----
+<1> Image field to be left intentionally blank which will be filled in by the ImageStream trigger
+<2> Name and tag of the ImageStream
+<3> The type of trigger
+
+
+=== Deploying Images from an Insecure Registry
+
+Images that are located in external registries that either may not have their SSL certificates trusted on the OpenShift node or communicate using the HTTP protocol can still be used by applications. Both the *oc new-app* command and ImageStream import processes support the management of images from these locations.
+
+The `--insecure-registry` option of the *oc new-app* command can be used to allow new applications to be referenced from insecure registries.
+
+The *oc import-image* command provides a `--insecure` option when importing images from insecure registries. Specific tags originating from insecure registries can be defined within an ImageStream by configuring the *importPolicy* section of the tag as shown below:
+
+[source]
+----
+kind: ImageStream
+apiVersion: v1
+metadata:
+  name: sample-app
+  tags:
+  - from:
+      kind: DockerImage
+      name: external-registry.example.com:5000/publicrepo/sample-app
+    name: latest
+    importPolicy:
+      insecure: "true" <1>
+----
+<1> Set insecure to **true** to signify the image originates in an insecure registry
+
+=== Deploying Images from an Authenticated Registry
+
+Images that are stored in a registry protected by authentication can by deployed to OpenShift. As described earlier, a *Secret* must be configured with the details necessary to access the registry.
+
+Once the details of the *.dockercfg* have been added to a secret as described in the section above, the secret must be added to the service account that will be used to run the pod. In most cases, this will be the *default* service account, but be sure to confirm these details. Execute the following command to add a secret called *external-registry* to the *default* service account:
+
+[source]
+----
+oc secrets link default external-registry --for=pull
+----
+
+The `--for=pull` option signifies that the secret will be added as a pull secret within the service account
+
+Confirm the secret for the external registry has been added successfully to the *default* service account:
+
+[source]
+----
+oc describe serviceaccount default
+
+Name:		default
+Labels:		<none>
+Annotations:	<none>
+
+Tokens:            	default-token-kssb4
+                   	default-token-xqxcf
+
+Image pull secrets:	default-dockercfg-4rq5x
+                   	external-registry <1>
+
+Mountable secrets: 	default-token-kssb4
+                   	default-dockercfg-4rq5x
+----
+<1> Secret containing credentials for pulling images from the protected external registry
+
+==== Importing ImageStreams from an Authenticated Registry
+
+To import images found within an ImageStream from an authenticated registry, add the necessary credentials to a *secret*. OpenShift will iterate through all available authentication options in an attempt to access the registry and import the ImageStream
+
+== Troubleshooting
+
+This section provides resolution to common issues when working with images located in an external registry
+
+=== Unable to deploy images from an external registry
+
+When attempting to deploy an application from an external registry, the following error may be observed from a pod:
+
+[source]
+----
+image pull failed for external-registry.example.com:5000/privaterepo/sample-app@sha256:45fbf8004abd1a4b9a983db7bf91b4934b3d0329399e275840bfe09e246643c4, this may be because there are no credentials on this request.
+----
+
+The pod will typically be observed with a *ImagePullBackOff* status indicating the underlying image cannot be retrieved.
+
+While this error can be used to diagnose incorrectly configured authentication, it is used by OpenShift internally as a last effort to denote that it is unable to retrieve the configured the image and may not be caused by an authentication issue at all. Be sure to confirm the location of the image before continuing with further diagnosis.

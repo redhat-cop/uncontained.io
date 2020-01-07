@@ -108,11 +108,11 @@ gulp.task("search", (cb) => {
 });
 
 gulp.task("build", gulp.series(gulp.parallel("sass", "js", "fonts", "asciidoctor-check"), "hugo", "search"));
-gulp.task("build-preview", gulp.series(gulp.parallel("sass", "js", "fonts", "asciidoctor-check"), "hugo", "search"));
+gulp.task("build-preview", gulp.series(gulp.parallel("sass", "js", "fonts", "asciidoctor-check"), "hugo-preview", "search"));
 
 // Run server tasks
-gulp.task("server", gulp.series(gulp.parallel("hugo", "sass", "js", "fonts", "asciidoctor-check"), "search", (cb) => runServer(cb)));
-gulp.task("server-preview", gulp.series(gulp.parallel("hugo-preview", "sass", "js", "fonts", "asciidoctor-check"), "search", (cb) => runServer(cb)));
+gulp.task("server", gulp.series("build", (cb) => runServer(cb)));
+gulp.task("server", gulp.series("build-preview", (cb) => runServer(cb)));
 
 // Run Automated Tests
 gulp.task("smoke", gulp.series((cb) => runSmokeTest(cb)));
@@ -125,7 +125,9 @@ function runServer() {
   browserSync.init({
     server: {
       baseDir: "./dist"
-    }
+    },
+    ui: false,
+    open: false
   });
   gulp.watch("./site/themes/*/src/**/*.scss", gulp.parallel(["sass"]));
   gulp.watch(["./site/**/*", "!./site/themes/*/src/**"], gulp.parallel(["hugo"]));
@@ -174,9 +176,7 @@ function testSetup(port, cb) {
       baseDir: "./dist"
     },
     port: port,
-    ui: {
-      port: port + 1
-    },
+    ui: false,
     open: false
   }, cb);
 
