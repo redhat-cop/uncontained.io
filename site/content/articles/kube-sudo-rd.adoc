@@ -1,0 +1,82 @@
+---
+title: "Sudo for Kubernetes"
+date: 2020-01-29T17:00:00-05:00
+authors: [redhat-cop]
+categories:
+  - SRE
+tags:
+  - Kubernetes
+draft: false
+---
+
+One of our cluster administrators just ran `kubectl delete all` in the `default` namespace and broke our s@#!. Let's put in a failsafe to protect from that.
+
+== The problem with administrators is that they are only human
+
+- Humans are bad at doing machine things.
+- We get lazy, etc.
+- Sometimes we need failsafes to protect us against ourselves
+
+Having administrators operate at a "less than god-mode" by default is a general best practice, just think of adding users to the wheel in Linux. It is no wonder why we would implement a similar structure in Kubernetes
+
+== Kubernetes User Impersonation
+Through kubernetes, we can use User Impersonation to achive our "sudo for Kubernetes" functionality. 
+
+User Impersonation is the ability for a user to act as another user in the cluster, overriding user information that an api call uses to authenticate. An impersonation request will first authenticate as the requesting user then use the information of the impersonated user. Using the same principles, kubernetes will also let a user impersonate a group.
+
+The most common way to achinve user and group impersonation is through setting the flags `--as` and `--as-group` respectivly on our `kubectl` commands. 
+
+For more detail on how User impersonation works under the hood take a look at: https://kubernetes.io/docs/reference/access-authn-authz/authentication/#user-impersonation
+
+== Implementing a kubesudo role
+
+To implement our kubesudo role lets create a yaml file simmilar to the below:
+
+[source,yaml]
+----
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: impersonator
+rules:
+- apiGroups: [""]
+  resources: ["users", "groups", "serviceaccounts"]
+  verbs: ["impersonate"]
+----
+
+Once we are happy with our role above, we can run a command to apply it to our cluster.
+
+`kubectl apply -f scopes-impersonator.yml`
+
+Users addded to our new impersonator cluster role will now have the ability to impersonate users, groups, and serviceaccounts without restrictions, giving us our kubernetes sudo. 
+
+Lets take a looks of user impersonation in action!
+
+Let's take a look at to users that we have. Our first user `admin` has the cluster role of `cluster-admin` and can do anything at any time. Our next user `user1` just has the cluster role of `impersonator`
+
+Our `user1` wants to delete a namespace `admins-only`, and the following happens 
+```
+> kubectl delete namespace admins-only                                                                              
+
+Error from server (Forbidden): namespaces "admins-only" is forbidden: User "developer" cannot delete resource "namespaces" in API group "" in the namespace "admins-only": RBAC: clusterrole.rbac.authorization.k8s.io "scopes-impsersonator" not found
+```
+Lucky for `developer` they are part of our `impersonator` Cluster Role, and can try the same comand again with the addition of our trusty `--as admin` flag
+
+This will allow `user1` to achive our sudo for kubernetes, lets take a look below:
+
+```
+> kubectl delete namespace admins-only --as admin                                                                                    
+namespace "admins-only" deleted
+```
+While this example might be simple, it is powerful.
+
+With the implementation of out impersonator cluster role we can say that running  `!! --as admin` is to kubernetes as running `sudo !!` is to linux.
+
+Do we want some permanent serviceaccount?
+
+<enable a service account to impersonate ?>
+
+
+Make sure we mention that individuals' actions can still be tracked, maybe provide an example of an audit log line showing an admin performing some action.
+
+``
