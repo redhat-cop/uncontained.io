@@ -54,10 +54,10 @@
 
 .summary {
   background-color: theme-color("white");
-  height: 22em;
+  min-height: 22em;
   margin: 1em 2em;
   padding-top: 0;
-  padding-bottom: 1em;
+  padding-bottom: 2em;
   h2 {
     font-size: 1.1em;
     a {
@@ -78,10 +78,9 @@
   }
   .read-more {
     font-weight: 500;
-    margin-top: 2em;
+    padding: 0 1em;
     a {
       color: theme-color("dark-blue");
-      padding: 0.4em .8em;
       &:hover, &:focus {
         color: theme-color("medium-blue");
         text-decoration: none;
