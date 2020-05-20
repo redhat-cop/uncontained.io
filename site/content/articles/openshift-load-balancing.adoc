@@ -93,7 +93,7 @@ TIP: By default, the use of a Ramp Node creates a single point of failure. To av
 image::/images/load_balancing_full.jpg[Full Integration]
 
 For more information on configuration, view the routing section of the official OpenShift Enterprise docs:
-{docs_url}install_config/router/f5_router.html
+{docs_url}install_config/router/index.html
 
 == Load Balancing For HA Master Infrastructure
 
