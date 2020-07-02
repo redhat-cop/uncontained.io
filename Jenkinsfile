@@ -30,7 +30,6 @@ pipeline {
       steps {
         container('jenkins-slave-uncontained') {
           sh '''
-          source /opt/rh/rh-git29/enable
           npm install
           npm run build
           '''
