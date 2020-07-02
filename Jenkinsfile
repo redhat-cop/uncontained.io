@@ -13,7 +13,7 @@ openshift.withCluster() {
 
 pipeline {
   agent {
-    label 'hugo-builder'
+    label 'jenkins-slave-uncontained'
   }
 
   stages {
@@ -28,7 +28,7 @@ pipeline {
 
     stage ('Build Site from Source') {
       steps {
-        container('builder') {
+        container('jenkins-slave-uncontained') {
           sh '''
           source /opt/rh/rh-git29/enable
           npm install
@@ -42,7 +42,7 @@ pipeline {
       parallel {
         stage ('Run Automated Tests') {
           steps {
-            container('builder') {
+            container('jenkins-slave-uncontained') {
               sh 'npm test'
             }
           }
@@ -98,7 +98,7 @@ pipeline {
             }
           }
         }
-        container('builder') {
+        container('jenkins-slave-uncontained') {
           sh "export TEST_URL=${env.TEST_URL} && npm run smoke"
         }
       }
