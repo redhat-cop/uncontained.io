@@ -1,11 +1,15 @@
-@Library('cop-library') _
+library identifier: "pipeline-library@v1.6",
+retriever: modernSCM(
+  [
+    $class: "GitSCMSource",
+    remote: "https://github.com/redhat-cop/pipeline-library.git"
+  ]
+)
 
 openshift.withCluster() {
   env.localToken = readFile('/var/run/secrets/kubernetes.io/serviceaccount/token').trim()
   env.NAMESPACE = openshift.project()
 }
-
-//n.notifyBuild('STARTED', rocketchat_url)
 
 pipeline {
   agent {
@@ -16,7 +20,6 @@ pipeline {
     stage ('Fetch Source Code') {
       steps {
         script {
-        hygieiaBuildPublishStep buildStatus: 'InProgress'
         git url: "${APPLICATION_SOURCE_REPO}", branch: "${APPLICATION_SOURCE_REF}"
 
         }
@@ -31,17 +34,6 @@ pipeline {
           npm install
           npm run build
           '''
-        }
-      }
-      post {
-        failure {
-          hygieiaBuildPublishStep buildStatus: 'Failure'
-        }
-        aborted {
-          hygieiaBuildPublishStep buildStatus: 'Aborted'
-        }
-        success {
-          hygieiaBuildPublishStep buildStatus: 'Success'
         }
       }
     }
