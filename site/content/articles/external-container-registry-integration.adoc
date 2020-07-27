@@ -38,7 +38,7 @@ Communication between the container engine and the remote registry is facilitate
 
 ==== Custom Certificates in OpenShift 3
 
-To configure the container runtime to trust the certificate of a remote repository that is not included in the platform trust store, the certificate(s) must be copied to a location on each node that for which the registry will be accessed. In most cases, this will be all masters and nodes within the cluster. The specific steps depends on the version of Docker that is being used. 
+To configure the container runtime to trust the certificate of a remote repository that is not included in the platform trust store, the certificate(s) must be copied to a location on each node that for which the registry will be accessed. In most cases, this will be all masters and nodes within the cluster. The specific steps depends on the version of Docker that is being used.
 
 ===== Docker 1.13+
 
@@ -62,11 +62,11 @@ Additional information can be found in the the link:https://docs.openshift.com/c
 
 ==== Custom Certificates in OpenShift 4
 
-Additional CA certificates that should be trusted by all platform components can be configured via the Proxy API. These certificates can be provided at installation time or at runtime. 
+Additional CA certificates that should be trusted by all platform components can be configured via the Proxy API. These certificates can be provided at installation time or at runtime.
 
 ===== Providing Custom Certificates at Installation
 
-The `install-config.yaml` resource that can be specified at installation time can be used to define any CA certificates that should be trusted by platform certificates. 
+The `install-config.yaml` resource that can be specified at installation time can be used to define any CA certificates that should be trusted by platform certificates.
 
 . If an existing `install-config.yaml` has yet to be generated execute the following command:
 +
@@ -75,17 +75,17 @@ The `install-config.yaml` resource that can be specified at installation time ca
 openshift-installer create install-config
 ----
 +
-. Add CA certificates to the `additionalTrustBundle` property as shown below
+. Add CA certificates to the `additionalTrustBundle` property:
 +
 [source]
 ----
 apiVersion: v1
 baseDomain: openshift.example.com
 proxy:
-  httpProxy: http://<username>:<pswd>@<ip>:<port> 
-  httpsProxy: http://<username>:<pswd>@<ip>:<port> 
-  noProxy: example.com 
-additionalTrustBundle: | 
+  httpProxy: http://<username>:<pswd>@<ip>:<port>
+  httpsProxy: http://<username>:<pswd>@<ip>:<port>
+  noProxy: example.com
+additionalTrustBundle: |
     -----BEGIN CERTIFICATE-----
     <MY_TRUSTED_CA_CERT>
     -----END CERTIFICATE-----
@@ -97,7 +97,7 @@ NOTE: The installer will configure the CA certificates in a _ConfigMap_ called `
 
 ===== Providing Custom Certificates at Runtime
 
-CA certificates that should be trusted by all platform components can be defined at runtime. These certificates should be added to a ConfigMap called `user-ca-bundle` in the `openshift-config` project. 
+CA certificates that should be trusted by all platform components can be defined at runtime. These certificates should be added to a ConfigMap called `user-ca-bundle` in the `openshift-config` project.
 
 . Add CA certificates to a file
 . Create a _ConfigMap_ called `user-ca-bundle` in the `openshift-config` project using the contents of the file created previously
@@ -114,7 +114,7 @@ oc create configmap -n openshift-config user-ca-bundle --from-file=ca-bundle.crt
 oc patch proxies.config.openshift.io/cluster --type=merge -p '{"spec":{"trustedCA":{"name":"user-ca-bundle"}}}'
 ----
 
-Additional information for providing CA certificates at installation and runtime can be found in the link:https://docs.openshift.com/container-platform/4.2/networking/configuring-a-custom-pki.html[Configuring a custom PKI] documentation
+Additional information for providing CA certificates at installation and runtime can be found in the link:https://docs.openshift.com/container-platform/4.3/networking/configuring-a-custom-pki.html[Configuring a custom PKI] documentation
 
 
 
@@ -126,7 +126,7 @@ The method to specify insecurre registries depends on the version of OpenShift b
 
 ==== Insecure Registry with OpenShift v4
 
-The `image.config.openshift.io/cluster` resource defines the image registry settings for which the Machine Config Operator (MCO) manages the configuration of each node. 
+The `image.config.openshift.io/cluster` resource defines the image registry settings for which the Machine Config Operator (MCO) manages the configuration of each node.
 
 To specify an insecure registry, perform the following steps:
 
