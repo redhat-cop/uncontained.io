@@ -205,7 +205,8 @@ function runDepcheck(cb) {
       'dist'
     ],
     ignoreMatches: [ // ignore dependencies that matches these globs
-      'bootstrap'
+      'bootstrap',
+      'eslint'
     ],
     parsers: { // the target parsers
       '*.js': depcheck.parser.es6,
