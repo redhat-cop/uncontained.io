@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8/nodejs-10
+FROM quay.io/redhat-cop/uncontained-local-dev
 
 # Add application sources to a directory that the assemble script expects them
 # and set permissions so that the container runs without root access

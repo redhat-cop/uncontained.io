@@ -20,5 +20,6 @@ RUN /usr/local/bin/user_setup && \
   bundle install
 
 USER ${USER_UID}
+EXPOSE 8080
 
 ENTRYPOINT ["entrypoint"]
