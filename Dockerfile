@@ -1,4 +1,4 @@
-FROM ubi8/nodejs-14
+FROM registry.redhat.io/rhel8/nodejs-14
 
 # Add application sources to a directory that the assemble script expects them
 # and set permissions so that the container runs without root access

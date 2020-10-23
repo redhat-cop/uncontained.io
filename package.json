@@ -12,7 +12,7 @@
     "start-preview": "gulp server-preview",
     "test": "gulp test",
     "smoke": "gulp smoke",
-    "lint": "eslint src",
+    "lint": "node_modules/.bin/eslint src",
     "depcheck": "gulp depcheck"
   },
   "author": "",
