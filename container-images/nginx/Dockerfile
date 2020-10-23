@@ -1,3 +1,3 @@
-FROM registry.paas.redhat.com/itpaas-blessed-images/rhel7-platops-nginx
+FROM centos/nginx-18-centos7
 
-COPY public/ /usr/share/nginx/html/
+COPY dist/ /usr/share/nginx/html/
