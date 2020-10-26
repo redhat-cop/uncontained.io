@@ -13,11 +13,6 @@ spec:
             filter: header.match('X-GitHub-Event', 'push')
         - cel:
             filter: "type(body.head_commit.id) == string"
-            # todo: when tkn upgraded https://github.com/tektoncd/triggers/blob/master/docs/eventlisteners.md#webhook-interceptors
-            # filter payloads from github and avoid triggering a pipelinerun for other webhook events
-            # overlays:
-            # - key: extensions.branch_name
-            #   expression: "body.ref.split('/')[2]"
       bindings:
       - name: trigger-binding
       template:

@@ -5,8 +5,6 @@ metadata:
   name: {{ .Values.application.name }}-trigger-template
   namespace: {{ .Values.application.environments.cicd }}
 spec:
-  # description: >-
-  #   This `task` consumes data from the trigger binding file and fires a new pipelinerun with a pipeline as reference.
   params:
   - name: ref
     description: git reference or branch name
