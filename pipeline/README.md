@@ -120,9 +120,6 @@ oc policy add-role-to-user \
 
 And also for triggers ServiceAccount:
 
-    oc adm policy add-scc-to-user privileged system:serviceaccount:uncontained-ci-cd:uncontained-tekton-triggers-sa -n uncontained-ci-cd
-    oc adm policy add-scc-to-user privileged system:serviceaccount:uncontained-ci-cd:uncontained-tekton-triggers-sa -n uncontained-development
-    oc adm policy add-scc-to-user privileged system:serviceaccount:uncontained-ci-cd:uncontained-tekton-triggers-sa -n uncontained-production
     oc adm policy add-role-to-user edit system:serviceaccount:uncontained-ci-cd:uncontained-tekton-triggers-sa -n uncontained-ci-cd
     oc adm policy add-role-to-user edit system:serviceaccount:uncontained-ci-cd:uncontained-tekton-triggers-sa -n uncontained-development
     oc adm policy add-role-to-user edit system:serviceaccount:uncontained-ci-cd:uncontained-tekton-triggers-sa -n uncontained-production
