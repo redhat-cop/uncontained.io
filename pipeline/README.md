@@ -102,18 +102,6 @@ How to verify that the installation was successful:
 
 You can check the webhook creation logs by searching for `webhook` in your pods in the `uncontained-ci-cd` namespace. If something has failed, you can delete TaskRun `create-uncontained-github-webhook`, update your webhook data from `values.yaml` and run the **Applying** step again.
 
-<!-- ```
-cat <<EOF | oc apply -f -
-apiVersion: v1
-kind: Secret
-metadata:
-  name: 11009103-tekton-pipeline-pull-secret
-data:
-  .dockerconfigjson: <token here>
-type: kubernetes.io/dockerconfigjson
-EOF
-``` -->
-
 ### Policies
 
 Before publishing a new commit, we will need to define some permissions for the pipeline ServiceAccount. This will allow the pipeline to move images from one environment to another.

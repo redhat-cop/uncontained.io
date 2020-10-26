@@ -1,6 +1,6 @@
 {
   "name": "uncontained.io",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "description": "uncontained.io is a website that focuses on Containers, Cloud, and Digital Transformation guidance for the Enterprise.",
   "repository": "redhat-cop/uncontained.io",
   "main": "index.js",
