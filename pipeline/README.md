@@ -132,7 +132,6 @@ And also for triggers ServiceAccount:
 | Key | Value | Description |
 | --- | --- | --- |
 | `application` | name | name of the application, used as prefix |
-| `application` | runtime | supported `nodejs:[10,12,14]` |
 | `application` | environments.cicd | pipeline will be deployed at this namespace |
 | `application` | environments.development | images, services, routes, etc for development stage |
 | `application` | environments.production | images, services, routes, etc for production stage |
