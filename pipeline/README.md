@@ -1,12 +1,13 @@
-# pipeline
+# Pipeline for uncontained.io
 
-This is a pipeline developed in Tekton, the peaceful cat 🐈. It contains the main steps of a continuous software delivery process and it enforces a strict semantic version validation strategy, managing tag increments automatically for you.
+This is a pipeline developed in Tekton, it contains the main steps of a continuous software delivery process and it enforces a strict semantic version validation strategy, managing tag increments automatically for you.
 
 ![The peaceful cat](assets/logo.png)
 
 The build strategy is based on [buildah](https://github.com/containers/buildah), which is a tool that facilitates building OCI container images.
 
 Furthermore, this package automatically manages three independent environments, which can be customized as needed.
+
 The 3 different environments are:
 
 - uncontained-cicd
@@ -101,7 +102,7 @@ How to verify that the installation was successful:
 
 You can check the webhook creation logs by searching for `webhook` in your pods in the `uncontained-ci-cd` namespace. If something has failed, you can delete TaskRun `create-uncontained-github-webhook`, update your webhook data from `values.yaml` and run the **Applying** step again.
 
-
+<!-- ```
 cat <<EOF | oc apply -f -
 apiVersion: v1
 kind: Secret
@@ -111,7 +112,7 @@ data:
   .dockerconfigjson: <token here>
 type: kubernetes.io/dockerconfigjson
 EOF
-
+``` -->
 
 ### Policies
 
@@ -140,7 +141,7 @@ And also for triggers ServiceAccount:
 
 ### Values
 
-| Key | Test2 | Test 3 |
+| Key | Value | Description |
 | --- | --- | --- |
 | `application` | name | name of the application, used as prefix |
 | `application` | runtime | supported `nodejs:[10,12,14]` |
@@ -155,7 +156,7 @@ And also for triggers ServiceAccount:
 
 Supported webhooks under the `pipeline.webhook` object
 
-| Provider | Param | Description 3 |
+| Provider | Param | Description |
 | --- | --- | --- |
 | github | org | github organization |
 | github | repo | repository to be integrated to the pipeline with automatic webhooks |
