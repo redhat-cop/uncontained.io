@@ -1,18 +1,8 @@
-# Tekton-demo
+# pipeline
 
-This is an example of a pipeline developed in Tekton, the peaceful cat 🐈. It contains the main steps of a continuous software delivery process and it enforces a strict semantic version validation strategy, managing tag increments automatically for you.
+This is a pipeline developed in Tekton, the peaceful cat 🐈. It contains the main steps of a continuous software delivery process and it enforces a strict semantic version validation strategy, managing tag increments automatically for you.
 
 ![The peaceful cat](assets/logo.png)
-
-There are several task templates available online. However, one of the biggest benefits of this chart is being able to take advantage of a model that holds all tasks in a solid and coherent way and with good linked parameters to be reused.
-
-![Tekton Pipeline Demo](assets/pipeline-with-task-steps.png)
-
-## Considerations
-
-Seeking to minimize dependencies on other components and avoid building your own images, which can be a little overwhelming when you want to kickstart fast your project. So bash scripting is primarily used and provides a solid and easy model to be extended.
-
-The different number of images being used has been taken into account. And with security in mind, only official images are consumed. With [Red Hat Universal Base Image (UBI)](https://www.redhat.com/en/blog/introducing-red-hat-universal-base-image), you can take advantage of the greater reliability, security, and performance of official Red Hat container images where OCI-compliant Linux containers run. See also [Red Hat Ecosystem Catalog.](https://catalog.redhat.com/software/containers/search).
 
 The build strategy is based on [Source-to-Image (S2I)](https://github.com/openshift/source-to-image), which is a toolkit and workflow for building reproducible container images from source code leveraging benefits like:
 
@@ -21,12 +11,12 @@ The build strategy is based on [Source-to-Image (S2I)](https://github.com/opensh
 - Speed
 - Security
 
-Furthermore, this package automatically manages the creation of three independent environments, which can be customized as needed.
+Furthermore, this package automatically manages three independent environments, which can be customized as needed.
 The 3 different environments are:
 
-- cicd
-- development
-- production
+- uncontained-cicd
+- uncontained-development
+- uncontained-production
 
 All the components corresponding to each environment were carefully introduced and are following the least privilege principle.
 
@@ -71,17 +61,17 @@ In this step by step we will assume the following values:
 
 | Namespace | Value |
 | --- | --- |
-| CI-CD | labs-ci-cd |
-| Development | do101-development |
-| Production | do101-production |
+| CI-CD | uncontained-ci-cd |
+| Development | uncontained-development |
+| Production | uncontained-production |
 
 If a ci-cd environment already exists, you can use it without the need to create a different one.
 
 For the other two environments you have to ensure that they exist. If they do not exist, you can create following the example below;
 
-    oc create namespace labs-ci-cd
-    oc create namespace do101-development
-    oc create namespace do101-production
+    oc create namespace uncontained-ci-cd
+    oc create namespace uncontained-development
+    oc create namespace uncontained-production
 
 ## Configuration
 
@@ -94,29 +84,40 @@ It will be in this repository that the webhook will be automatically created and
 The Github token will only be shown once, be sure to save it somewhere safe. 
 Then copy the token and replace it in the command below.
 
-    oc create secret generic github-webhook-secret --from-literal=token=XXXXXXXXXXXXXXXX -n labs-ci-cd
+    oc create secret generic github-webhook-secret --from-literal=token=XXXXXXXXXXXXXXXX -n uncontained-ci-cd
+
 
 In order to avoid using passwords to publish new content on Github, we will use a keypair. 
 [Here's](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) how to create one if you don't already have one available on your machine.
 
 Assuming your private key was created in the default location `$HOME/.ssh/id_rsa`, you can run the command below to create a generic secret.
 
-    oc create secret generic github-deploy-secret \
+    oc create secret generic uncontained-github-deploy-secret \
         --from-file=ssh-privatekey=$HOME/.ssh/id_rsa \
-        --namespace labs-ci-cd
+        --namespace uncontained-ci-cd
 
 ### Applying
 
 Great. Now that the secrets have been set up correctly we can install the package. For this, we will use helm, as below.
 
-    helm template -f charts/tekton-demo/values.yaml charts/tekton-demo | oc apply -f-
+    helm template -f pipeline/values.yaml pipeline | oc apply -f-
 
 How to verify that the installation was successful:
 
 - See if you github webhook integration was created. Go to your github repository, click on Settings, and then on Webhooks.
 
-You can check the webhook creation logs by searching for `webhook` in your pods in the `labs-ci-cd` namespace. If something has failed, you can delete TaskRun `create-do101-github-webhook`, update your webhook data from `values.yaml` and run the **Applying** step again.
+You can check the webhook creation logs by searching for `webhook` in your pods in the `uncontained-ci-cd` namespace. If something has failed, you can delete TaskRun `create-uncontained-github-webhook`, update your webhook data from `values.yaml` and run the **Applying** step again.
 
+
+cat <<EOF | oc apply -f -
+apiVersion: v1
+kind: Secret
+metadata:
+  name: 11009103-tekton-pipeline-pull-secret
+data:
+  .dockerconfigjson: <>
+type: kubernetes.io/dockerconfigjson
+EOF
 
 
 ### Policies
@@ -125,28 +126,28 @@ Before publishing a new commit, we will need to define some permissions for the 
 
 ```
 oc policy add-role-to-user \
-    system:image-puller system:serviceaccount:labs-ci-cd:tekton-triggers-sa \
-    --namespace=do101-development
+    system:image-puller system:serviceaccount:uncontained-ci-cd:uncontained-tekton-triggers-sa \
+    --namespace=uncontained-development
 ```
 
 ```
 oc policy add-role-to-user \
-    system:image-puller system:serviceaccount:labs-ci-cd:tekton-triggers-sa \
-    --namespace=do101-production
+    system:image-puller system:serviceaccount:uncontained-ci-cd:uncontained-tekton-triggers-sa \
+    --namespace=uncontained-production
 ```
 
 And also for triggers ServiceAccount:
 
-    oc adm policy add-scc-to-user privileged system:serviceaccount:labs-ci-cd:tekton-triggers-sa -n labs-ci-cd
-    oc adm policy add-scc-to-user privileged system:serviceaccount:labs-ci-cd:tekton-triggers-sa -n do101-development
-    oc adm policy add-scc-to-user privileged system:serviceaccount:labs-ci-cd:tekton-triggers-sa -n do101-production
-    oc adm policy add-role-to-user edit system:serviceaccount:labs-ci-cd:tekton-triggers-sa -n labs-ci-cd
-    oc adm policy add-role-to-user edit system:serviceaccount:labs-ci-cd:tekton-triggers-sa -n do101-development
-    oc adm policy add-role-to-user edit system:serviceaccount:labs-ci-cd:tekton-triggers-sa -n do101-production
+    oc adm policy add-scc-to-user privileged system:serviceaccount:uncontained-ci-cd:uncontained-tekton-triggers-sa -n uncontained-ci-cd
+    oc adm policy add-scc-to-user privileged system:serviceaccount:uncontained-ci-cd:uncontained-tekton-triggers-sa -n uncontained-development
+    oc adm policy add-scc-to-user privileged system:serviceaccount:uncontained-ci-cd:uncontained-tekton-triggers-sa -n uncontained-production
+    oc adm policy add-role-to-user edit system:serviceaccount:uncontained-ci-cd:uncontained-tekton-triggers-sa -n uncontained-ci-cd
+    oc adm policy add-role-to-user edit system:serviceaccount:uncontained-ci-cd:uncontained-tekton-triggers-sa -n uncontained-development
+    oc adm policy add-role-to-user edit system:serviceaccount:uncontained-ci-cd:uncontained-tekton-triggers-sa -n uncontained-production
 
 Something failed? See troubleshooting.
 
-1. Check pod `create-do101-github-webhook-pod-kmc4p` and make sure the webhook was created correctly
+1. Check pod `create-uncontained-github-webhook-pod-kmc4p` and make sure the webhook was created correctly
 2. Define policies
 
 
