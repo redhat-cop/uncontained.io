@@ -4,12 +4,7 @@ This is a pipeline developed in Tekton, the peaceful cat 🐈. It contains the m
 
 ![The peaceful cat](assets/logo.png)
 
-The build strategy is based on [Source-to-Image (S2I)](https://github.com/openshift/source-to-image), which is a toolkit and workflow for building reproducible container images from source code leveraging benefits like:
-
-- Reproducibility
-- Flexibility
-- Speed
-- Security
+The build strategy is based on [buildah](https://github.com/containers/buildah), which is a tool that facilitates building OCI container images.
 
 Furthermore, this package automatically manages three independent environments, which can be customized as needed.
 The 3 different environments are:
@@ -28,7 +23,6 @@ Besides that, it was designed to be plug and play. Upon installation, the webhoo
 
 It also allows changing the status of each commit to pending or success depending on the result of the pipeline tasks. Developers can view the status of each commit in the Github interface.
 
-
 ## Deployments
 
 The pipeline manages the creation of deployments for each environment and also takes care of enforcing standards such as code linting, chart linting, unit testing, code audit, and code coverage.
@@ -40,18 +34,18 @@ Currently supporting for the following branches, environment and and routes.
 
 | Branch type | Upgrade | Docs | Dev | Prod | Hostname
 | --- | --- | --- | --- | --- |  --- |
-| `develop` |  | ✅ | ✅ | ⭕ | develop-myapp-development.apps.host.com | 
-| `feature/login` |  | ⭕ | ✅ | ⭕ | feature-login-myapp-development.apps.s45.core.rht-labs.com | 
-| `release/1.0.0` | minor* | ✅ | ⭕ | ✅ | v1-0-0-myapp-production.apps.s45.core.rht-labs.com | 
-| `hotfix/1.0.1` | patch | ✅ | ⭕ | ✅ | v1-0-1-myapp-production.apps.s45.core.rht-labs.com | 
-| `patch/1.0.2` | patch | ✅ | ⭕ | ✅ | v1-0-2-myapp-production.apps.s45.core.rht-labs.com | 
+| `develop` |  | ✅ | ✅ | ⭕ | develop-uncontained-development.apps.host.com | 
+| `feature/login` |  | ⭕ | ✅ | ⭕ | feature-login-uncontained-development.apps.d1.casl.rht-labs.com | 
+| `release/1.0.0` | minor* | ✅ | ⭕ | ✅ | v1-0-0-uncontained-production.apps.d1.casl.rht-labs.com | 
+| `hotfix/1.0.1` | patch | ✅ | ⭕ | ✅ | v1-0-1-uncontained-production.apps.d1.casl.rht-labs.com | 
+| `patch/1.0.2` | patch | ✅ | ⭕ | ✅ | v1-0-2-uncontained-production.apps.d1.casl.rht-labs.com | 
 
 *Obs: The first version `0.0.0` exceptionally will use a major upgrade to `1.0.0`.
 
-A documentation based on [Slate](https://github.com/slatedocs/slate)  API docs generator will be also exposed for each environment through the routes hostnames:
+A documentation based endpoint will be also exposed for each environment through the routes hostnames:
 
-- documentation-myapp-development.apps.s45.core.rht-labs.com
-- documentation-myapp-production.apps.s45.core.rht-labs.com
+- documentation-uncontained-development.apps.d1.casl.rht-labs.com
+- documentation-uncontained-production.apps.d1.casl.rht-labs.com
 
 
 
@@ -86,7 +80,6 @@ Then copy the token and replace it in the command below.
 
     oc create secret generic github-webhook-secret --from-literal=token=XXXXXXXXXXXXXXXX -n uncontained-ci-cd
 
-
 In order to avoid using passwords to publish new content on Github, we will use a keypair. 
 [Here's](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) how to create one if you don't already have one available on your machine.
 
@@ -115,7 +108,7 @@ kind: Secret
 metadata:
   name: 11009103-tekton-pipeline-pull-secret
 data:
-  .dockerconfigjson: <>
+  .dockerconfigjson: <token here>
 type: kubernetes.io/dockerconfigjson
 EOF
 
@@ -145,43 +138,7 @@ And also for triggers ServiceAccount:
     oc adm policy add-role-to-user edit system:serviceaccount:uncontained-ci-cd:uncontained-tekton-triggers-sa -n uncontained-development
     oc adm policy add-role-to-user edit system:serviceaccount:uncontained-ci-cd:uncontained-tekton-triggers-sa -n uncontained-production
 
-Something failed? See troubleshooting.
-
-1. Check pod `create-uncontained-github-webhook-pod-kmc4p` and make sure the webhook was created correctly
-2. Define policies
-
-
-<!-- 
-
-### Deploying to development environment
-
-1. Create a new branch called `develop` and push to the repo to trigger a new build
-
-    git checkout -b develop
-    git push origin develop
-
-2. Create a new branch called `feature/awesome-feature` and push to the repo to trigger a new independent build
-
-    git checkout -b feature/awesome-feature
-    git push origin feature/awesome-feature
-
-### Deploying to production environment
-
-1. From the latest `develop` branch, create a new branch called `release/1.0.0`
-
-    git checkout -b release/1.0.0
-    git push origin release/1.0.0
-
-2. Patching and hotfixes folllows the same structure
-
-    git checkout -b hotfix/1.0.1
-    git push origin hotfix/1.0.1
-
-    git checkout -b patch/1.0.2
-    git push origin patch/1.0.2 -->
-
 ### Values
-
 
 | Key | Test2 | Test 3 |
 | --- | --- | --- |
@@ -205,32 +162,3 @@ Supported webhooks under the `pipeline.webhook` object
 | github | user | github repository username |
 | github | secret | a [github personal access token](https://github.com/settings/tokens) with `admin:repo` and `repo` permissions |
 | github | secret | a [ssh keypair](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account) to allow to push content without password |
-
-<!-- 
-
-### Deploying to development environment
-
-1. Create a new branch called `develop` and push to the repo to trigger a new build
-
-    git checkout -b develop
-    git push origin develop
-
-2. Create a new branch called `feature/awesome-feature` and push to the repo to trigger a new independent build
-
-    git checkout -b feature/awesome-feature
-    git push origin feature/awesome-feature
-
-### Deploying to production environment
-
-1. From the latest `develop` branch, create a new branch called `release/1.0.0`
-
-    git checkout -b release/1.0.0
-    git push origin release/1.0.0
-
-2. Patching and hotfixes folllows the same structure
-
-    git checkout -b hotfix/1.0.1
-    git push origin hotfix/1.0.1
-
-    git checkout -b patch/1.0.2
-    git push origin patch/1.0.2 -->
