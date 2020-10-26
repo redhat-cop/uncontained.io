@@ -25,7 +25,7 @@ spec:
 
     - name: test-integration
       image: quay.io/redhat-cop/uncontained-local-dev
-      workingDir: /workspace/shared/{{ .Values.pipeline.build.s2i.context }}
+      workingDir: /workspace/shared/{{ .Values.pipeline.build.context }}
       script: |
         #!/bin/sh
         npm test

@@ -25,7 +25,7 @@ spec:
   steps:
     - name: code-prepare
       image: registry.access.redhat.com/ubi8/nodejs-10
-      workingDir: /workspace/shared/{{ .Values.pipeline.build.s2i.context }}
+      workingDir: /workspace/shared/{{ .Values.pipeline.build.context }}
       script: |
         #!/bin/sh
         npm ping --registry {{ .Values.pipeline.nexus.host }}
@@ -41,7 +41,7 @@ spec:
     # - name: code-audit
     #   image: ubi8/nodejs-10
     #   resources: {}
-    #   workingDir: /workspace/shared/{{ .Values.pipeline.build.s2i.context }}
+    #   workingDir: /workspace/shared/{{ .Values.pipeline.build.context }}
     #   command: ["/bin/bash", "-c"]
     #   args:
     #     - |-
@@ -52,7 +52,7 @@ spec:
     - name: code-lint
       image: quay.io/redhat-cop/uncontained-local-dev
       resources: {}
-      workingDir: /workspace/shared/{{ .Values.pipeline.build.s2i.context }}
+      workingDir: /workspace/shared/{{ .Values.pipeline.build.context }}
       command: ["/bin/bash", "-c"]
       args:
         - |-
@@ -60,24 +60,13 @@ spec:
       securityContext:
         runAsUser: 0
 
-    # - name: code-test
+    # - name: code-coverage
     #   image: quay.io/redhat-cop/uncontained-local-dev
     #   resources: {}
-    #   workingDir: /workspace/shared/{{ .Values.pipeline.build.s2i.context }}
-    #   command: ["/bin/bash", "-c"]
-    #   args:
-    #     - |-
-    #       npm run test
-    #   securityContext:
-    #     runAsUser: 0
-
-    - name: code-coverage
-      image: quay.io/redhat-cop/uncontained-local-dev
-      resources: {}
-      workingDir: /workspace/shared/{{ .Values.pipeline.build.s2i.context }}
-      script: |
-        #!/bin/sh
-        # npm run coverage
+    #   workingDir: /workspace/shared/{{ .Values.pipeline.build.context }}
+    #   script: |
+    #     #!/bin/sh
+    #     npm run coverage
 
   volumes:
     - name: varlibcontainers

@@ -40,7 +40,7 @@ spec:
 
     - name: code-build
       image: quay.io/redhat-cop/uncontained-local-dev
-      workingDir: /workspace/shared/{{ .Values.pipeline.build.s2i.context }}
+      workingDir: /workspace/shared/{{ .Values.pipeline.build.context }}
       command: ["/bin/bash", "-c"]
       args:
         - |-
@@ -55,7 +55,7 @@ spec:
       script: |
         #!/bin/sh
         if [ "$(inputs.params.revision-type)" == "develop" ]; then
-          buildah bud --tls-verify=$(inputs.params.TLSVERIFY) --layers -f {{ .Values.pipeline.build.s2i.rubygem }} -t $(outputs.resources.documentation.url):rubygem-compiler ./container-images/rubygem-compiler
+          buildah bud --tls-verify=$(inputs.params.TLSVERIFY) --layers -f {{ .Values.pipeline.build.rubygem }} -t $(outputs.resources.documentation.url):rubygem-compiler ./container-images/rubygem-compiler
         else
           echo Skipping
         fi
@@ -65,29 +65,14 @@ spec:
       securityContext:
         privileged: true
 
-    - name: image-debug
-      image: registry.access.redhat.com/ubi8/nodejs-10
-      workingDir: /workspace/shared/{{ .Values.pipeline.build.s2i.context }}
-      script: |
-        #!/bin/sh
-        pwd
-        ls -ls /workspace/shared/dist
-      securityContext:
-        privileged: true
-
     - name: image-build
       image: quay.io/buildah/stable
       workingDir: /workspace/shared
       resources: {}
       script: |
         #!/bin/sh
-        pwd
-        ls -ls /workspace/shared/dist
         chmod -R o+rx /workspace/shared/dist
-        buildah bud --tls-verify=$(inputs.params.TLSVERIFY) --layers -f {{ .Values.pipeline.build.s2i.nginx }} -t $(outputs.resources.image.url):$(inputs.params.revision-name) /workspace/shared/dist
-        buildah push --tls-verify=$(inputs.params.TLSVERIFY) $(outputs.resources.documentation.url):rubygem-compiler docker://$(outputs.resources.documentation.url):rubygem-compiler
-        echo OK        
-      # command: ['buildah', 'bud', '--tls-verify=$(inputs.params.TLSVERIFY)', '--layers', '-f', '{{ .Values.pipeline.build.s2i.nginx }}', '-t', '$(outputs.resources.image.url):$(inputs.params.revision-name)', 'dist/']
+        buildah bud --tls-verify=$(inputs.params.TLSVERIFY) --layers -f {{ .Values.pipeline.build.nginx }} -t $(outputs.resources.image.url):$(inputs.params.revision-name) /workspace/shared/dist
       volumeMounts:
         - name: varlibcontainers
           mountPath: /var/lib/containers
@@ -96,7 +81,13 @@ spec:
 
     - name: image-push
       image: quay.io/buildah/stable
-      command: ['buildah', 'push', '--tls-verify=$(inputs.params.TLSVERIFY)', '$(outputs.resources.image.url):$(inputs.params.revision-name)', 'docker://$(outputs.resources.image.url):$(inputs.params.revision-name)']
+      resources: {}
+      script: |
+        #!/bin/sh
+        if [ "$(inputs.params.revision-type)" == "develop" ]; then
+          buildah push --tls-verify=$(inputs.params.TLSVERIFY) $(outputs.resources.documentation.url):rubygem-compiler docker://$(outputs.resources.documentation.url):rubygem-compiler
+        fi
+        buildah push --tls-verify=$(inputs.params.TLSVERIFY) $(outputs.resources.image.url):$(inputs.params.revision-name) docker://$(outputs.resources.image.url):$(inputs.params.revision-name)
       volumeMounts:
         - name: varlibcontainers
           mountPath: /var/lib/containers
