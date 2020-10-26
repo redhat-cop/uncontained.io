@@ -1,7 +1,6 @@
 cluster: apps.d1.casl.rht-labs.com
 application:
   name: uncontained
-  runtime: nodejs:14
   environments:
     cicd: uncontained-ci-cd
     development: uncontained-development
@@ -13,12 +12,10 @@ pipeline:
   nexus:
     host: https://nexus-labs-ci-cd.apps.s45.core.rht-labs.com/repository/labs-npm
   build:
-    s2i:
-      context:
-      dockerfile: container-images/local-dev/Dockerfile
-      nginx: container-images/nginx/Dockerfile
-      rubygem: container-images/rubygem-compiler/Dockerfile
-      docs: container-images/hugo/Dockerfile
+    context:
+    nginx: container-images/nginx/Dockerfile
+    rubygem: container-images/rubygem-compiler/Dockerfile
+    docs: container-images/hugo/Dockerfile
   webhook:
     github:
       org: mvmaestri

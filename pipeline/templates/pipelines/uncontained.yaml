@@ -20,7 +20,7 @@ spec:
     
   params:
     - name: ref
-      description: Ref of the application
+      description: ref of the application
     - name: revision
       description: git unique head commit id
     - name: repourl

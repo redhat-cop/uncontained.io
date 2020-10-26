@@ -26,10 +26,6 @@ spec:
       type: string
     - name: author
       description: revision commit author username
-    - name: VERSION
-      description: The version of nodejs
-      default: {{ .Values.application.runtime }}
-      type: string
     - name: TLSVERIFY
       description: Verify the TLS on the registry endpoint (for push/pull to a non-TLS registry)
       default: "false"
@@ -43,7 +39,7 @@ spec:
     # - name: code-audit
     #   image: ubi8/nodejs-10
     #   resources: {}
-    #   workingDir: /workspace/shared/{{ .Values.pipeline.build.s2i.context }}
+    #   workingDir: /workspace/shared/{{ .Values.pipeline.build.context }}
     #   command: ["/bin/bash", "-c"]
     #   args:
     #     - |-
@@ -53,7 +49,7 @@ spec:
 
     - name: asciidoctor
       image: $(outputs.resources.documentation.url):rubygem-compiler
-      workingDir: /workspace/shared/{{ .Values.pipeline.build.s2i.context }}
+      workingDir: /workspace/shared/{{ .Values.pipeline.build.context }}
       resources: {}
       env:
         - name: PACKER_OPTIONS
@@ -80,7 +76,7 @@ spec:
       script: |
         #!/bin/sh
         if [ "$(inputs.params.revision-type)" == "develop" ]; then
-          buildah bud --tls-verify=$(inputs.params.TLSVERIFY) --layers -f {{ .Values.pipeline.build.s2i.docs }} -t $(outputs.resources.documentation.url):$(inputs.params.revision-name) .
+          buildah bud --tls-verify=$(inputs.params.TLSVERIFY) --layers -f {{ .Values.pipeline.build.docs }} -t $(outputs.resources.documentation.url):$(inputs.params.revision-name) .
           echo OK
         fi
       volumeMounts:

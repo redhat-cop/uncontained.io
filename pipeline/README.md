@@ -194,7 +194,7 @@ Something failed? See troubleshooting.
 | `pipeline` | .triggers | separate service account for tekton triggers |
 | `pipeline` | nexus.host | npm repository host |
 | `pipeline` | build | npm repository host |
-| `pipeline` | build.s2i.context | context path for s2i build |
+| `pipeline` | build.context | context build path |
 
 Supported webhooks under the `pipeline.webhook` object
 
