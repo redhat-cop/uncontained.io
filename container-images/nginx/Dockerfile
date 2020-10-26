@@ -1,6 +1,6 @@
 
 FROM centos/nginx-18-centos7
-COPY . /usr/share/nginx/html/
+COPY . /opt/app-root/src
 
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
