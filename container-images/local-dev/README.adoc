@@ -12,6 +12,14 @@ cd uncontained.io/
 buildah bud -f container-images/local-dev/Dockerfile -t uncontained-local-dev .
 ----
 
+Or, if you use Docker:
+
+[source,bash]
+----
+cd uncontained.io/
+docker build -f container-images/local-dev/Dockerfile -t uncontained-local-dev .
+----
+
 
 To run the image you can use the following command:
 
@@ -20,7 +28,7 @@ To run the image you can use the following command:
 podman run --rm -it -p 3000:3000 uncontained-local-dev
 ----
 
-This command will run uncontained.io usin embedded copy of the source code.
+This command will run uncontained.io using embedded copy of the source code.
 
 
 If you need to run it with actual code use this:
