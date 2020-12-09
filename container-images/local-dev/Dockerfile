@@ -1,6 +1,6 @@
 FROM registry.access.redhat.com/ubi8-minimal
 
-ENV NODE_VERSION v10.15.1
+ENV NODE_VERSION v10.23.0
 ENV PATH /node/node-${NODE_VERSION}-linux-x64/bin:${PATH}
 ENV HOME /uncontained.io
 ENV USER_UID 1001
