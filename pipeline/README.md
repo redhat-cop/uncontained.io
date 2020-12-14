@@ -36,17 +36,17 @@ Currently supporting for the following branches, environment and and routes.
 | Branch type | Upgrade | Docs | Dev | Prod | Hostname
 | --- | --- | --- | --- | --- |  --- |
 | `develop` |  | ✅ | ✅ | ⭕ | develop-uncontained-development.apps.host.com | 
-| `feature/login` |  | ⭕ | ✅ | ⭕ | feature-login-uncontained-development.apps.d1.casl.rht-labs.com | 
-| `release/1.0.0` | minor* | ✅ | ⭕ | ✅ | v1-0-0-uncontained-production.apps.d1.casl.rht-labs.com | 
-| `hotfix/1.0.1` | patch | ✅ | ⭕ | ✅ | v1-0-1-uncontained-production.apps.d1.casl.rht-labs.com | 
-| `patch/1.0.2` | patch | ✅ | ⭕ | ✅ | v1-0-2-uncontained-production.apps.d1.casl.rht-labs.com | 
+| `feature/login` |  | ⭕ | ✅ | ⭕ | feature-login-uncontained-development.apps.example.com | 
+| `release/1.0.0` | minor* | ✅ | ⭕ | ✅ | v1-0-0-uncontained-production.apps.example.com | 
+| `hotfix/1.0.1` | patch | ✅ | ⭕ | ✅ | v1-0-1-uncontained-production.apps.example.com | 
+| `patch/1.0.2` | patch | ✅ | ⭕ | ✅ | v1-0-2-uncontained-production.apps.example.com | 
 
 *Obs: The first version `0.0.0` exceptionally will use a major upgrade to `1.0.0`.
 
 A documentation based endpoint will be also exposed for each environment through the routes hostnames:
 
-- documentation-uncontained-development.apps.d1.casl.rht-labs.com
-- documentation-uncontained-production.apps.d1.casl.rht-labs.com
+- documentation-uncontained-development.apps.example.com
+- documentation-uncontained-production.apps.example.com
 
 
 
