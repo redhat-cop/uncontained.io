@@ -1,3 +1,6 @@
-FROM registry.paas.redhat.com/itpaas-blessed-images/rhel7-platops-nginx
 
-COPY public/ /usr/share/nginx/html/
+FROM centos/nginx-18-centos7
+COPY . /opt/app-root/src
+
+EXPOSE 8080
+CMD ["nginx", "-g", "daemon off;"]

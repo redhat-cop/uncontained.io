@@ -1,0 +1,106 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: docs
+  namespace: {{ .Values.application.environments.cicd }}
+  annotations:
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
+spec:
+  workspaces:
+  - name: shared
+  params:
+    - name: ref
+      description: Git reference
+    - name: repourl
+      description: repository url from github payload
+    - name: repofullname
+      description: full name user-org/reponame from github
+    - name: revision
+      description: commit head unique id
+      type: string
+    - name: revision-type
+      description: revision type
+      type: string
+    - name: revision-name
+      description: revision name
+      type: string
+    - name: author
+      description: revision commit author username
+    - name: TLSVERIFY
+      description: Verify the TLS on the registry endpoint (for push/pull to a non-TLS registry)
+      default: "false"
+      type: string
+  resources:
+    outputs:
+      - name: documentation
+        type: image
+  steps:
+
+    # - name: code-audit
+    #   image: ubi8/nodejs-10
+    #   resources: {}
+    #   workingDir: /workspace/shared/{{ .Values.pipeline.build.context }}
+    #   command: ["/bin/bash", "-c"]
+    #   args:
+    #     - |-
+    #       npm audit
+    #   securityContext:
+    #     runAsUser: 0
+
+    - name: asciidoctor
+      image: $(outputs.resources.documentation.url):rubygem-compiler
+      workingDir: /workspace/shared/{{ .Values.pipeline.build.context }}
+      resources: {}
+      env:
+        - name: PACKER_OPTIONS
+          value: "--gem=asciidoctor --gem-version=1.5.7.1"
+        - name: PACKER_ENTRANCE
+          value: asciidoctor
+        - name: PACKER_OUTPUT_PATH
+          value: /tmp/output/asciidoctor
+      script: |
+        #!/bin/sh
+        echo test
+      volumeMounts:
+        - name: varlibcontainers
+          mountPath: /var/lib/containers
+        - name: gen-source
+          mountPath: /gen-source
+      securityContext:
+        privileged: true
+
+    - name: hugo
+      image: quay.io/buildah/stable
+      workingDir: /workspace/shared
+      resources: {}
+      script: |
+        #!/bin/sh
+        if [ "$(inputs.params.revision-type)" == "develop" ]; then
+          buildah bud --tls-verify=$(inputs.params.TLSVERIFY) --layers -f {{ .Values.pipeline.build.docs }} -t $(outputs.resources.documentation.url):$(inputs.params.revision-name) .
+          echo OK
+        fi
+      volumeMounts:
+        - name: varlibcontainers
+          mountPath: /var/lib/containers
+      securityContext:
+        privileged: true
+        
+    - name: image-push
+      image: quay.io/buildah/stable
+      script: |
+        #!/bin/sh
+        echo test
+        if [ "$(inputs.params.revision-type)" == "develop" ]; then
+          buildah push --tls-verify=$(inputs.params.TLSVERIFY) $(outputs.resources.documentation.url):$(inputs.params.revision-name) docker://$(outputs.resources.documentation.url):$(inputs.params.revision-name)
+        fi
+      volumeMounts:
+        - name: varlibcontainers
+          mountPath: /var/lib/containers
+      resources: {}
+      securityContext:
+        privileged: true
+  volumes:
+    - name: varlibcontainers
+      emptyDir: {}
+    - name: gen-source
+      emptyDir: {}

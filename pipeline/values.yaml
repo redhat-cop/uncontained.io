@@ -1,0 +1,25 @@
+cluster: apps.example.com
+application:
+  name: uncontained
+  environments:
+    cicd: uncontained-ci-cd
+    development: uncontained-development
+    production: uncontained-production
+pipeline:
+  sa:
+    default: pipeline
+    triggers: uncontained-tekton-triggers-sa
+  nexus:
+    host: https://nexus-labs-ci-cd.apps.example.com/repository/labs-npm
+  build:
+    context:
+    nginx: container-images/nginx/Dockerfile
+    rubygem: container-images/rubygem-compiler/Dockerfile
+    docs: container-images/hugo/Dockerfile
+  webhook:
+    github:
+      org: mvmaestri
+      user: mvmaestri
+      repo: uncontained.io
+      secret: uncontained-github-webhook-secret
+      key: uncontained-github-deploy-secret
