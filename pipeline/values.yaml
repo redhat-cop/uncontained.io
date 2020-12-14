@@ -1,4 +1,4 @@
-cluster: apps.d1.casl.rht-labs.com
+cluster: apps.example.com
 application:
   name: uncontained
   environments:
@@ -10,7 +10,7 @@ pipeline:
     default: pipeline
     triggers: uncontained-tekton-triggers-sa
   nexus:
-    host: https://nexus-labs-ci-cd.apps.s45.core.rht-labs.com/repository/labs-npm
+    host: https://nexus-labs-ci-cd.apps.example.com/repository/labs-npm
   build:
     context:
     nginx: container-images/nginx/Dockerfile
